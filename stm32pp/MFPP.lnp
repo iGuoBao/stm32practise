@@ -1,0 +1,7 @@
+--cpu Cortex-M3
+".\main.o"
+".\startup_stm32f10x_hd.o"
+--strict --scatter ".\MFPP.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\MFPP.map" -o .\MFPP.axf
