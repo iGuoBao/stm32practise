@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_HD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries;..\user;..\obj;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup;..\user\LED;..\user\Public</IncludePath>
+              <IncludePath>..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries;..\user;..\obj;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup;..\user\LED;..\user\Public;..\user\Button</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -458,9 +458,9 @@
           <GroupName>BsdButton</GroupName>
           <Files>
             <File>
-              <FileName>Button.C</FileName>
+              <FileName>Button.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\user\Button\Button.C</FilePath>
+              <FilePath>..\user\Button\Button.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -471,6 +471,16 @@
               <FileName>setSysClk.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\Public\setSysClk.c</FilePath>
+            </File>
+            <File>
+              <FileName>Delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\Public\Delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>Delay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\Public\Delay.h</FilePath>
             </File>
           </Files>
         </Group>

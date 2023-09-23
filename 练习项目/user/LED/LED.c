@@ -1,6 +1,7 @@
 #include "LED.h"
 
-int LEDinit()
+// 板载用户LED 两个
+void LEDinit()
 {
 	// 结构体 GPIO_InitS
 	GPIO_InitTypeDef GPIO_InitS;
@@ -20,10 +21,11 @@ int LEDinit()
 	GPIO_InitS.GPIO_Mode=GPIO_Mode_Out_PP;	 	
 	GPIO_InitS.GPIO_Speed=GPIO_Speed_50MHz;	  
 	GPIO_Init(LED1_PORT,&GPIO_InitS); 	 			// 打包初始化LED0
-	GPIO_ResetBits(LED1_PORT,LED1_PIN);   		
+	GPIO_ResetBits(LED1_PORT,LED1_PIN); 	
 }
 
-int JLEDinit()
+// GPIO 使用跳线驱动板载LED J排 8个
+void JLEDinit()
 {
 	// 结构体 GPIO_InitS
 	GPIO_InitTypeDef GPIO_InitS;

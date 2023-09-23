@@ -1,4 +1,4 @@
-.\objects\button.o: ..\user\Button\Button.C
+.\objects\button.o: ..\user\Button\Button.c
 .\objects\button.o: ..\user\Button\Button.h
 .\objects\button.o: ..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h
 .\objects\button.o: ..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h
