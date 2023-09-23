@@ -15,7 +15,7 @@ _Bool setSysClkHSE()
 	
 	// while可能一直循环 
 	// while(RCC_WaitForHSEStartUp() != SUCCESS){}		// 如果没稳定就一直等待
-	for (int i = 0; i < 10 && RCC_WaitForHSEStartUp() != SUCCESS; i++){}		//检测稳定 最多10次
+	// for (int i = 0; i < 10 && RCC_WaitForHSEStartUp() != SUCCESS; i++){}		//检测稳定 最多10次
 	if(RCC_WaitForHSEStartUp() != SUCCESS) return 0;
 	while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY)==RESET);
 	RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
