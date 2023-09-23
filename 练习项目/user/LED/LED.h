@@ -15,6 +15,7 @@
 
 
 
+
 // JLED1-8 PC0-7
 // JLED1
 #define JLED1_PORT 						GPIOC
@@ -52,8 +53,8 @@
 
 
 // 初始化
-void LEDinit(void);
-void JLEDinit(void);
+int LEDinit();
+int JLEDinit();
 
 
 
