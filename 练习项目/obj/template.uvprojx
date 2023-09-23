@@ -458,9 +458,9 @@
           <GroupName>BsdButton</GroupName>
           <Files>
             <File>
-              <FileName>Button.C</FileName>
+              <FileName>Button.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\user\Button\Button.C</FilePath>
+              <FilePath>..\user\Button\Button.c</FilePath>
             </File>
           </Files>
         </Group>

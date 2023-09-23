@@ -349,8 +349,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\user\Button\Button.C</PathWithFileName>
-      <FilenameWithoutPath>Button.C</FilenameWithoutPath>
+      <PathWithFileName>..\user\Button\Button.c</PathWithFileName>
+      <FilenameWithoutPath>Button.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
