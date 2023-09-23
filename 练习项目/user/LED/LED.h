@@ -53,8 +53,8 @@
 
 
 // 初始化
-int LEDinit();
-int JLEDinit();
+int LED_init();
+int JLED_init();
 
 
 

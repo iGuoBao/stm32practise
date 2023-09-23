@@ -29,4 +29,5 @@
 .\objects\main.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h
 .\objects\main.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 .\objects\main.o: ..\user\LED\LED.h
+.\objects\main.o: ..\user\Button\Button.h
 .\objects\main.o: ..\user\Public\setSysClk.h

@@ -1,6 +1,6 @@
 #include "LED.h"
 
-int LEDinit()
+int LED_init()
 {
 	// 结构体 GPIO_InitS
 	GPIO_InitTypeDef GPIO_InitS;
@@ -23,7 +23,7 @@ int LEDinit()
 	GPIO_ResetBits(LED1_PORT,LED1_PIN);   		
 }
 
-int JLEDinit()
+int JLED_init()
 {
 	// 结构体 GPIO_InitS
 	GPIO_InitTypeDef GPIO_InitS;

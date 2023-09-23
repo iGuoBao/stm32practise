@@ -1,4 +1,4 @@
-.\objects\button.o: ..\user\Button\Button.C
+.\objects\button.o: ..\user\Button\Button.c
 .\objects\button.o: ..\user\Button\Button.h
 .\objects\button.o: ..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h
 .\objects\button.o: ..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h
@@ -29,3 +29,4 @@
 .\objects\button.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
 .\objects\button.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h
 .\objects\button.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
+.\objects\button.o: ..\user\LED\LED.h
