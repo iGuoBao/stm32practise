@@ -20,7 +20,7 @@
 // #endif	/* __BUTTON_H__ */
 
 
-static void NVIC_Configuration(void);	// NVIC ≈‰÷√
+void EXTI_Key_Config(void);
 
 void KEY0_IRQHandler(void);						// KEY0 ÷–∂œ∫Ø ˝
 

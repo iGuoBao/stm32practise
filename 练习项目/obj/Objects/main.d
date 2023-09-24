@@ -31,3 +31,4 @@
 .\objects\main.o: ..\user\LED\LED.h
 .\objects\main.o: ..\user\Button\Button.h
 .\objects\main.o: ..\user\Public\setSysClk.h
+.\objects\main.o: ..\user\EventInterrupt\exti.h
