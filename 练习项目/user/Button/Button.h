@@ -15,7 +15,6 @@
 #define KEY1_PORT 						GPIOE 						
 #define KEY1_PIN  						GPIO_Pin_3 				
 #define KEY1_PORT_RCC					RCC_APB2Periph_GPIOE
-
 // KEY2  PE2
 #define KEY2_PORT 						GPIOE							
 #define KEY2_PIN  						GPIO_Pin_2 				

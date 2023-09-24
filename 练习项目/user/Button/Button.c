@@ -7,7 +7,6 @@ void KEY_init(void)
 {
 	// 定义一个GPIO初始化结构体变量
   GPIO_InitTypeDef GPIO_InitStructure; 
-	
 	// 使能三个端口的时钟
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE, ENABLE); 
   

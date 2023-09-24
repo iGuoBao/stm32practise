@@ -8,12 +8,15 @@ Section Cross References
     main.o(i.main) refers to setsysclk.o(i.setSysClkHSE) for setSysClkHSE
     main.o(i.main) refers to led.o(i.LED_init) for LED_init
     main.o(i.main) refers to button.o(i.KEY_init) for KEY_init
-    main.o(i.main) refers to exti.o(i.EXTI_Key_Config) for EXTI_Key_Config
-    system_stm32f10x.o(i.SetSysClock) refers to system_stm32f10x.o(i.SetSysClockTo72) for SetSysClockTo72
-    system_stm32f10x.o(i.SystemCoreClockUpdate) refers to system_stm32f10x.o(.data) for SystemCoreClock
-    system_stm32f10x.o(i.SystemInit) refers to system_stm32f10x.o(i.SetSysClock) for SetSysClock
+    main.o(i.main) refers to button.o(i.IsKeyPressed) for IsKeyPressed
+    main.o(i.main) refers to stm32f10x_gpio.o(i.GPIO_ReadOutputDataBit) for GPIO_ReadOutputDataBit
+    main.o(i.main) refers to stm32f10x_gpio.o(i.GPIO_WriteBit) for GPIO_WriteBit
+    system_stm32f10x_1.o(i.SetSysClock) refers to system_stm32f10x_1.o(i.SetSysClockTo72) for SetSysClockTo72
+    system_stm32f10x_1.o(i.SystemCoreClockUpdate) refers to system_stm32f10x_1.o(.data) for SystemCoreClock
+    system_stm32f10x_1.o(i.SystemInit) refers to system_stm32f10x_1.o(i.SetSysClock) for SetSysClock
     startup_stm32f10x_hd.o(RESET) refers to startup_stm32f10x_hd.o(STACK) for __initial_sp
     startup_stm32f10x_hd.o(RESET) refers to startup_stm32f10x_hd.o(.text) for Reset_Handler
+<<<<<<< HEAD
     startup_stm32f10x_hd.o(RESET) refers to stm32f10x_it.o(i.NMI_Handler) for NMI_Handler
     startup_stm32f10x_hd.o(RESET) refers to stm32f10x_it.o(i.HardFault_Handler) for HardFault_Handler
     startup_stm32f10x_hd.o(RESET) refers to stm32f10x_it.o(i.MemManage_Handler) for MemManage_Handler
@@ -25,6 +28,9 @@ Section Cross References
     startup_stm32f10x_hd.o(RESET) refers to stm32f10x_it.o(i.SysTick_Handler) for SysTick_Handler
     startup_stm32f10x_hd.o(RESET) refers to exti.o(i.EXTI4_IRQHandler) for EXTI4_IRQHandler
     startup_stm32f10x_hd.o(.text) refers to system_stm32f10x.o(i.SystemInit) for SystemInit
+=======
+    startup_stm32f10x_hd.o(.text) refers to system_stm32f10x_1.o(i.SystemInit) for SystemInit
+>>>>>>> parent of 0d1c42d (中断练习 写完了，但是中断进不去。)
     startup_stm32f10x_hd.o(.text) refers to entry.o(.ARM.Collect$$$$00000000) for __main
     stm32f10x_gpio.o(i.GPIO_AFIODeInit) refers to stm32f10x_rcc.o(i.RCC_APB2PeriphResetCmd) for RCC_APB2PeriphResetCmd
     stm32f10x_gpio.o(i.GPIO_DeInit) refers to stm32f10x_rcc.o(i.RCC_APB2PeriphResetCmd) for RCC_APB2PeriphResetCmd
@@ -52,6 +58,7 @@ Section Cross References
     setsysclk.o(i.setSysClkHSE) refers to stm32f10x_rcc.o(i.RCC_SYSCLKConfig) for RCC_SYSCLKConfig
     setsysclk.o(i.setSysClkHSE) refers to stm32f10x_rcc.o(i.RCC_GetSYSCLKSource) for RCC_GetSYSCLKSource
     setsysclk.o(i.setSysClkHSI) refers to stm32f10x_rcc.o(i.RCC_DeInit) for RCC_DeInit
+<<<<<<< HEAD
     exti.o(i.EXTI4_IRQHandler) refers to stm32f10x_exti.o(i.EXTI_GetITStatus) for EXTI_GetITStatus
     exti.o(i.EXTI4_IRQHandler) refers to button.o(i.IsKeyPressed) for IsKeyPressed
     exti.o(i.EXTI4_IRQHandler) refers to stm32f10x_gpio.o(i.GPIO_ReadOutputDataBit) for GPIO_ReadOutputDataBit
@@ -61,6 +68,8 @@ Section Cross References
     exti.o(i.EXTI_Key_Config) refers to stm32f10x_gpio.o(i.GPIO_EXTILineConfig) for GPIO_EXTILineConfig
     exti.o(i.EXTI_Key_Config) refers to misc.o(i.NVIC_Init) for NVIC_Init
     exti.o(i.EXTI_Key_Config) refers to stm32f10x_exti.o(i.EXTI_Init) for EXTI_Init
+=======
+>>>>>>> parent of 0d1c42d (中断练习 写完了，但是中断进不去。)
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
@@ -83,12 +92,13 @@ Section Cross References
 Removing Unused input sections from the image.
 
     Removing core_cm3.o(.emb_text), (32 bytes).
-    Removing system_stm32f10x.o(i.SystemCoreClockUpdate), (164 bytes).
-    Removing system_stm32f10x.o(.data), (20 bytes).
+    Removing system_stm32f10x_1.o(i.SystemCoreClockUpdate), (164 bytes).
+    Removing system_stm32f10x_1.o(.data), (20 bytes).
     Removing startup_stm32f10x_hd.o(HEAP), (512 bytes).
     Removing stm32f10x_gpio.o(i.GPIO_AFIODeInit), (20 bytes).
     Removing stm32f10x_gpio.o(i.GPIO_DeInit), (200 bytes).
     Removing stm32f10x_gpio.o(i.GPIO_ETH_MediaInterfaceConfig), (12 bytes).
+    Removing stm32f10x_gpio.o(i.GPIO_EXTILineConfig), (64 bytes).
     Removing stm32f10x_gpio.o(i.GPIO_EventOutputCmd), (12 bytes).
     Removing stm32f10x_gpio.o(i.GPIO_EventOutputConfig), (32 bytes).
     Removing stm32f10x_gpio.o(i.GPIO_PinLockConfig), (18 bytes).
@@ -119,18 +129,15 @@ Removing Unused input sections from the image.
     Removing stm32f10x_rcc.o(i.RCC_RTCCLKConfig), (16 bytes).
     Removing stm32f10x_rcc.o(i.RCC_USBCLKConfig), (12 bytes).
     Removing stm32f10x_rcc.o(.data), (20 bytes).
+    Removing misc.o(i.NVIC_Init), (112 bytes).
+    Removing misc.o(i.NVIC_PriorityGroupConfig), (20 bytes).
     Removing misc.o(i.NVIC_SetVectorTable), (20 bytes).
     Removing misc.o(i.NVIC_SystemLPConfig), (32 bytes).
     Removing misc.o(i.SysTick_CLKSourceConfig), (40 bytes).
-    Removing stm32f10x_exti.o(i.EXTI_ClearFlag), (12 bytes).
-    Removing stm32f10x_exti.o(i.EXTI_DeInit), (36 bytes).
-    Removing stm32f10x_exti.o(i.EXTI_GenerateSWInterrupt), (16 bytes).
-    Removing stm32f10x_exti.o(i.EXTI_GetFlagStatus), (24 bytes).
-    Removing stm32f10x_exti.o(i.EXTI_StructInit), (16 bytes).
     Removing led.o(i.JLED_init), (288 bytes).
     Removing setsysclk.o(i.setSysClkHSI), (10 bytes).
 
-47 unused section(s) (total 2348 bytes) removed from the image.
+45 unused section(s) (total 2440 bytes) removed from the image.
 
 ==============================================================================
 
@@ -140,30 +147,39 @@ Image Symbol Table
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
+<<<<<<< HEAD
+=======
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+>>>>>>> parent of 0d1c42d (中断练习 写完了，但是中断进不去。)
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+<<<<<<< HEAD
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+=======
+>>>>>>> parent of 0d1c42d (中断练习 写完了，但是中断进不去。)
     ..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.c 0x00000000   Number         0  core_cm3.o ABSOLUTE
     ..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm\startup_stm32f10x_hd.s 0x00000000   Number         0  startup_stm32f10x_hd.o ABSOLUTE
-    ..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.c 0x00000000   Number         0  system_stm32f10x.o ABSOLUTE
+    ..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.c 0x00000000   Number         0  system_stm32f10x_1.o ABSOLUTE
     ..\Libraries\STM32F10x_StdPeriph_Driver\src\misc.c 0x00000000   Number         0  misc.o ABSOLUTE
-    ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c 0x00000000   Number         0  stm32f10x_exti.o ABSOLUTE
     ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c 0x00000000   Number         0  stm32f10x_gpio.o ABSOLUTE
     ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c 0x00000000   Number         0  stm32f10x_rcc.o ABSOLUTE
     ..\\Libraries\\CMSIS\\CM3\\CoreSupport\\core_cm3.c 0x00000000   Number         0  core_cm3.o ABSOLUTE
     ..\user\Button\Button.c                  0x00000000   Number         0  button.o ABSOLUTE
-    ..\user\EventInterrupt\exti.c            0x00000000   Number         0  exti.o ABSOLUTE
-    ..\user\IT\stm32f10x_it.c                0x00000000   Number         0  stm32f10x_it.o ABSOLUTE
+    ..\user\IT\stm32f10x_it.c                0x00000000   Number         0  stm32f10x_it_1.o ABSOLUTE
     ..\user\LED\LED.c                        0x00000000   Number         0  led.o ABSOLUTE
     ..\user\Public\setSysClk.c               0x00000000   Number         0  setsysclk.o ABSOLUTE
     ..\user\main.c                           0x00000000   Number         0  main.o ABSOLUTE
@@ -183,6 +199,7 @@ Image Symbol Table
     __lit__00000000                          0x08000140   Data           4  entry2.o(.ARM.Collect$$$$00002712)
     .text                                    0x08000144   Section       36  startup_stm32f10x_hd.o(.text)
     .text                                    0x08000168   Section       36  init.o(.text)
+<<<<<<< HEAD
     i.BusFault_Handler                       0x0800018c   Section        0  stm32f10x_it.o(i.BusFault_Handler)
     i.DebugMon_Handler                       0x08000190   Section        0  stm32f10x_it.o(i.DebugMon_Handler)
     i.EXTI4_IRQHandler                       0x08000194   Section        0  exti.o(i.EXTI4_IRQHandler)
@@ -230,6 +247,38 @@ Image Symbol Table
     i.__scatterload_zeroinit                 0x08000924   Section       14  handlers.o(i.__scatterload_zeroinit)
     i.main                                   0x08000932   Section        0  main.o(i.main)
     i.setSysClkHSE                           0x0800094e   Section        0  setsysclk.o(i.setSysClkHSE)
+=======
+    i.GPIO_Init                              0x0800018c   Section        0  stm32f10x_gpio.o(i.GPIO_Init)
+    i.GPIO_ReadInputDataBit                  0x080002a2   Section        0  stm32f10x_gpio.o(i.GPIO_ReadInputDataBit)
+    i.GPIO_ReadOutputDataBit                 0x080002b4   Section        0  stm32f10x_gpio.o(i.GPIO_ReadOutputDataBit)
+    i.GPIO_ResetBits                         0x080002c6   Section        0  stm32f10x_gpio.o(i.GPIO_ResetBits)
+    i.GPIO_WriteBit                          0x080002ca   Section        0  stm32f10x_gpio.o(i.GPIO_WriteBit)
+    i.IsKeyPressed                           0x080002d4   Section        0  button.o(i.IsKeyPressed)
+    i.KEY_init                               0x08000310   Section        0  button.o(i.KEY_init)
+    i.LED_init                               0x08000378   Section        0  led.o(i.LED_init)
+    i.RCC_APB2PeriphClockCmd                 0x080003d0   Section        0  stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd)
+    i.RCC_DeInit                             0x080003f0   Section        0  stm32f10x_rcc.o(i.RCC_DeInit)
+    i.RCC_GetFlagStatus                      0x0800043c   Section        0  stm32f10x_rcc.o(i.RCC_GetFlagStatus)
+    i.RCC_GetSYSCLKSource                    0x08000478   Section        0  stm32f10x_rcc.o(i.RCC_GetSYSCLKSource)
+    i.RCC_HCLKConfig                         0x08000488   Section        0  stm32f10x_rcc.o(i.RCC_HCLKConfig)
+    i.RCC_HSEConfig                          0x080004a0   Section        0  stm32f10x_rcc.o(i.RCC_HSEConfig)
+    i.RCC_PCLK1Config                        0x080004ec   Section        0  stm32f10x_rcc.o(i.RCC_PCLK1Config)
+    i.RCC_PCLK2Config                        0x08000504   Section        0  stm32f10x_rcc.o(i.RCC_PCLK2Config)
+    i.RCC_PLLCmd                             0x0800051c   Section        0  stm32f10x_rcc.o(i.RCC_PLLCmd)
+    i.RCC_PLLConfig                          0x08000528   Section        0  stm32f10x_rcc.o(i.RCC_PLLConfig)
+    i.RCC_SYSCLKConfig                       0x08000544   Section        0  stm32f10x_rcc.o(i.RCC_SYSCLKConfig)
+    i.RCC_WaitForHSEStartUp                  0x0800055c   Section        0  stm32f10x_rcc.o(i.RCC_WaitForHSEStartUp)
+    i.SetSysClock                            0x08000594   Section        0  system_stm32f10x_1.o(i.SetSysClock)
+    SetSysClock                              0x08000595   Thumb Code     8  system_stm32f10x_1.o(i.SetSysClock)
+    i.SetSysClockTo72                        0x0800059c   Section        0  system_stm32f10x_1.o(i.SetSysClockTo72)
+    SetSysClockTo72                          0x0800059d   Thumb Code   214  system_stm32f10x_1.o(i.SetSysClockTo72)
+    i.SystemInit                             0x0800067c   Section        0  system_stm32f10x_1.o(i.SystemInit)
+    i.__scatterload_copy                     0x080006dc   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x080006ea   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x080006ec   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.main                                   0x080006fc   Section        0  main.o(i.main)
+    i.setSysClkHSE                           0x0800078c   Section        0  setsysclk.o(i.setSysClkHSE)
+>>>>>>> parent of 0d1c42d (中断练习 写完了，但是中断进不去。)
     STACK                                    0x20000000   Section     1024  startup_stm32f10x_hd.o(STACK)
 
     Global Symbols
@@ -256,6 +305,15 @@ Image Symbol Table
     __rt_final_cpp                           0x08000141   Thumb Code     0  entry10a.o(.ARM.Collect$$$$0000000D)
     __rt_final_exit                          0x08000141   Thumb Code     0  entry11a.o(.ARM.Collect$$$$0000000F)
     Reset_Handler                            0x08000145   Thumb Code     8  startup_stm32f10x_hd.o(.text)
+    NMI_Handler                              0x0800014d   Thumb Code     2  startup_stm32f10x_hd.o(.text)
+    HardFault_Handler                        0x0800014f   Thumb Code     2  startup_stm32f10x_hd.o(.text)
+    MemManage_Handler                        0x08000151   Thumb Code     2  startup_stm32f10x_hd.o(.text)
+    BusFault_Handler                         0x08000153   Thumb Code     2  startup_stm32f10x_hd.o(.text)
+    UsageFault_Handler                       0x08000155   Thumb Code     2  startup_stm32f10x_hd.o(.text)
+    SVC_Handler                              0x08000157   Thumb Code     2  startup_stm32f10x_hd.o(.text)
+    DebugMon_Handler                         0x08000159   Thumb Code     2  startup_stm32f10x_hd.o(.text)
+    PendSV_Handler                           0x0800015b   Thumb Code     2  startup_stm32f10x_hd.o(.text)
+    SysTick_Handler                          0x0800015d   Thumb Code     2  startup_stm32f10x_hd.o(.text)
     ADC1_2_IRQHandler                        0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
     ADC3_IRQHandler                          0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
     CAN1_RX1_IRQHandler                      0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
@@ -317,6 +375,7 @@ Image Symbol Table
     WWDG_IRQHandler                          0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
     __scatterload                            0x08000169   Thumb Code    28  init.o(.text)
     __scatterload_rt2                        0x08000169   Thumb Code     0  init.o(.text)
+<<<<<<< HEAD
     BusFault_Handler                         0x0800018d   Thumb Code     4  stm32f10x_it.o(i.BusFault_Handler)
     DebugMon_Handler                         0x08000191   Thumb Code     2  stm32f10x_it.o(i.DebugMon_Handler)
     EXTI4_IRQHandler                         0x08000195   Thumb Code    56  exti.o(i.EXTI4_IRQHandler)
@@ -362,6 +421,36 @@ Image Symbol Table
     setSysClkHSE                             0x0800094f   Thumb Code    96  setsysclk.o(i.setSysClkHSE)
     Region$$Table$$Base                      0x080009b0   Number         0  anon$$obj.o(Region$$Table)
     Region$$Table$$Limit                     0x080009c0   Number         0  anon$$obj.o(Region$$Table)
+=======
+    GPIO_Init                                0x0800018d   Thumb Code   278  stm32f10x_gpio.o(i.GPIO_Init)
+    GPIO_ReadInputDataBit                    0x080002a3   Thumb Code    18  stm32f10x_gpio.o(i.GPIO_ReadInputDataBit)
+    GPIO_ReadOutputDataBit                   0x080002b5   Thumb Code    18  stm32f10x_gpio.o(i.GPIO_ReadOutputDataBit)
+    GPIO_ResetBits                           0x080002c7   Thumb Code     4  stm32f10x_gpio.o(i.GPIO_ResetBits)
+    GPIO_WriteBit                            0x080002cb   Thumb Code    10  stm32f10x_gpio.o(i.GPIO_WriteBit)
+    IsKeyPressed                             0x080002d5   Thumb Code    60  button.o(i.IsKeyPressed)
+    KEY_init                                 0x08000311   Thumb Code   100  button.o(i.KEY_init)
+    LED_init                                 0x08000379   Thumb Code    80  led.o(i.LED_init)
+    RCC_APB2PeriphClockCmd                   0x080003d1   Thumb Code    26  stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd)
+    RCC_DeInit                               0x080003f1   Thumb Code    64  stm32f10x_rcc.o(i.RCC_DeInit)
+    RCC_GetFlagStatus                        0x0800043d   Thumb Code    56  stm32f10x_rcc.o(i.RCC_GetFlagStatus)
+    RCC_GetSYSCLKSource                      0x08000479   Thumb Code    10  stm32f10x_rcc.o(i.RCC_GetSYSCLKSource)
+    RCC_HCLKConfig                           0x08000489   Thumb Code    18  stm32f10x_rcc.o(i.RCC_HCLKConfig)
+    RCC_HSEConfig                            0x080004a1   Thumb Code    70  stm32f10x_rcc.o(i.RCC_HSEConfig)
+    RCC_PCLK1Config                          0x080004ed   Thumb Code    18  stm32f10x_rcc.o(i.RCC_PCLK1Config)
+    RCC_PCLK2Config                          0x08000505   Thumb Code    20  stm32f10x_rcc.o(i.RCC_PCLK2Config)
+    RCC_PLLCmd                               0x0800051d   Thumb Code     6  stm32f10x_rcc.o(i.RCC_PLLCmd)
+    RCC_PLLConfig                            0x08000529   Thumb Code    24  stm32f10x_rcc.o(i.RCC_PLLConfig)
+    RCC_SYSCLKConfig                         0x08000545   Thumb Code    18  stm32f10x_rcc.o(i.RCC_SYSCLKConfig)
+    RCC_WaitForHSEStartUp                    0x0800055d   Thumb Code    56  stm32f10x_rcc.o(i.RCC_WaitForHSEStartUp)
+    SystemInit                               0x0800067d   Thumb Code    78  system_stm32f10x_1.o(i.SystemInit)
+    __scatterload_copy                       0x080006dd   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x080006eb   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x080006ed   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    main                                     0x080006fd   Thumb Code   134  main.o(i.main)
+    setSysClkHSE                             0x0800078d   Thumb Code    96  setsysclk.o(i.setSysClkHSE)
+    Region$$Table$$Base                      0x080007ec   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080007fc   Number         0  anon$$obj.o(Region$$Table)
+>>>>>>> parent of 0d1c42d (中断练习 写完了，但是中断进不去。)
     __initial_sp                             0x20000400   Data           0  startup_stm32f10x_hd.o(STACK)
 
 
@@ -372,6 +461,7 @@ Memory Map of the image
 
   Image Entry point : 0x08000131
 
+<<<<<<< HEAD
   Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000009c0, Max: 0x00080000, ABSOLUTE)
 
     Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000009c0, Max: 0x00080000, ABSOLUTE)
@@ -446,10 +536,63 @@ Memory Map of the image
 
 
     Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080009c0, Size: 0x00000400, Max: 0x00010000, ABSOLUTE)
+=======
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000007fc, Max: 0x00080000, ABSOLUTE)
+
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000007fc, Max: 0x00080000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000        -       0x00000400   Zero   RW          221    STACK               startup_stm32f10x_hd.o
+    0x08000000   0x08000000   0x00000130   Data   RO          157    RESET               startup_stm32f10x_hd.o
+    0x08000130   0x08000130   0x00000000   Code   RO          575  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x08000130   0x08000130   0x00000004   Code   RO          578    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x08000134   0x08000134   0x00000004   Code   RO          581    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x08000138   0x08000138   0x00000000   Code   RO          583    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x08000138   0x08000138   0x00000000   Code   RO          585    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x08000138   0x08000138   0x00000008   Code   RO          586    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x08000140   0x08000140   0x00000000   Code   RO          588    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x08000140   0x08000140   0x00000000   Code   RO          590    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x08000140   0x08000140   0x00000004   Code   RO          579    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x08000144   0x08000144   0x00000024   Code   RO          158    .text               startup_stm32f10x_hd.o
+    0x08000168   0x08000168   0x00000024   Code   RO          592    .text               mc_w.l(init.o)
+    0x0800018c   0x0800018c   0x00000116   Code   RO          168    i.GPIO_Init         stm32f10x_gpio.o
+    0x080002a2   0x080002a2   0x00000012   Code   RO          172    i.GPIO_ReadInputDataBit  stm32f10x_gpio.o
+    0x080002b4   0x080002b4   0x00000012   Code   RO          174    i.GPIO_ReadOutputDataBit  stm32f10x_gpio.o
+    0x080002c6   0x080002c6   0x00000004   Code   RO          175    i.GPIO_ResetBits    stm32f10x_gpio.o
+    0x080002ca   0x080002ca   0x0000000a   Code   RO          179    i.GPIO_WriteBit     stm32f10x_gpio.o
+    0x080002d4   0x080002d4   0x0000003c   Code   RO          530    i.IsKeyPressed      button.o
+    0x08000310   0x08000310   0x00000068   Code   RO          531    i.KEY_init          button.o
+    0x08000378   0x08000378   0x00000058   Code   RO          513    i.LED_init          led.o
+    0x080003d0   0x080003d0   0x00000020   Code   RO          280    i.RCC_APB2PeriphClockCmd  stm32f10x_rcc.o
+    0x080003f0   0x080003f0   0x0000004c   Code   RO          287    i.RCC_DeInit        stm32f10x_rcc.o
+    0x0800043c   0x0800043c   0x0000003c   Code   RO          289    i.RCC_GetFlagStatus  stm32f10x_rcc.o
+    0x08000478   0x08000478   0x00000010   Code   RO          291    i.RCC_GetSYSCLKSource  stm32f10x_rcc.o
+    0x08000488   0x08000488   0x00000018   Code   RO          292    i.RCC_HCLKConfig    stm32f10x_rcc.o
+    0x080004a0   0x080004a0   0x0000004c   Code   RO          293    i.RCC_HSEConfig     stm32f10x_rcc.o
+    0x080004ec   0x080004ec   0x00000018   Code   RO          299    i.RCC_PCLK1Config   stm32f10x_rcc.o
+    0x08000504   0x08000504   0x00000018   Code   RO          300    i.RCC_PCLK2Config   stm32f10x_rcc.o
+    0x0800051c   0x0800051c   0x0000000c   Code   RO          301    i.RCC_PLLCmd        stm32f10x_rcc.o
+    0x08000528   0x08000528   0x0000001c   Code   RO          302    i.RCC_PLLConfig     stm32f10x_rcc.o
+    0x08000544   0x08000544   0x00000018   Code   RO          305    i.RCC_SYSCLKConfig  stm32f10x_rcc.o
+    0x0800055c   0x0800055c   0x00000038   Code   RO          307    i.RCC_WaitForHSEStartUp  stm32f10x_rcc.o
+    0x08000594   0x08000594   0x00000008   Code   RO          121    i.SetSysClock       system_stm32f10x_1.o
+    0x0800059c   0x0800059c   0x000000e0   Code   RO          122    i.SetSysClockTo72   system_stm32f10x_1.o
+    0x0800067c   0x0800067c   0x00000060   Code   RO          124    i.SystemInit        system_stm32f10x_1.o
+    0x080006dc   0x080006dc   0x0000000e   Code   RO          596    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x080006ea   0x080006ea   0x00000002   Code   RO          597    i.__scatterload_null  mc_w.l(handlers.o)
+    0x080006ec   0x080006ec   0x0000000e   Code   RO          598    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x080006fa   0x080006fa   0x00000002   PAD
+    0x080006fc   0x080006fc   0x00000090   Code   RO            1    i.main              main.o
+    0x0800078c   0x0800078c   0x00000060   Code   RO          548    i.setSysClkHSE      setsysclk.o
+    0x080007ec   0x080007ec   0x00000010   Data   RO          594    Region$$Table       anon$$obj.o
+
+
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080007fc, Size: 0x00000400, Max: 0x00010000, ABSOLUTE)
+>>>>>>> parent of 0d1c42d (中断练习 写完了，但是中断进不去。)
+
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x20000000        -       0x00000400   Zero   RW          155    STACK               startup_stm32f10x_hd.o
 
 
 ==============================================================================
@@ -461,22 +604,31 @@ Image component sizes
 
        156          6          0          0          0       1462   button.o
          0          0          0          0          0         32   core_cm3.o
+<<<<<<< HEAD
        142          8          0          0          0       1041   exti.o
         88          8          0          0          0        507   led.o
         28          0          0          0          0     229431   main.o
        132         22          0          0          0       1655   misc.o
+=======
+        88          8          0          0          0        507   led.o
+       144         10          0          0          0     225435   main.o
+>>>>>>> parent of 0d1c42d (中断练习 写完了，但是中断进不去。)
         96          0          0          0          0        559   setsysclk.o
-        36          8        304          0       1024        892   startup_stm32f10x_hd.o
-       200         18          0          0          0       2268   stm32f10x_exti.o
-       392          4          0          0          0       5204   stm32f10x_gpio.o
-        26          0          0          0          0       3850   stm32f10x_it.o
+        36          8        304          0       1024        868   startup_stm32f10x_hd.o
+       328          0          0          0          0       4554   stm32f10x_gpio.o
        452         66          0          0          0       9449   stm32f10x_rcc.o
-       328         28          0          0          0       2217   system_stm32f10x.o
+       328         28          0          0          0       2217   system_stm32f10x_1.o
 
     ----------------------------------------------------------------------
+<<<<<<< HEAD
       2090        168        320          0       1024     258567   Object Totals
          0          0         16          0          0          0   (incl. Generated)
         14          0          0          0          0          0   (incl. Padding)
+=======
+      1636        124        320          0       1024     245091   Object Totals
+         0          0         16          0          0          0   (incl. Generated)
+         0          0          0          0          0          0   (incl. Padding)
+>>>>>>> parent of 0d1c42d (中断练习 写完了，但是中断进不去。)
 
     ----------------------------------------------------------------------
 
@@ -494,8 +646,8 @@ Image component sizes
         36          8          0          0          0         68   init.o
 
     ----------------------------------------------------------------------
-        86         16          0          0          0         68   Library Totals
-         0          0          0          0          0          0   (incl. Padding)
+        88         16          0          0          0         68   Library Totals
+         2          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -504,7 +656,7 @@ Image component sizes
         86         16          0          0          0         68   mc_w.l
 
     ----------------------------------------------------------------------
-        86         16          0          0          0         68   Library Totals
+        88         16          0          0          0         68   Library Totals
 
     ----------------------------------------------------------------------
 
@@ -513,6 +665,7 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
+<<<<<<< HEAD
       2176        184        320          0       1024     256863   Grand Totals
       2176        184        320          0       1024     256863   ELF Image Totals
       2176        184        320          0          0          0   ROM Totals
@@ -522,6 +675,17 @@ Image component sizes
     Total RO  Size (Code + RO Data)                 2496 (   2.44kB)
     Total RW  Size (RW Data + ZI Data)              1024 (   1.00kB)
     Total ROM Size (Code + RO Data + RW Data)       2496 (   2.44kB)
+=======
+      1724        140        320          0       1024     244219   Grand Totals
+      1724        140        320          0       1024     244219   ELF Image Totals
+      1724        140        320          0          0          0   ROM Totals
+
+==============================================================================
+
+    Total RO  Size (Code + RO Data)                 2044 (   2.00kB)
+    Total RW  Size (RW Data + ZI Data)              1024 (   1.00kB)
+    Total ROM Size (Code + RO Data + RW Data)       2044 (   2.00kB)
+>>>>>>> parent of 0d1c42d (中断练习 写完了，但是中断进不去。)
 
 ==============================================================================
 

@@ -324,7 +324,7 @@
             <wLevel>1</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_HD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries;..\user;..\obj;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup;..\user\LED;..\user\Public;..\user\Button;..\user\IT;..\user\EventInterrupt</IncludePath>
+              <IncludePath>..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries;..\user;..\obj;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup;..\user\LED;..\user\Public;..\user\Button;..\user\IT</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -387,11 +387,6 @@
               <FileType>1</FileType>
               <FilePath>..\user\main.c</FilePath>
             </File>
-            <File>
-              <FileName>stm32f10x_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user\IT\stm32f10x_it.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -403,14 +398,14 @@
               <FilePath>..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.c</FilePath>
             </File>
             <File>
-              <FileName>core_cm3.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h</FilePath>
-            </File>
-            <File>
               <FileName>system_stm32f10x.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.c</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -441,11 +436,6 @@
               <FileName>misc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\misc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -483,9 +473,14 @@
           <GroupName>InterputEvent</GroupName>
           <Files>
             <File>
-              <FileName>exti.c</FileName>
+              <FileName>stm32f10x_it.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\user\EventInterrupt\exti.c</FilePath>
+              <FilePath>..\user\IT\stm32f10x_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_it.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\IT\stm32f10x_it.h</FilePath>
             </File>
           </Files>
         </Group>
