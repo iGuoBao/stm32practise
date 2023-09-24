@@ -1,7 +1,7 @@
 #include "setSysClk.h"
 
 // 时钟源设置为 默认外部高速振荡器
-_Bool setSysClkHSE()
+int setSysClkHSE()
 {
 	RCC_DeInit();								// 将外设 RCC 寄存器重设为缺省值
 	RCC_HSEConfig(RCC_HSE_ON); 	// HSE晶振 启动
@@ -23,7 +23,7 @@ _Bool setSysClkHSE()
 	
 	return 1;
 }
-_Bool setSysClkHSI()
+int setSysClkHSI()
 {
 	RCC_DeInit();
 	// 设置内部高速

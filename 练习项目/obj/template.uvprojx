@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_HD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries;..\user;..\obj;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup;..\user\LED;..\user\Public;..\user\Button</IncludePath>
+              <IncludePath>..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries;..\user;..\obj;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup;..\user\LED;..\user\Public;..\user\Button;..\user\IT</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -386,11 +386,6 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\main.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user\IT\stm32f10x_it.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -471,6 +466,21 @@
               <FileName>setSysClk.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\Public\setSysClk.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>InterputEvent</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32f10x_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\IT\stm32f10x_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_it.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\IT\stm32f10x_it.h</FilePath>
             </File>
           </Files>
         </Group>

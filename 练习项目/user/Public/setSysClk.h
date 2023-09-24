@@ -5,7 +5,7 @@
 
 
 
-_Bool setSysClkHSE();
-_Bool setSysClkHSI();
+int setSysClkHSE();
+int setSysClkHSI();
 
 #endif
