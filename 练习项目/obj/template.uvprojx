@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_HD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries;..\user;..\obj;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup;..\user\LED;..\user\Public;..\user\Button;..\user\IT</IncludePath>
+              <IncludePath>..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries;..\user;..\obj;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup;..\user\Button;..\user\EventInterrupt;..\user\IT;..\user\LED;..\user\Public</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -381,11 +381,120 @@
       <Groups>
         <Group>
           <GroupName>User</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>2</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath>..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries\CMSIS\CM3\CoreSupport;..\user\Button;..\user\EventInterrupt;..\user\IT;..\user\LED;..\user\Public</IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <uClangAs>2</uClangAs>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
           <Files>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\stm32f10x_it.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EXTI</GroupName>
+          <Files>
+            <File>
+              <FileName>exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\EventInterrupt\exti.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>BSD</GroupName>
+          <Files>
+            <File>
+              <FileName>Button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\Button\Button.c</FilePath>
+            </File>
+            <File>
+              <FileName>LED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\LED\LED.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Public</GroupName>
+          <Files>
+            <File>
+              <FileName>setSysClk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\Public\setSysClk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -423,9 +532,84 @@
           <GroupName>Driver</GroupName>
           <Files>
             <File>
+              <FileName>misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\misc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_bkp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_can.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_cec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_dac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_dbgmcu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_fsmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f10x_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.c</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_rcc.c</FileName>
@@ -433,54 +617,34 @@
               <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c</FilePath>
             </File>
             <File>
-              <FileName>misc.c</FileName>
+              <FileName>stm32f10x_rtc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\misc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>BsdLED</GroupName>
-          <Files>
-            <File>
-              <FileName>LED.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user\LED\LED.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>BsdButton</GroupName>
-          <Files>
-            <File>
-              <FileName>Button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user\Button\Button.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Public</GroupName>
-          <Files>
-            <File>
-              <FileName>setSysClk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user\Public\setSysClk.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>InterputEvent</GroupName>
-          <Files>
-            <File>
-              <FileName>stm32f10x_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user\IT\stm32f10x_it.c</FilePath>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f10x_it.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\user\IT\stm32f10x_it.h</FilePath>
+              <FileName>stm32f10x_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_wwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.c</FilePath>
             </File>
           </Files>
         </Group>
