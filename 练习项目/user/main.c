@@ -12,6 +12,7 @@
 
 int main(void)
 {	
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);							// 配置组别
 	setSysClkHSE();				// 设置HSE 为时钟源
 	LED_init();						// LED0 1 初始化 默认亮
 	// JLED_init();				// JLED1-8 初始化 默认亮
