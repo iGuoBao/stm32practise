@@ -5,12 +5,17 @@
 #include "Button.h"
 
 // 公共
-#include "setSysClk.h"
+#include "SysTick.h"		// 滴答 以后不会使用这种
+#include "setSysClk.h"	// 72M
+
+// 中断
 #include "exti.h"
+
 
 int main(void)
 {	
 	setSysClkHSE();				// 设置HSE 为时钟源
+	delay_init();
 	LED_init();						// LED0 1 初始化 默认亮
 	// JLED_init();				// JLED1-8 初始化 默认亮
 	KEY_init();

@@ -31,3 +31,4 @@
 .\objects\exti.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 .\objects\exti.o: ..\user\Button\Button.h
 .\objects\exti.o: ..\user\LED\LED.h
+.\objects\exti.o: ..\user\Public\SysTick.h

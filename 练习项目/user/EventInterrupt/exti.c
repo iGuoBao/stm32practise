@@ -39,6 +39,8 @@ void KEY0_IRQHandler(void)	// 中断
 		if(IsKeyPressed(KEY0_PORT,KEY0_PIN))
 		{
 			GPIO_WriteBit(LED0_PORT, LED0_PIN, !GPIO_ReadOutputDataBit(LED0_PORT, LED0_PIN));		// 取反
+			delay_ms(1000);
+			GPIO_WriteBit(LED0_PORT, LED0_PIN, !GPIO_ReadOutputDataBit(LED0_PORT, LED0_PIN));		// 取反
 		}
 		
 		//清除中断标志位
