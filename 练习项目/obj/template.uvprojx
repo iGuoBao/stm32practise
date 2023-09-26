@@ -496,6 +496,11 @@
               <FileType>1</FileType>
               <FilePath>..\user\Public\setSysClk.c</FilePath>
             </File>
+            <File>
+              <FileName>SysTick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\Public\SysTick.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

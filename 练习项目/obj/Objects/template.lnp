@@ -5,6 +5,7 @@
 ".\objects\button.o"
 ".\objects\led.o"
 ".\objects\setsysclk.o"
+".\objects\systick.o"
 ".\objects\core_cm3.o"
 ".\objects\system_stm32f10x.o"
 ".\objects\startup_stm32f10x_hd.o"
