@@ -1,0 +1,41 @@
+# 编写gitignore  忽略keil5IDE下的无用文件提交
+
+# 忽略所有生成的文件
+*.o
+*.d
+*.crf
+*.htm
+*.dep
+*.map
+*.bak
+*.lnp
+*.lst
+*.ini
+*.iex
+*.sct
+*.scvd
+*.uvguix
+*.dbg
+
+# 忽略所有.uvguix.*文件
+**.uvguix.*
+
+# 忽略所有.rar文件
+*.rar
+
+# 忽略所有.mxproject文件
+.mxproject
+
+# 忽略RTE、Templates和Examples文件夹
+RTE/
+Templates/
+Examples/
+
+# 不忽略以下类型的文件
+!*.uvprojx
+!*.h
+!*.c
+!*.ioc
+!*.axf
+!*.bin
+!*.hex

@@ -21,7 +21,7 @@
 #define KEY0_IRQHandler 				EXTI4_IRQHandler	// 中断函数名
 // #endif	/* __BUTTON_H__ */
 
-
+static void  NVCI_Config();
 void EXTI_Key_Config(void);
 
 void KEY0_IRQHandler(void);						// KEY0 中断函数
