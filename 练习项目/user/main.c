@@ -3,6 +3,7 @@
 // 用户外设
 #include "LED.h"
 #include "Button.h"
+#include "beep.h"
 
 // 公共
 #include "SysTick.h"		// 滴答 以后不会使用这种

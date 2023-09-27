@@ -4,6 +4,7 @@
 ".\objects\exti.o"
 ".\objects\button.o"
 ".\objects\led.o"
+".\objects\beep.o"
 ".\objects\setsysclk.o"
 ".\objects\systick.o"
 ".\objects\core_cm3.o"
