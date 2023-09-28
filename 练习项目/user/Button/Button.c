@@ -31,6 +31,8 @@ void KEY_init(void)
 }
 
 
+
+
 int IsKeyPressed(GPIO_TypeDef * KEY_PORT,uint16_t KEY_PIN)
 {
 	// 通过判断输出模式 区分不同按钮设计从而正确判断是否按下。

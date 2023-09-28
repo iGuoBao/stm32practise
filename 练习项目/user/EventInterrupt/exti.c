@@ -6,13 +6,20 @@ static void NVCI_Config()
 	
 	// 结构体使用
 	NVIC_InitTypeDef NVIC_InitStructure;
-	// EXTI0--KEY0  中断配置
+	// EXTI0--KEY0  NVIC配置
 	NVIC_InitStructure.NVIC_IRQChannel = KEY0_EXTI_IRQ;					// 配置中断源 EXTI4通道  KEY0_EXTI_IRQ----EXTI0
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		// 抢占优先级1  pree
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					// 子优先级1		sub
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							// 使能
 	NVIC_Init(&NVIC_InitStructure);															// 包装完毕
+	// USART0 NVIC配置
+	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;						//	串口1中断通道
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3;			//	抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority =3;						//	子优先级3
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							//	IRQ通道使能
+	NVIC_Init(&NVIC_InitStructure);															//	包装完毕		
 }
+
 
 void EXTI_Key_Config(void)
 {
@@ -30,8 +37,6 @@ void EXTI_Key_Config(void)
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;												// 使能
 	EXTI_Init(&EXTI_InitStructure);																	// 包装完毕
 }	
-	
-
 
 void KEY0_IRQHandler(void)	// 中断
 {
