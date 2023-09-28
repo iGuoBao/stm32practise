@@ -29,8 +29,6 @@ void USART1_Init(u32 bound)
 	USART_Init(USART1, &USART_InitStructure);		// 包装完毕
 	USART_Cmd(USART1, ENABLE);  //使能串口1 
 	USART_ClearFlag(USART1, USART_FLAG_TC);				// 清除 USARTx 的待处理标志位
-	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);// 猜测：接受完后中断
-	
-	
+
 	
 }

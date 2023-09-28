@@ -1,5 +1,10 @@
 #include "exti.h"
 
+
+u16 USART1_RX_STA=0;       //接收状态标记
+u8 USART1_RX_BUF[USART1_REC_LEN];     //接收缓冲,最大USART_REC_LEN个字节.
+
+
 static void NVCI_Config()
 {
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);							// 配置组别 2
@@ -23,7 +28,7 @@ static void NVCI_Config()
 
 void EXTI_Key_Config(void)
 {
-	RCC_APB2PeriphClockCmd(KEY0_EXTI_RCC,ENABLE);	// 复用时钟开启
+	
 	GPIO_EXTILineConfig(KEY0_EXTI_PORTSOURCE, KEY0_EXTI_PINSOURCE); //选择作为外部中断线路  EXTI0 与引脚映射
 	NVCI_Config();		// NVCI配置
 	
@@ -37,6 +42,16 @@ void EXTI_Key_Config(void)
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;												// 使能
 	EXTI_Init(&EXTI_InitStructure);																	// 包装完毕
 }	
+
+void EXTI_USART1_Config(void)
+{
+	NVCI_Config();		// NVCI配置
+	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);// 猜测： 开启中断 接受完后中断
+}
+
+
+
+
 
 void KEY0_IRQHandler(void)	// 中断
 {
@@ -52,3 +67,20 @@ void KEY0_IRQHandler(void)	// 中断
 		EXTI_ClearITPendingBit(KEY0_EXTI_LINE);
 	}
 }
+
+
+void USART1_IRQHandler(void)                	//串口1中断服务程序
+{
+	u8 r;
+	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  //接收中断
+	{
+		if (USART_ReceiveData(USART1) == 1)
+		{
+			GPIO_WriteBit(LED0_PORT, LED0_PIN, !GPIO_ReadOutputDataBit(LED0_PORT, LED0_PIN));		// 取反
+		}
+	} 
+} 	
+
+ 
+
+

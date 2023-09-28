@@ -12,10 +12,12 @@
 static void  NVCI_Config();
 
 void EXTI_Key_Config(void);
+void EXTI_USART1_Config(void);
+
 
 // KEY0 ÖÐ¶Ïº¯Êý
 void KEY0_IRQHandler(void);						
-
+void USART1_IRQHandler(void);
 
 
 #endif
