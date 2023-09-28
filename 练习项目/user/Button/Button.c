@@ -15,7 +15,7 @@ void KEY_init(void)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 			  // 设置为上拉输入模式
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 	  // 设置速度为50MHz
   GPIO_Init(KEY0_PORT, &GPIO_InitStructure); 					  // 初始化GPIOA
-	GPIO_WriteBit(KEY0_PORT, KEY0_PIN,1);									  // 上拉 则需要输出高电平
+	GPIO_WriteBit(KEY0_PORT, KEY0_PIN,1);									// 上拉 则需要输出高电平
   
   // 配置KEY1的GPIO参数，与KEY0类似
   GPIO_InitStructure.GPIO_Pin = KEY1_PIN;
@@ -38,6 +38,8 @@ void KEY_init(void)
   GPIO_Init(WKUP_PORT, &GPIO_InitStructure);
 	//GPIO_WriteBit(WKUP_PORT, WKUP_PIN,0);									  // 下拉 则需要输出低电平
 }
+
+
 
 
 int IsKeyPressed(GPIO_TypeDef * KEY_PORT,uint16_t KEY_PIN)

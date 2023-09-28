@@ -12,6 +12,7 @@
 // 中断
 #include "exti.h"
 
+#include "USART.h"
 
 int main(void)
 {	
@@ -20,6 +21,9 @@ int main(void)
 	LED_init();						// LED0 1 初始化 默认亮
 	// JLED_init();				// JLED1-8 初始化 默认亮
 	KEY_init();
+	USART1_Init(19200);
+	EXTI_Key_Config();
+	EXTI_USART1_Config();
 	Beep_Init();
 	
 	EXTI_Key_Config();		// 中断设置
@@ -30,6 +34,7 @@ int main(void)
 	
 	while(1)
 	{
-		
+		USART_SendData(USART1,0x22);
+		delay_ms(500);
 	}
 }
