@@ -14,12 +14,32 @@
 
 // KEY1  PE3
 #define KEY1_PORT 						GPIOE 						
-#define KEY1_PIN  						GPIO_Pin_3 				
+#define KEY1_PORTSOURCE  			GPIO_PortSourceGPIOE		
+#define KEY1_PIN  						GPIO_Pin_3 		
+#define KEY1_PINSOURCE   			GPIO_PinSource3
 #define KEY1_PORT_RCC					RCC_APB2Periph_GPIOE
+#define KEY1_EXTI_RCC					(KEY1_PORT_RCC\
+															|RCC_APB2Periph_AFIO)
+
 // KEY2  PE2
-#define KEY2_PORT 						GPIOE							
-#define KEY2_PIN  						GPIO_Pin_2 				
+#define KEY2_PORT 						GPIOE						
+#define KEY2_PORTSOURCE  			GPIO_PortSourceGPIOE	
+#define KEY2_PIN  						GPIO_Pin_2 	
+#define KEY2_PINSOURCE   			GPIO_PinSource2
 #define KEY2_PORT_RCC					RCC_APB2Periph_GPIOE
+#define KEY2_EXTI_RCC					(KEY2_PORT_RCC\
+															|RCC_APB2Periph_AFIO)
+															
+															
+															
+// WKUP  PA0
+#define WKUP_PORT 						GPIOA					
+#define WKUP_PORTSOURCE  			GPIO_PortSourceGPIOA	
+#define WKUP_PIN  						GPIO_Pin_0 				
+#define WKUP_PINSOURCE   			GPIO_PinSource0
+#define WKUP_PORT_RCC					RCC_APB2Periph_GPIOA
+#define WKUP_EXTI_RCC					(WKUP_PORT_RCC\
+															|RCC_APB2Periph_AFIO)
 
 void KEY_init(void);
 int IsKeyPressed(GPIO_TypeDef * KEY_PORT,uint16_t KEY_PIN);		//判断是否按下 按下返回1，没按下返回0 
