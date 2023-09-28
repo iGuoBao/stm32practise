@@ -4,31 +4,31 @@ void USART1_Init(u32 bound)
 {
 	RCC_APB2PeriphClockCmd(USART_TX_CLK,ENABLE);
 	
-	// GPIO½á¹¹Ìå
+	// GPIOç»“æ„ä½“
 	GPIO_InitTypeDef GPIO_InitStructure;
-	// ´®¿ÚÊä³ö
+	// ä¸²å£è¾“å‡º
 	GPIO_InitStructure.GPIO_Pin = USART_TX_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;	    			// ¸´ÓÃÍÆÍìÊä³ö
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;	    			// å¤ç”¨æ¨æŒ½è¾“å‡º
 	GPIO_Init(USART_TX_Port,&GPIO_InitStructure);  			
-	// ´®¿ÚÊäÈë
+	// ä¸²å£è¾“å…¥
 	GPIO_InitStructure.GPIO_Pin = USART_RX_PIN;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;		  // Ä£ÄâÊäÈë
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;		  // æ¨¡æ‹Ÿè¾“å…¥
 	GPIO_Init(USART_RX_Port,&GPIO_InitStructure); 
 	
 	
-	// USART½á¹¹Ìå
+	// USARTç»“æ„ä½“
 	USART_InitTypeDef USART_InitStructure;
-	// ´®¿Ú1
-	USART_InitStructure.USART_BaudRate = bound;								 	//²¨ÌØÂÊÉèÖÃ
-	USART_InitStructure.USART_WordLength = USART_WordLength_8b;	//×Ö³¤Îª8Î»Êı¾İ¸ñÊ½
-	USART_InitStructure.USART_StopBits = USART_StopBits_1;			//Ò»¸öÍ£Ö¹Î»
-	USART_InitStructure.USART_Parity = USART_Parity_No;					//ÎŞÆæÅ¼Ğ£ÑéÎ»
-	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;		//ÎŞÓ²¼şÊı¾İÁ÷¿ØÖÆ
-	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;										//ÊÕ·¢Ä£Ê½
-	USART_Init(USART1, &USART_InitStructure);		// °ü×°Íê±Ï
-	USART_Cmd(USART1, ENABLE);  //Ê¹ÄÜ´®¿Ú1 
-	USART_ClearFlag(USART1, USART_FLAG_TC);				// Çå³ı USARTx µÄ´ı´¦Àí±êÖ¾Î»
+	// ä¸²å£1
+	USART_InitStructure.USART_BaudRate = bound;								 	//æ³¢ç‰¹ç‡è®¾ç½®
+	USART_InitStructure.USART_WordLength = USART_WordLength_8b;	//å­—é•¿ä¸º8ä½æ•°æ®æ ¼å¼
+	USART_InitStructure.USART_StopBits = USART_StopBits_1;			//ä¸€ä¸ªåœæ­¢ä½
+	USART_InitStructure.USART_Parity = USART_Parity_No;					//æ— å¥‡å¶æ ¡éªŒä½
+	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;		//æ— ç¡¬ä»¶æ•°æ®æµæ§åˆ¶
+	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;										//æ”¶å‘æ¨¡å¼
+	USART_Init(USART1, &USART_InitStructure);		// åŒ…è£…å®Œæ¯•
+	USART_Cmd(USART1, ENABLE);  //ä½¿èƒ½ä¸²å£1 
+	USART_ClearFlag(USART1, USART_FLAG_TC);				// æ¸…é™¤ USARTx çš„å¾…å¤„ç†æ ‡å¿—ä½
 
 	
 }
