@@ -3,6 +3,7 @@
 // 用户外设
 #include "LED.h"
 #include "Button.h"
+#include "beep.h"
 
 // 公共
 #include "SysTick.h"		// 滴答 以后不会使用这种
@@ -19,7 +20,14 @@ int main(void)
 	LED_init();						// LED0 1 初始化 默认亮
 	// JLED_init();				// JLED1-8 初始化 默认亮
 	KEY_init();
-	EXTI_Key_Config();
+	Beep_Init();
+	
+	EXTI_Key_Config();		// 中断设置
+	
+	Beep_On();
+	delay_ms(200);
+	Beep_Off();
+	
 	while(1)
 	{
 		
