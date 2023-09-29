@@ -16,12 +16,12 @@ extern u16 USART1_RX_STA;
 
 #define USART_RX_CLK  					( RCC_APB2Periph_GPIOA | RCC_APB2Periph_USART1 )
 #define USART_RX_Port  					GPIOA
-#define USART_RX_PIN 						GPIO_Pin_3
+#define USART_RX_PIN 						GPIO_Pin_3	
 
 
 void USART1_Init(u32 bound);
 
-
+void sendString(char* str);
 
 
 #endif

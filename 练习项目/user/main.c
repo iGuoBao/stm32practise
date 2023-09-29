@@ -19,16 +19,13 @@ int main(void)
 	setSysClkHSE();				// 设置HSE 为时钟源
 	delay_init();
 	LED_init();						// LED0 1 初始化 默认亮
+	JLED_init();
 	KEY_init();
 	USART1_Init(19200);
 	Beep_Init();
 
-	EXTI_USART1_Config();
 	EXTI_Key_Config();		// 中断设置
-	
-	Beep_On();
-	delay_ms(200);
-	Beep_Off();
+	EXTI_USART1_Config();
 	
 	while(1)
 	{

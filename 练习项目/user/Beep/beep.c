@@ -20,3 +20,9 @@ void Beep_Off(void)
     GPIO_ResetBits(GPIOB,GPIO_Pin_8);
 }
 
+void Beep_Test(void)
+{
+	Beep_On();
+	delay_ms(200);
+	Beep_Off();
+}

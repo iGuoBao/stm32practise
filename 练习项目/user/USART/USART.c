@@ -1,5 +1,9 @@
 #include "USART.h"
 
+u16 USART1_RX_STA = 0;       
+u8 USART1_RX_BUF[USART1_REC_LEN];    
+
+
 void USART1_Init(u32 bound)
 {
 	RCC_APB2PeriphClockCmd(USART_TX_CLK,ENABLE);
@@ -26,9 +30,24 @@ void USART1_Init(u32 bound)
 	USART_InitStructure.USART_Parity = USART_Parity_No;					//无奇偶校验位
 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;		//无硬件数据流控制
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;										//收发模式
-	USART_Init(USART1, &USART_InitStructure);		// 包装完毕
-	USART_Cmd(USART1, ENABLE);  //使能串口1 
+	USART_Init(USART1, &USART_InitStructure);			// 包装完毕
+	USART_Cmd(USART1, ENABLE); 									  //使能串口1 
 	USART_ClearFlag(USART1, USART_FLAG_TC);				// 清除 USARTx 的待处理标志位
 
 	
+}
+
+void sendString(char* str)
+{
+    while(*str)
+    {
+        // 等待发送数据寄存器为空
+        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+
+        // 发送一个字符
+        USART_SendData(USART1, *str);
+
+        // 移动到下一个字符
+        str++;
+    }
 }

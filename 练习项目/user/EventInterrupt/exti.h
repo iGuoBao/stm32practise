@@ -22,6 +22,6 @@ void KEY0_IRQHandler(void);
 void KEY1_IRQHandler(void);	
 void KEY2_IRQHandler(void);	
 void WKUP_IRQHandler(void);	
-
+void USART1_IRQHandler(void);
 
 #endif
