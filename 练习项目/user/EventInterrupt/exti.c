@@ -1,8 +1,7 @@
 #include "exti.h"
 
-
- 
-
+int numTIM6 = 0;  // 计数变量
+int Reques_Ms;
 
 static void NVCI_Config()
 {
@@ -33,11 +32,17 @@ static void NVCI_Config()
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);		
-	//USART
+	// USART
 	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			
+	NVIC_Init(&NVIC_InitStructure);	
+	// TIM6
+	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;					//定时器中断通道
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				//子优先级
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;					//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
 }
 
@@ -134,4 +139,22 @@ void WKUP_IRQHandler(void)
 		EXTI_ClearITPendingBit(WKUP_EXTI_LINE);
 	}
 }
+
+void TIM6_IRQHandler(void)
+{
+	if(TIM_GetITStatus(TIM6,TIM_IT_Update))			// 溢出
+	{
+		numTIM6++;
+		if(numTIM6 >= Reques_Ms)
+		{
+			// Beep_Test();
+			numTIM6 = 0 ;
+			ToggleLED(1);
+			// TIM_Cmd(BASIC_TIM6, DISABLE);										// 定时器关闭
+		}
+	}
+	TIM_ClearFlag(BASIC_TIM6, TIM_FLAG_Update);	// 清除标志位
+}
+
+
 

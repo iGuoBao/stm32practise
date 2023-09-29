@@ -8,6 +8,7 @@
 #include "beep.h"
 #include "USART.h"
 #include "SysTick.h"
+#include "TIM.h"
 
 
 
@@ -23,5 +24,6 @@ void KEY1_IRQHandler(void);
 void KEY2_IRQHandler(void);	
 void WKUP_IRQHandler(void);	
 void USART1_IRQHandler(void);
-
+void TIM6_IRQHandler(void);
+	
 #endif
