@@ -56,6 +56,9 @@
 int LED_init();
 int JLED_init();
 
-
+void SetLED(int number,int station);
+void ToggleLED(int number);
+void SetJLED(int number,int station);
+void ToggleJLED(int number);
 
 #endif

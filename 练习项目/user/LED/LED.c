@@ -89,4 +89,154 @@ int JLED_init()
 }
 
 
+void SetLED(int number,int station)
+{
+	GPIO_TypeDef* port;
+    uint16_t pin;
+
+    switch(number)
+    {
+			case 0:
+				port = LED0_PORT;
+				pin = LED0_PIN;
+				break;
+			case 1:
+				port = LED1_PORT;
+				pin = LED1_PIN;
+				break;
+
+       default:
+				return;  // 如果没有匹配的LED编号，直接返回
+    }
+
+    if(station)
+    {
+        GPIO_SetBits(port, pin);  // 打开LED
+    }
+    else
+    {
+        GPIO_ResetBits(port, pin);  // 关闭LED
+    }
+}
+void ToggleLED(int number)
+{
+	GPIO_TypeDef* port;
+    uint16_t pin;
+
+    switch(number)
+    {
+			case 0:
+				port = LED0_PORT;
+				pin = LED0_PIN;
+				break;
+			case 1:
+				port = LED1_PORT;
+				pin = LED1_PIN;
+				break;
+
+       default:
+				return;  // 如果没有匹配的LED编号，直接返回
+    }
+	GPIO_WriteBit(port, pin, !GPIO_ReadOutputDataBit(port, pin));
+}
+
+void SetJLED(int number,int station)
+{
+    GPIO_TypeDef* port;
+    uint16_t pin;
+
+    switch(number)
+    {
+			case 1:
+				port = JLED1_PORT;
+				pin = JLED1_PIN;
+				break;
+			case 2:
+				port = JLED2_PORT;
+				pin = JLED2_PIN;
+				break;
+			case 3:
+				port = JLED3_PORT;
+				pin = JLED3_PIN;
+				break;
+			case 4:
+				port = JLED4_PORT;
+				pin = JLED4_PIN;
+				break;
+			case 5:
+				port = JLED5_PORT;
+				pin = JLED5_PIN;
+				break;
+			case 6:
+				port = JLED6_PORT;
+				pin = JLED6_PIN;
+				break;
+			case 7:
+				port = JLED7_PORT;
+				pin = JLED7_PIN;
+				break;
+			case 8:
+				port = JLED8_PORT;
+				pin = JLED8_PIN;
+				break;
+
+       default:
+				return;  // 如果没有匹配的LED编号，直接返回
+    }
+
+    if(station)
+    {
+        GPIO_SetBits(port, pin);  // 打开LED
+    }
+    else
+    {
+        GPIO_ResetBits(port, pin);  // 关闭LED
+    }
+}
+
+void ToggleJLED(int number)
+{
+	 GPIO_TypeDef* port;
+    uint16_t pin;
+
+    switch(number)
+    {
+			case 1:
+				port = JLED1_PORT;
+				pin = JLED1_PIN;
+				break;
+			case 2:
+				port = JLED2_PORT;
+				pin = JLED2_PIN;
+				break;
+			case 3:
+				port = JLED3_PORT;
+				pin = JLED3_PIN;
+				break;
+			case 4:
+				port = JLED4_PORT;
+				pin = JLED4_PIN;
+				break;
+			case 5:
+				port = JLED5_PORT;
+				pin = JLED5_PIN;
+				break;
+			case 6:
+				port = JLED6_PORT;
+				pin = JLED6_PIN;
+				break;
+			case 7:
+				port = JLED7_PORT;
+				pin = JLED7_PIN;
+				break;
+			case 8:
+				port = JLED8_PORT;
+				pin = JLED8_PIN;
+				break;
+
+       default:
+				return;  // 如果没有匹配的LED编号，直接返回
+    }
+		GPIO_WriteBit(port, pin, !GPIO_ReadOutputDataBit(port, pin));
+}
 

@@ -1,14 +1,12 @@
 #include "exti.h"
 
 
-u16 USART1_RX_STA=0;       
-u8 USART1_RX_BUF[USART1_REC_LEN];     
+ 
 
 
 static void NVCI_Config()
 {
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);							
-	
 
 	NVIC_InitTypeDef NVIC_InitStructure;
 	// EXTI4--KEY0 
@@ -34,7 +32,13 @@ static void NVCI_Config()
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
-	NVIC_Init(&NVIC_InitStructure);															
+	NVIC_Init(&NVIC_InitStructure);		
+	//USART
+	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			
+	NVIC_Init(&NVIC_InitStructure);	
 }
 
 
@@ -43,8 +47,7 @@ void EXTI_Key_Config(void)
 {
 	RCC_APB2PeriphClockCmd(KEY0_EXTI_RCC,ENABLE);										
 	GPIO_EXTILineConfig(KEY0_EXTI_PORTSOURCE, KEY0_EXTI_PINSOURCE); 
-	NVCI_Config();		
-																
+	NVCI_Config();																
 }	
 
 void EXTI_USART1_Config(void)
@@ -58,15 +61,18 @@ void EXTI_USART1_Config(void)
 
 void USART1_IRQHandler(void)                
 {
-	u8 r;
-	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET) 
+	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)		// 接收中断
 	{
-		if (USART_ReceiveData(USART1) == 1)
-		{
-			GPIO_WriteBit(LED0_PORT, LED0_PIN, !GPIO_ReadOutputDataBit(LED0_PORT, LED0_PIN));	
-		}
-	} 
+			uint8_t data = USART_ReceiveData(USART1);
+			if (data >= 0 && data <= 8)
+			{
+				int JLEDNumber = data;
+				ToggleJLED(JLEDNumber);
+			}
+			USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+	}
 } 	
+
 
 
 void KEY0_IRQHandler(void)	
@@ -75,7 +81,7 @@ void KEY0_IRQHandler(void)
 	{
 		if(IsKeyPressed(KEY0_PORT,KEY0_PIN))
 		{
-			GPIO_WriteBit(LED1_PORT, LED1_PIN, !GPIO_ReadOutputDataBit(LED1_PORT, LED1_PIN));
+			ToggleLED(1);
 		}
 
 		EXTI_ClearITPendingBit(KEY0_EXTI_LINE);
@@ -91,8 +97,8 @@ void KEY1_IRQHandler(void)
 			Beep_On();
 			delay_ms(200);
 			Beep_Off();
-			GPIO_SetBits(LED0_PORT, LED0_PIN);
-			GPIO_SetBits(LED1_PORT, LED1_PIN);
+			SetLED(0,SET);
+			SetLED(1,SET);
 		}
 		
 			EXTI_ClearITPendingBit(KEY1_EXTI_LINE);
@@ -105,7 +111,7 @@ void KEY2_IRQHandler(void)
 	{
 		if(IsKeyPressed(KEY2_PORT,KEY2_PIN))
 		{
-			GPIO_WriteBit(LED0_PORT, LED0_PIN, !GPIO_ReadOutputDataBit(LED0_PORT, LED0_PIN));		
+			ToggleLED(0);
 		}
 	
 		EXTI_ClearITPendingBit(KEY2_EXTI_LINE);
