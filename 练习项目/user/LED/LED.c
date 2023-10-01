@@ -240,3 +240,12 @@ void ToggleJLED(int number)
 		GPIO_WriteBit(port, pin, !GPIO_ReadOutputDataBit(port, pin));
 }
 
+
+void SetAllJLED(int sta)
+{
+	int i = 1;
+	for(i = 1;i<=8;i++)
+	{
+		SetJLED(i,sta);
+	}
+}

@@ -22,19 +22,19 @@ int main(void)
 	JLED_init();
 	KEY_init();
 	USART1_Init(19200);
-	Beep_Init();
+	Beep_Init(PWM);
+	
 
 	EXTI_Key_Config();		// 中断设置
 	EXTI_USART1_Config();
 	
-	BASIC_TIM6_Config();	//定时器启用
 	
 	
-	
-	TIM6_DelayMs(500); 
 	while(1)
 	{
 		
 
 	}
 }
+
+

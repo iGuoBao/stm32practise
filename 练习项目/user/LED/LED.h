@@ -61,4 +61,9 @@ void ToggleLED(int number);
 void SetJLED(int number,int station);
 void ToggleJLED(int number);
 
+void SetAllJLED(int sta);
+
+
+
+
 #endif

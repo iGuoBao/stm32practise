@@ -1,9 +1,5 @@
 #include "Button.h"
 
-#include "exti.h"
-#include "LED.h"
-#include "SysTick.h"
-
 void KEY_init(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure; 	// GPIO结构体
