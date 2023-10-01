@@ -3,6 +3,13 @@
 
 #include "stm32f10x.h"
 
+#include "beep.h"
+
+#define BASIC_TIM4 									TIM4
+#define BASIC_TIM4_APBxClock_FUN 		RCC_APB1PeriphClockCmd		
+#define BASIC_TIM4_CLK 							RCC_APB1Periph_TIM4
+#define BASIC_TIM4_IRQ 							TIM4_IRQn
+#define BASIC_TIM4_IRQHandler 			TIM4_IRQHandler
 
 #define BASIC_TIM6 									TIM6
 #define BASIC_TIM6_APBxClock_FUN 		RCC_APB1PeriphClockCmd		
@@ -17,7 +24,11 @@
 #define BASIC_TIM7_IRQHandler 			TIM7_IRQHandler
 
 
+
+void BASIC_TIM4_Config(void);
+void SetBASIC_TIM4_Hz(int Hz);
 void BASIC_TIM6_Config(void);
+
 void TIM6_DelayMs(int Ms);
 
 #endif

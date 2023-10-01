@@ -1,7 +1,13 @@
 #ifndef __BUTTON_H__
 #define __BUTTON_H__
 
+
 #include "stm32f10x.h"
+
+
+#include "exti.h"
+#include "LED.h"
+#include "SysTick.h"
 
 // KEY0  PE4
 #define KEY0_PORT 						GPIOE 			
