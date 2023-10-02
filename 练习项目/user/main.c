@@ -20,13 +20,13 @@ int main(void)
 	
 	// 外设初始化 开始
 	LED_init();						
-	//JLED_init();
-	//KEY_init();
-	//Beep_Init(PWM);
+	JLED_init();
+	KEY_init();
+	Beep_Init(PWM);
 	// 外设初始化 结束
 
 	delay_init();					// systick
-	// EXTI_Key_Config();		// 中断设置
+	EXTI_Key_Config();		// 中断设置
 	EXTI_USART1_Config(115200);
 
 
@@ -34,7 +34,7 @@ int main(void)
 	{
 		printf("data=%d\r\n",123);
 
-		delay_ms(200);
+		delay_ms(500);
 	}
 }
 
