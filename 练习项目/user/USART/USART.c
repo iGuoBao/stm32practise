@@ -1,11 +1,20 @@
 #include "USART.h"
 
-u16 USART1_RX_STA = 0;       
-u8 USART1_RX_BUF[USART1_REC_LEN];    
+
+uint8_t buffer[BUFFER_SIZE];
+uint16_t writeIndex = 0;
+
+int fputc(int ch,FILE *p)  //函数默认的，在使用printf函数时自动调用
+{
+	USART_SendData(USART1,(u8)ch);	
+	while(USART_GetFlagStatus(USART1,USART_FLAG_TXE)==RESET);
+	return ch;
+}
 
 
 void USART1_Init(u32 bound)
 {
+	USART_DeInit(USART1);
 	RCC_APB2PeriphClockCmd(USART_TX_CLK,ENABLE);
 	
 	// GPIO结构体
@@ -33,8 +42,6 @@ void USART1_Init(u32 bound)
 	USART_Init(USART1, &USART_InitStructure);			// 包装完毕
 	USART_Cmd(USART1, ENABLE); 									  //使能串口1 
 	USART_ClearFlag(USART1, USART_FLAG_TC);				// 清除 USARTx 的待处理标志位
-
-	
 }
 
 void sendString(char* str)
@@ -50,4 +57,8 @@ void sendString(char* str)
         // 移动到下一个字符
         str++;
     }
+}
+u8 getDate()
+{
+	return buffer[writeIndex];
 }

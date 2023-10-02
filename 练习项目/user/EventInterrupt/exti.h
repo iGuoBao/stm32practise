@@ -15,7 +15,7 @@
 static void  NVCI_Config();
 
 void EXTI_Key_Config(void);
-void EXTI_USART1_Config(void);
+void EXTI_USART1_Config(u32 b);
 
 
 // 中断函数

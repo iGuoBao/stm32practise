@@ -8,26 +8,26 @@ static void NVCI_Config()
 	NVIC_InitTypeDef NVIC_InitStructure;
 	// EXTI4--KEY0 
 	NVIC_InitStructure.NVIC_IRQChannel = KEY0_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);														
 	// EXTI3--KEY1
 	NVIC_InitStructure.NVIC_IRQChannel = KEY1_EXTI_IRQ;				
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);															
 	// EXTI2--KEY2
 	NVIC_InitStructure.NVIC_IRQChannel = KEY2_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);															
 	// EXTI0--WKUP
 	NVIC_InitStructure.NVIC_IRQChannel = WKUP_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);		
 	// USART
@@ -53,8 +53,9 @@ void EXTI_Key_Config(void)
 	NVCI_Config();																
 }	
 
-void EXTI_USART1_Config(void)
+void EXTI_USART1_Config(u32 b)
 {
+	USART1_Init(b);
 	NVCI_Config();		// NVCI
 	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 }
@@ -64,11 +65,15 @@ void EXTI_USART1_Config(void)
 
 void USART1_IRQHandler(void)                
 {
+	
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)		// 接收中断
 	{
-		uint8_t data = USART_ReceiveData(USART1);
-
-
+		
+		buffer[writeIndex++] = USART_ReceiveData(USART1);		// 将数据存储到缓冲区
+		
+		
+  	USART_ClearITPendingBit(USART1, USART_IT_RXNE); // 清除中断标志位
+		if(writeIndex >=128) writeIndex = 0;
 	}
 } 	
 

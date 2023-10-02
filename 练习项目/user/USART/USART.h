@@ -2,26 +2,27 @@
 #define __USART_H__
 
 #include "stm32f10x.h"
+#include "stdio.h" // 标准库
 
-#define USART1_REC_LEN		200  	
+#define BUFFER_SIZE		128	// 最大接受字节数量  	
 
-extern u8  USART1_RX_BUF[USART1_REC_LEN]; 
-extern u16 USART1_RX_STA;         		
+extern u8 buffer[BUFFER_SIZE];
+extern u16 writeIndex;
 
-
+ 	
 #define USART_TX_CLK  					( RCC_APB2Periph_GPIOA | RCC_APB2Periph_USART1 )
 #define USART_TX_Port  					GPIOA
-#define USART_TX_PIN 						GPIO_Pin_2
+#define USART_TX_PIN 						GPIO_Pin_9
 
 
 #define USART_RX_CLK  					( RCC_APB2Periph_GPIOA | RCC_APB2Periph_USART1 )
 #define USART_RX_Port  					GPIOA
-#define USART_RX_PIN 						GPIO_Pin_3	
+#define USART_RX_PIN 						GPIO_Pin_10	
 
 
 void USART1_Init(u32 bound);
 
 void sendString(char* str);
-
+u8 getDate();
 
 #endif

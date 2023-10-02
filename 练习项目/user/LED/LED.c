@@ -249,3 +249,11 @@ void SetAllJLED(int sta)
 		SetJLED(i,sta);
 	}
 }
+
+void TestLED(int number)
+{
+	SetLED(number,1);
+	delay_ms(80);
+	SetLED(number,0);
+	delay_ms(80);
+}

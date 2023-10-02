@@ -16,24 +16,25 @@
 
 int main(void)
 {	
-	setSysClkHSE();				// 设置HSE 为时钟源
-	delay_init();
-	LED_init();						// LED0 1 初始化 默认亮
-	JLED_init();
-	KEY_init();
-	USART1_Init(19200);
-	Beep_Init(PWM);
+	setSysClkHSE();				
 	
+	// 外设初始化 开始
+	LED_init();						
+	//JLED_init();
+	//KEY_init();
+	//Beep_Init(PWM);
+	// 外设初始化 结束
 
-	EXTI_Key_Config();		// 中断设置
-	EXTI_USART1_Config();
-	
-	
-	
+	delay_init();					// systick
+	// EXTI_Key_Config();		// 中断设置
+	EXTI_USART1_Config(115200);
+
+
 	while(1)
 	{
-		
+		printf("data=%d\r\n",123);
 
+		delay_ms(200);
 	}
 }
 

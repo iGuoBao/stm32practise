@@ -2,6 +2,7 @@
 #define __LED_H__
 
 #include "stm32f10x.h"
+#include "SysTick.h"
 
 // LED引脚宏定义
 // LED0 PB5
@@ -60,8 +61,9 @@ void SetLED(int number,int station);
 void ToggleLED(int number);
 void SetJLED(int number,int station);
 void ToggleJLED(int number);
-
 void SetAllJLED(int sta);
+
+void TestLED(int number);
 
 
 
