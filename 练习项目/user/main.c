@@ -6,6 +6,7 @@
 #include "beep.h"
 #include "EEPROM_AT24C02.h"
 #include "tftlcd.h"
+#include "animations.h"
 
 // 公共
 #include "SysTick.h"		// 滴答 以后不会使用这种
@@ -41,17 +42,9 @@ int main(void)
 	
 	// I2C_Config(EEPROM_I2Cx_Write_ADDRESS);
 
-	LCD_Clear(LGRAY);
-	LCD_Fill(1,1,320,40,LGRAYBLUE);
-	
-	FRONT_COLOR=BLACK;
-	u8 str[] = "SO EASY" ;
-	LCD_ShowString(10,30,tftlcd_data.width,tftlcd_data.height,16,str);
-	LCD_Fill(30,150,60,180,GRAY);
-
-	LCD_Set_Window(1,200,200,200);
-	
-	
+	draw_voltmeter_window();
+	draw_voltmeter_chart();
+	draw_voltmeter_chart_value_time_line();
 	
 	while(1)
 	{
@@ -59,8 +52,9 @@ int main(void)
 		
 		for(int i=1;i<=10;i++)
 		{
-			delay_ms(500);
-			printf("number %u - %.2f\r\n",i,GetValue());
+			delay_ms(5);
+			refresh_voltmeter_chart();
+			
 		}
 		
 	}
