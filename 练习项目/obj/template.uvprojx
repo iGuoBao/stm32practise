@@ -716,6 +716,16 @@
               <FileType>5</FileType>
               <FilePath>..\user\TFTLCD\picture.h</FilePath>
             </File>
+            <File>
+              <FileName>animations.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\TFTLCD\animations.c</FilePath>
+            </File>
+            <File>
+              <FileName>animations.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\TFTLCD\animations.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
