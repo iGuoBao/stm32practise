@@ -1,7 +1,7 @@
 #include "SysTick.h"
 
 
-void delay_init(void)
+void delay_Config(void)
 {
     SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8); 
 }

@@ -9,6 +9,7 @@
 #include "USART.h"
 #include "SysTick.h"
 #include "TIM.h"
+#include "ADC.h"
 
 
 
