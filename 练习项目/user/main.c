@@ -23,20 +23,20 @@ int main(void)
 	uint8_t eedata;
 	setSysClkHSE();				
 	
-	// 外设初始化 开始
+
 	//LED_init();						
 	//JLED_init();
 	//KEY_init();
 	//Beep_Init(PWM);
 	//EEPROM_Init();
+	ADCx_GPIO_Init();
 	
-	delay_init();					// systick
+	delay_Config();					// systick
 	EXTI_Key_Config();		// 中断设置
 	EXTI_USART1_Config(115200);
-	
+	ADCx_Mode_Config();
 	TFTLCD_Init();
-		printf("TFTLCD_Init();");
-	// 外设初始化 结束
+
 	
 	
 	// I2C_Config(EEPROM_I2Cx_Write_ADDRESS);
@@ -57,13 +57,12 @@ int main(void)
 	{
 		//printf("data=%d\r\n",123);
 		
-		for(int i=0;i<=8;i++)
+		for(int i=1;i<=10;i++)
 		{
-			delay_ms(30);
-			printf("number %d - %u\r\n",i,I2C_EEPROM_ByteRead(i));
+			delay_ms(500);
+			printf("number %u - %.2f\r\n",i,GetValue());
 		}
 		
-		break;	
 	}
 }
 

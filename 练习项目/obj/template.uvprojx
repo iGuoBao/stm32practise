@@ -696,6 +696,11 @@
               <FileType>1</FileType>
               <FilePath>..\user\APP\bsd_tftlcd.c</FilePath>
             </File>
+            <File>
+              <FileName>ADC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\Public\ADC.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -720,11 +725,6 @@
               <FileName>animations.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\TFTLCD\animations.c</FilePath>
-            </File>
-            <File>
-              <FileName>animations.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\user\TFTLCD\animations.h</FilePath>
             </File>
           </Files>
         </Group>

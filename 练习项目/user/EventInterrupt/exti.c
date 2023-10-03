@@ -1,5 +1,6 @@
 #include "exti.h"
 
+extern float  ADC_ConvertedValue; // from ADC
 
 static void NVCI_Config()
 {
@@ -37,11 +38,18 @@ static void NVCI_Config()
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			
 	NVIC_Init(&NVIC_InitStructure);	
 	// TIM6
-	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;					//定时器中断通道
+	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;						//定时器中断通道
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				//子优先级
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;					//IRQ通道使能
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
+	// ADC PA1
+	NVIC_InitStructure.NVIC_IRQChannel = ADC_IRQ;							//定时器中断通道
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;	//抢占优先级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;				//子优先级
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
+	NVIC_Init(&NVIC_InitStructure);	
+	
 }
 
 
@@ -131,5 +139,15 @@ void TIM6_IRQHandler(void)
 	
 }
 
-
+void ADC_IRQHandler(void)
+{
+	if (ADC_GetITStatus(ADCx,ADC_IT_EOC)==SET)
+	{
+		u16 temp;
+		// 读取 ADC 的转换值
+		temp = ADC_GetConversionValue(ADCx);
+		ADC_ConvertedValue = (float)temp / 4096 * 3.3;  // 2^12  3.3参考电压
+	}
+	ADC_ClearITPendingBit(ADCx,ADC_IT_EOC);
+}
 
