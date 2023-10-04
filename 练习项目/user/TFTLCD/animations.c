@@ -1,15 +1,18 @@
 #include "animations.h"
 // 1.2KB   x,y
-u16 arr_coordinate_X_memory[voltmeter_chart_line_lengthX];
-u16 arr_coordinate_Y_memory[voltmeter_chart_line_lengthY];
+u16 arr_coordinate_X_memory[voltmeter_chart_line_lengthX ]; // 实际最优解-2 (-1下标 -1坐标轴)
+u16 arr_coordinate_Y_memory[voltmeter_chart_line_lengthX ];
 int arr_coordinate_X_memory_write_index = 0;
 
 u16 chart_origin_pointX;
 u16 chart_origin_pointY;
+
 u16 chart_TEMP_pointX;
 u16 chart_TEMP_pointY;
+
 u16 value_line_start_pointX = (voltmeter_chart_start_pointX + (voltmeter_chart_width/7));
 u16 value_line_start_pointY = (voltmeter_chart_start_pointY + (voltmeter_chart_height/7));
+
 u16 value_line_end_pointX;
 u16 value_line_end_pointY;
 
@@ -55,31 +58,33 @@ void draw_voltmeter_chart_value_time_line(void)
 void refresh_voltmeter_chart(void)
 {
 	if(!chart_overflow){
-		// 第一次
+		
+		
+		// 第一次 		/**/ /**/ /**/ /**/ /**/ /**/ 
 		if(arr_coordinate_X_memory_write_index == 0)
 		{
-			chart_TEMP_pointX = chart_origin_pointX;
-			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY) + (voltmeter_chart_height/7) + 10;  // 临时解决(voltmeter_chart_height/7)+ 10
+			chart_TEMP_pointX = chart_origin_pointX + 1;
+			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // 临时解决
 			arr_coordinate_X_memory[0] = chart_TEMP_pointX;
 			arr_coordinate_Y_memory[0] = chart_TEMP_pointY;
-			
 			arr_coordinate_X_memory_write_index = 1;
 		}
-		// 没满格前
-		else if (arr_coordinate_X_memory_write_index < voltmeter_chart_line_lengthX-1)	// 坐标轴 宽度长
+		// 没满格前的操作
+		else if (arr_coordinate_X_memory_write_index < voltmeter_chart_line_lengthX -2 )	// 坐标轴 宽度长
 		{
 			chart_TEMP_pointX = chart_TEMP_pointX + 1;
-			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * voltmeter_chart_line_lengthY + (voltmeter_chart_height/7)+ 10;  // 临时解决(voltmeter_chart_height/7)+ 10
+			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // 临时解决  -27
 			arr_coordinate_X_memory[arr_coordinate_X_memory_write_index] = chart_TEMP_pointX;
 			arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index] = chart_TEMP_pointY;
 			
 			LCD_DrawLine_Color(arr_coordinate_X_memory[arr_coordinate_X_memory_write_index-1],arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index-1],chart_TEMP_pointX,chart_TEMP_pointY,RED);
 			arr_coordinate_X_memory_write_index++;
 		}
-		else if(arr_coordinate_X_memory_write_index == voltmeter_chart_line_lengthX -1)
+		// 满前的一步
+		else if(arr_coordinate_X_memory_write_index == voltmeter_chart_line_lengthX -2)
 		{
 			chart_TEMP_pointX = chart_TEMP_pointX + 1;
-			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * voltmeter_chart_line_lengthY + (voltmeter_chart_height/7)+ 10;  // 临时解决(voltmeter_chart_height/7)+ 10
+			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // 临时解决
 			arr_coordinate_X_memory[arr_coordinate_X_memory_write_index] = chart_TEMP_pointX;
 			arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index] = chart_TEMP_pointY;
 			
@@ -92,6 +97,24 @@ void refresh_voltmeter_chart(void)
 	}
 	else
 	{
+		chart_TEMP_pointX = value_line_end_pointX;
+		chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // 临时解决
+		arr_coordinate_X_memory[voltmeter_chart_line_lengthX - 1] = chart_TEMP_pointX;
+		arr_coordinate_Y_memory[voltmeter_chart_line_lengthX - 1] = chart_TEMP_pointY;
+		for(int i = 1; i < voltmeter_chart_line_lengthX - 1; i++)
+		{
+			LCD_DrawLine_Color(arr_coordinate_X_memory[i-1], arr_coordinate_Y_memory[i-1],
+												arr_coordinate_X_memory[i], arr_coordinate_Y_memory[i],BLACK); // B代表黑色
+			LCD_DrawLine_Color(arr_coordinate_X_memory[i-1], arr_coordinate_Y_memory[i],
+												arr_coordinate_X_memory[i], arr_coordinate_Y_memory[i+1],RED); 
+			arr_coordinate_Y_memory[i-1] = arr_coordinate_Y_memory[i];
+		}
+			arr_coordinate_Y_memory[voltmeter_chart_line_lengthX - 2] = arr_coordinate_Y_memory[voltmeter_chart_line_lengthX - 1];
+	}
+	
+	/*
+	else
+	{
 		LCD_Fill(value_line_start_pointX + 1 ,
 				   value_line_start_pointY,
 				   value_line_end_pointX,
@@ -99,7 +122,7 @@ void refresh_voltmeter_chart(void)
 				   BLACK);
 		chart_overflow = 0;
 	}
-	
+	*/
 	
 	/*
 	失败失败
@@ -180,6 +203,12 @@ void refresh_voltmeter_chart(void)
 		LCD_DrawLine_Color(arr_coordinate_X_memory[arr_coordinate_X_memory_write_index-1],arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index-1],chart_TEMP_pointX,chart_TEMP_pointY,RED);
 	}
 	*/
+}
+
+void show_voltmeter_chart_value(void)
+{
+	
+
 }
 
 

@@ -52,7 +52,7 @@ int main(void)
 		
 		for(int i=1;i<=10;i++)
 		{
-			delay_ms(5);
+
 			refresh_voltmeter_chart();
 			
 		}
