@@ -49,13 +49,8 @@ int main(void)
 	while(1)
 	{
 		//printf("data=%d\r\n",123);
-		
-		for(int i=1;i<=10;i++)
-		{
-			delay_ms(5);
 			refresh_voltmeter_chart();
-			
-		}
+			show_voltmeter_chart_value();
 		
 	}
 }
