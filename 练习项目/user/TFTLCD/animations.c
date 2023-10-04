@@ -205,10 +205,18 @@ void refresh_voltmeter_chart(void)
 	*/
 }
 
-void show_voltmeter_chart_value(void)
-{
-	
+void show_voltmeter_chart_value(void) {
+    float value = GetValue();
 
+    // 提取整数部分和小数部分
+    int intValue = (int)value;
+    int decimalPart = (int)((value - intValue) * 100);  // 假设保留两位小数
+
+    // 将整数部分和小数部分转换为字符数组
+    char show_value_char[20];
+    snprintf(show_value_char, sizeof(show_value_char), "%d.%02d", intValue, decimalPart);
+
+    printf("data=%f\r\n", value);
+    LCD_ShowString(value_line_start_pointX, value_line_start_pointY-16, 100, 16, 16, (u8*)show_value_char);
 }
-
 
