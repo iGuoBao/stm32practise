@@ -67,6 +67,7 @@ void draw_voltmeter_chart_value_time_line(void)
 */
 void refresh_voltmeter_chart(void)
 {
+	ADC_Cmd(ADCx,ENABLE);
 	//int refresh_skip_distance;
 	if(!chart_overflow){
 		// µÚÒ»´Î 		/**/ /**/ /**/ /**/ /**/ /**/ 

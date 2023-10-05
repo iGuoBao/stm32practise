@@ -53,8 +53,8 @@ static void NVCI_Config()
 	NVIC_Init(&NVIC_InitStructure);	
 	// RTC
 	NVIC_InitStructure.NVIC_IRQChannel = RTC_IRQn;							//定时器中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;	//抢占优先级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;				//子优先级
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;	//抢占优先级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;				//子优先级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
 }
@@ -164,7 +164,6 @@ void ADC_IRQHandler(void)
 // RTC 秒中断
 void RTC_IRQHandler(void)
 {
-	printf("main%d\r\n",1);
 	showTimeToScreen();
 
 }

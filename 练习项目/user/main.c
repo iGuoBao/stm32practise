@@ -24,10 +24,7 @@ int main(void)
 {	
 	uint8_t eedata;
 	
-
 	setSysClkHSE();				
-	
-
 	//LED_init();						
 	//JLED_init();
 	//KEY_init();
@@ -35,16 +32,13 @@ int main(void)
 	//EEPROM_Init();
 	
 	ADCx_GPIO_Init();
-
 	
-	delay_Config();					// systick
-	EXTI_Key_Config();		// 中断设置
+	delay_Config();									// systick
+	//EXTI_Key_Config();						// 中断设置
 	EXTI_USART1_Config(115200);
 	ADCx_Mode_Config();
 	TFTLCD_Init();
-
 	RTC_Init();
-	
 	// I2C_Config(EEPROM_I2Cx_Write_ADDRESS);
 
 	draw_voltmeter_window();
@@ -53,11 +47,9 @@ int main(void)
 	
 	while(1)
 	{
-			// printf("main%d\r\n",1);
-			ADC_Cmd(ADCx,ENABLE);
-			refresh_voltmeter_chart();
-			show_voltmeter_chart_value();
-		
+		// printf("main%d\r\n",1);
+		refresh_voltmeter_chart();
+		show_voltmeter_chart_value();
 	}
 }
 

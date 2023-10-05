@@ -671,11 +671,6 @@
               <FileType>1</FileType>
               <FilePath>..\user\Public\RTC.c</FilePath>
             </File>
-            <File>
-              <FileName>RTC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\user\Public\RTC.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
