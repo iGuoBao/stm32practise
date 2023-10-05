@@ -2,6 +2,8 @@
 
 extern float  ADC_ConvertedValue; // from ADC
 
+
+// 突然意识到  虽然很好对照优先级，但是后续不方便，还是需要写到各个的NVCI下
 static void NVCI_Config()
 {
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);							
@@ -9,25 +11,25 @@ static void NVCI_Config()
 	NVIC_InitTypeDef NVIC_InitStructure;
 	// EXTI4--KEY0 
 	NVIC_InitStructure.NVIC_IRQChannel = KEY0_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;		
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);														
 	// EXTI3--KEY1
 	NVIC_InitStructure.NVIC_IRQChannel = KEY1_EXTI_IRQ;				
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;		
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);															
 	// EXTI2--KEY2
 	NVIC_InitStructure.NVIC_IRQChannel = KEY2_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;		
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);															
 	// EXTI0--WKUP
 	NVIC_InitStructure.NVIC_IRQChannel = WKUP_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;		
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);		
@@ -45,11 +47,16 @@ static void NVCI_Config()
 	NVIC_Init(&NVIC_InitStructure);	
 	// ADC PA1
 	NVIC_InitStructure.NVIC_IRQChannel = ADC_IRQ;							//定时器中断通道
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 4;				//子优先级
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
+	NVIC_Init(&NVIC_InitStructure);	
+	// RTC
+	NVIC_InitStructure.NVIC_IRQChannel = RTC_IRQn;							//定时器中断通道
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;	//抢占优先级
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;				//子优先级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
-	
 }
 
 
@@ -149,5 +156,15 @@ void ADC_IRQHandler(void)
 		ADC_ConvertedValue = (float)temp / 4096 * 3.3;  // 2^12  3.3参考电压
 	}
 	ADC_ClearITPendingBit(ADCx,ADC_IT_EOC);
+	
+	ADC_Cmd(ADCx,DISABLE);
 }
 
+
+// RTC 秒中断
+void RTC_IRQHandler(void)
+{
+	printf("main%d\r\n",1);
+	showTimeToScreen();
+
+}
