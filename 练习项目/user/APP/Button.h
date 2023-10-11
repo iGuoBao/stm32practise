@@ -21,7 +21,7 @@
 #define KEY0_EXTI_PIN 					KEY0_PIN
 #define KEY0_EXTI_PORTSOURCE 		KEY0_PORTSOURCE		// 在button.h 定义  中断源与引脚映射用
 #define KEY0_EXTI_PINSOURCE  		KEY0_PINSOURCE
-#define KEY0_EXTI_LINE 					EXTI_Line4				// EXTI通道选择 0
+#define KEY0_EXTI_LINE 					EXTI_Line4				// EXTI通道选择 4
 #define KEY0_EXTI_IRQ 					EXTI4_IRQn				// 中断号  	NVIC中
 #define KEY0_IRQHandler 				EXTI4_IRQHandler	// 中断函数名
 
@@ -80,28 +80,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void KEY_init(void);
 
 
 int IsKeyPressed(GPIO_TypeDef * KEY_PORT,uint16_t KEY_PIN);		//判断是否按下 按下返回1，没按下返回0 
-
+int getPressKeyStation(GPIO_TypeDef * KEY_PORT,uint16_t KEY_PIN);
 
 #endif

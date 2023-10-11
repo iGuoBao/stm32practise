@@ -1,6 +1,8 @@
 #include "exti.h"
 
 extern float  ADC_ConvertedValue; // from ADC
+extern int KEY0DelayTime;
+extern int KEY0PressNumber;
 
 static void NVCI_Config()
 {
@@ -91,10 +93,20 @@ void KEY0_IRQHandler(void)
 {
 	if (EXTI_GetITStatus(KEY0_EXTI_LINE) != RESET)		
 	{
-		if(IsKeyPressed(KEY0_PORT,KEY0_PIN))
+		if(KEY0DelayTime == 0)
 		{
-			Beep_Music_Do(CM, VOLUME1, B1);
+			TIM_Cmd(BASIC_TIM6, ENABLE);
 		}
+		else if(KEY0DelayTime <= 500)
+		{
+			// 双击
+			ToggleLED(0);
+			ToggleLED(1);
+			
+			TIM_Cmd(BASIC_TIM6, DISABLE);
+			KEY0DelayTime = 0;
+		}
+		
 		EXTI_ClearITPendingBit(KEY0_EXTI_LINE);
 	}
 }
@@ -105,7 +117,7 @@ void KEY1_IRQHandler(void)
 	{
 		if(IsKeyPressed(KEY1_PORT,KEY1_PIN))
 		{
-			Beep_Music_Do(GM, VOLUME1, B1);
+			
 		}
 		
 			EXTI_ClearITPendingBit(KEY1_EXTI_LINE);
@@ -136,7 +148,26 @@ void WKUP_IRQHandler(void)
 
 void TIM6_IRQHandler(void)
 {
-	
+	KEY0DelayTime++;
+	if(KEY0DelayTime>600)
+	{
+		if(IsKeyPressed(KEY0_PORT,KEY0_PIN))
+		{
+			// 长按
+			ToggleLED(1);
+			
+			TIM_Cmd(BASIC_TIM6, DISABLE);
+			KEY0DelayTime = 0;
+		}
+		else
+		{
+			// 短按
+			ToggleLED(0);
+			
+			TIM_Cmd(BASIC_TIM6, DISABLE);
+			KEY0DelayTime = 0;
+		}
+	}
 }
 
 void ADC_IRQHandler(void)
