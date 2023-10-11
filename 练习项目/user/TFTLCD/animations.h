@@ -18,6 +18,7 @@
 #define voltmeter_chart_line_lengthY		150
 
 
+
 void draw_voltmeter_window(void);
 void draw_voltmeter_chart(void);
 void draw_voltmeter_chart_value_time_line(void);

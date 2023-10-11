@@ -1,5 +1,6 @@
 #include "animations.h"
 // 1.2KB   x,y
+
 u16 arr_coordinate_X_memory[voltmeter_chart_line_lengthX ]; // 实际最优解-2 (-1下标 -1坐标轴)
 u16 arr_coordinate_Y_memory[voltmeter_chart_line_lengthX ];
 int arr_coordinate_X_memory_write_index = 0;
@@ -56,6 +57,7 @@ void draw_voltmeter_chart_value_time_line(void)
 	@note：			自己写着玩的
 		可优化空间非常大
 		通用性：
+			移植有问题。如果放中断里就不行；同样的刷新电压表，他的显示是正常的。
 			例如界面的更新。关于像素点生成，原生成思路是把数据一像素一像素的x轴间隔距离生成;此函数以写死，不能调整像素间生成的点间距。
 			总之屎山一样，慢慢改吧。
 		性能优化点：
@@ -67,7 +69,7 @@ void draw_voltmeter_chart_value_time_line(void)
 */
 void refresh_voltmeter_chart(void)
 {
-	ADC_Cmd(ADCx,ENABLE);
+	// ADC_Cmd(ADCx,ENABLE);  // ADC跟着刷新走  耗资源
 	//int refresh_skip_distance;
 	if(!chart_overflow){
 		// 第一次 		/**/ /**/ /**/ /**/ /**/ /**/ 

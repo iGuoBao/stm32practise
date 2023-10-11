@@ -3,6 +3,9 @@
 extern float  ADC_ConvertedValue; // from ADC
 
 
+
+
+
 // 突然意识到  虽然很好对照优先级，但是后续不方便，还是需要写到各个的NVCI下
 static void NVCI_Config()
 {
@@ -143,7 +146,19 @@ void WKUP_IRQHandler(void)
 
 void TIM6_IRQHandler(void)
 {
-	
+	if(TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) //检查TIM6更新中断发生与否
+  {
+		show_voltmeter_chart_value();
+		if(ADC_GetSoftwareStartConvStatus(ADC1)==ENABLE)
+		{
+			ADC_Cmd(ADCx,DISABLE);
+		}
+		else if(ADC_GetSoftwareStartConvStatus(ADC1)==DISABLE)
+		{
+			ADC_Cmd(ADCx,ENABLE);
+		}
+	}
+	TIM_ClearITPendingBit(TIM6, TIM_IT_Update);  //清除TIMx更新中断标志 
 }
 
 void ADC_IRQHandler(void)
@@ -154,10 +169,13 @@ void ADC_IRQHandler(void)
 		// 读取 ADC 的转换值
 		temp = ADC_GetConversionValue(ADCx);
 		ADC_ConvertedValue = (float)temp / 4096 * 3.3;  // 2^12  3.3参考电压
-	}
-	ADC_ClearITPendingBit(ADCx,ADC_IT_EOC);
+		
+		ADC_ClearITPendingBit(ADCx,ADC_IT_EOC);
 	
-	ADC_Cmd(ADCx,DISABLE);
+		ADC_Cmd(ADCx,DISABLE);
+		
+	}
+
 }
 
 

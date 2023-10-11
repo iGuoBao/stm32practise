@@ -29,6 +29,8 @@ u8 RTC_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec);//设置时间
 
 // 旧版 保留
 // void UnixtimeToTime(u32 timestamp, int* year, int* month, int* day, int* hour, int* minute, int* second);
-void showTimeToScreen();
+void showTimeToScreen();		// 未知bug
+
+void showLastDownloadTimeToScreen();
 
 #endif

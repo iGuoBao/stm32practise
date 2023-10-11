@@ -4177,57 +4177,6 @@ void LCD_ShowFontHZ(u16 x, u16 y, u8 *cn)
 }
 #endif
 
-
-#if 1
-void LCD_ShowFontHZ(u16 x, u16 y, u8 *cn)
-{
-	u8 i, j, wordNum;
-	u16 color;
-	u16 x0=x; 
-	u16 y0=y; 
-	while (*cn != '\0')
-	{
-		for (wordNum=0; wordNum<20; wordNum++)
-		{	//wordNum扫描字库的字数
-			if ((CnChar32x29[wordNum].Index[0]==*cn)
-			     &&(CnChar32x29[wordNum].Index[1]==*(cn+1)))
-			{
-				for(i=0; i<116; i++) 
-				{	//MSK的位数
-					color=CnChar32x29[wordNum].Msk[i];
-					for(j=0;j<8;j++) 
-					{
-						if((color&0x80)==0x80)
-						{
-							LCD_DrawFRONT_COLOR(x,y,FRONT_COLOR);
-						} 						
-						else
-						{
-							LCD_DrawFRONT_COLOR(x,y,BACK_COLOR);
-						} 
-						color<<=1;
-						x++;
-						if((x-x0)==32)
-						{
-							x=x0;
-							y++;
-							if((y-y0)==29)
-							{
-								y=y0;
-							}
-						}
-					}//for(j=0;j<8;j++)结束
-				}	
-			}
-			
-		} //for (wordNum=0; wordNum<20; wordNum++)结束 	
-		cn += 2;
-		x += 32;
-		x0=x;
-	}
-}	
-#endif
-
 void LCD_ShowPicture(u16 x, u16 y, u16 wide, u16 high,u8 *pic)
 {
 	u16 i,j;
