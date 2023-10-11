@@ -1,7 +1,6 @@
 #include "Button.h"
 
-int KEY0DelayTime = 0; // 根据tim6设置  单位为1ms
-int KEY0PressNumber = 0;
+
 
 void KEY_init(void)
 {
@@ -20,7 +19,7 @@ void KEY_init(void)
 	GPIO_EXTILineConfig(KEY0_EXTI_PORTSOURCE, KEY0_EXTI_PINSOURCE); 
 	EXTI_InitStructure.EXTI_Line = KEY0_EXTI_LINE;									
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;							
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;	 // 上升沿下降沿都触发 双击用				
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;	 // 上升沿下降沿都触发 双击用				
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;												
 	EXTI_Init(&EXTI_InitStructure);	
 	
@@ -79,7 +78,7 @@ int IsKeyPressed(GPIO_TypeDef * KEY_PORT,uint16_t KEY_PIN)
 	//
 	// 引脚输出模式
 	if(GPIO_ReadOutputDataBit(KEY_PORT, KEY_PIN) == 1){
-		delay_ms(7);										// 去抖
+		delay_ms(17);										// 去抖
 		if(GPIO_ReadOutputDataBit(KEY_PORT, KEY_PIN) == 1)			
 		{
 			return !GPIO_ReadInputDataBit(KEY_PORT, KEY_PIN); // 返回引脚电平的反值 若按下为1

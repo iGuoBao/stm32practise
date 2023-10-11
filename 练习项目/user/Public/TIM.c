@@ -47,9 +47,11 @@ void SetBASIC_TIM4_Hz(int Hz)
 	
 }
 
+
+
 void BASIC_TIM6_Config(void)
 {
-	// 开启定时器时钟,即内部时钟 CK_INT=72M
+	// 开启定时器时钟,即内部时钟 CK_INT=72M 1000
 	BASIC_TIM6_APBxClock_FUN(BASIC_TIM6_CLK, ENABLE);
 	
 	// 基础定时器时钟结构体
@@ -61,7 +63,7 @@ void BASIC_TIM6_Config(void)
 	
 	TIM_ITConfig(BASIC_TIM6,TIM_IT_Update,ENABLE);	  	// 开启中断
 	TIM_ClearFlag(BASIC_TIM6, TIM_FLAG_Update);		  	  // 清除标志位
-	TIM_Cmd(BASIC_TIM6, ENABLE);										  // 定时器使能
+	//TIM_Cmd(BASIC_TIM6, ENABLE);										  // 定时器使能
 
 }
 

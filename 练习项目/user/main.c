@@ -30,10 +30,11 @@ int main(void)
 
 	
 	delay_Config();					// systick
-	BASIC_TIM3_Config();
+	//BASIC_TIM3_Config();
+	BASIC_TIM4_Config();
 	BASIC_TIM6_Config();
 	EXTI_Key_Config();		// 中断设置
-	
+	USART1_Init(115200);
 	
 	while(1)
 	{

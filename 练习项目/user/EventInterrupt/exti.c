@@ -1,8 +1,9 @@
 #include "exti.h"
 
 extern float  ADC_ConvertedValue; // from ADC
-extern int KEY0DelayTime;
-extern int KEY0PressNumber;
+
+int KEY0DelayTime = 0; // 根据tim6设置  单位为1ms
+
 
 static void NVCI_Config()
 {
@@ -36,12 +37,12 @@ static void NVCI_Config()
 	// USART
 	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;		
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			
 	NVIC_Init(&NVIC_InitStructure);	
 	// TIM6
 	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;						//定时器中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;	//抢占优先级
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				//子优先级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
@@ -93,18 +94,22 @@ void KEY0_IRQHandler(void)
 {
 	if (EXTI_GetITStatus(KEY0_EXTI_LINE) != RESET)		
 	{
-		if(KEY0DelayTime == 0)
+		if(IsKeyPressed(KEY0_PORT,KEY0_PIN))
 		{
-			TIM_Cmd(BASIC_TIM6, ENABLE);
-		}
-		else if(KEY0DelayTime <= 500)
-		{
-			// 双击
-			ToggleLED(0);
-			ToggleLED(1);
 			
-			TIM_Cmd(BASIC_TIM6, DISABLE);
-			KEY0DelayTime = 0;
+			if(KEY0DelayTime == 0 ||KEY0DelayTime == 1)
+			{
+				TIM_Cmd(BASIC_TIM6, ENABLE);		
+				KEY0DelayTime = 0;
+			}
+			else if(KEY0DelayTime<400)
+			{
+				// double
+				printf("double");
+				
+				TIM_Cmd(BASIC_TIM6, DISABLE);		
+				KEY0DelayTime = 0;
+			}
 		}
 		
 		EXTI_ClearITPendingBit(KEY0_EXTI_LINE);
@@ -113,7 +118,7 @@ void KEY0_IRQHandler(void)
 
 void KEY1_IRQHandler(void)
 {
-		if (EXTI_GetITStatus(KEY1_EXTI_LINE) != RESET)			
+	if (EXTI_GetITStatus(KEY1_EXTI_LINE) != RESET)			
 	{
 		if(IsKeyPressed(KEY1_PORT,KEY1_PIN))
 		{
@@ -146,28 +151,38 @@ void WKUP_IRQHandler(void)
 	EXTI_ClearITPendingBit(WKUP_EXTI_LINE);
 }
 
+
 void TIM6_IRQHandler(void)
 {
-	KEY0DelayTime++;
-	if(KEY0DelayTime>600)
-	{
-		if(IsKeyPressed(KEY0_PORT,KEY0_PIN))
-		{
-			// 长按
-			ToggleLED(1);
-			
-			TIM_Cmd(BASIC_TIM6, DISABLE);
-			KEY0DelayTime = 0;
-		}
-		else
-		{
-			// 短按
-			ToggleLED(0);
-			
-			TIM_Cmd(BASIC_TIM6, DISABLE);
-			KEY0DelayTime = 0;
-		}
-	}
+		
+    if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET)
+    {
+			if(KEY0DelayTime>700)
+			{
+				if(GPIO_ReadInputDataBit(KEY0_PORT, KEY0_PIN) == 0)
+				{
+					// 长按
+					printf("long");
+					
+					TIM_Cmd(BASIC_TIM6, DISABLE);		
+					KEY0DelayTime = 0;
+					
+					EXTI_ClearITPendingBit(KEY0_EXTI_LINE);
+				}
+				else if(GPIO_ReadInputDataBit(KEY0_PORT, KEY0_PIN) == 1)
+				{
+					// 短按
+					printf("short");
+					
+					TIM_Cmd(BASIC_TIM6, DISABLE);		
+					KEY0DelayTime = 0;
+				}
+			}  
+		 KEY0DelayTime = KEY0DelayTime + 1;	
+
+        // 清除中断标志位
+        TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
+    }
 }
 
 void ADC_IRQHandler(void)
