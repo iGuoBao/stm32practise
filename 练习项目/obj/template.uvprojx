@@ -666,6 +666,11 @@
               <FileType>1</FileType>
               <FilePath>..\user\Public\system.c</FilePath>
             </File>
+            <File>
+              <FileName>RTC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\Public\RTC.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

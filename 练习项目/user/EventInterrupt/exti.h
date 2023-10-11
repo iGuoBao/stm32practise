@@ -10,8 +10,9 @@
 #include "SysTick.h"
 #include "TIM.h"
 #include "ADC.h"
-
-
+#include "RTC.h"
+#include "animations.h"
+#include "tftlcd.h"
 
 static void  NVCI_Config();
 

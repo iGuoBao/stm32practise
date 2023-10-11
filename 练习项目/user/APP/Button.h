@@ -41,6 +41,7 @@
 #define KEY1_EXTI_IRQ 					EXTI3_IRQn				
 #define KEY1_IRQHandler 				EXTI3_IRQHandler
 
+
 // KEY2  PE2
 #define KEY2_PORT 						GPIOE						
 #define KEY2_PORTSOURCE  			GPIO_PortSourceGPIOE	
@@ -73,25 +74,6 @@
 #define WKUP_EXTI_LINE 					EXTI_Line0				
 #define WKUP_EXTI_IRQ 					EXTI0_IRQn				
 #define WKUP_IRQHandler 				EXTI0_IRQHandler	
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
