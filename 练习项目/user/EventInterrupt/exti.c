@@ -14,25 +14,25 @@ static void NVCI_Config()
 	NVIC_InitTypeDef NVIC_InitStructure;
 	// EXTI4--KEY0 
 	NVIC_InitStructure.NVIC_IRQChannel = KEY0_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;		
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);														
 	// EXTI3--KEY1
 	NVIC_InitStructure.NVIC_IRQChannel = KEY1_EXTI_IRQ;				
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;		
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);															
 	// EXTI2--KEY2
 	NVIC_InitStructure.NVIC_IRQChannel = KEY2_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;		
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);															
 	// EXTI0--WKUP
 	NVIC_InitStructure.NVIC_IRQChannel = WKUP_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;		
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);		
@@ -50,16 +50,11 @@ static void NVCI_Config()
 	NVIC_Init(&NVIC_InitStructure);	
 	// ADC PA1
 	NVIC_InitStructure.NVIC_IRQChannel = ADC_IRQ;							//定时器中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 4;				//子优先级
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
-	NVIC_Init(&NVIC_InitStructure);	
-	// RTC
-	NVIC_InitStructure.NVIC_IRQChannel = RTC_IRQn;							//定时器中断通道
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;	//抢占优先级
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;				//子优先级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
+	
 }
 
 

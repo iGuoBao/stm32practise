@@ -1,17 +1,16 @@
 #include "stm32f10x.h"         
 
 // 用户外设
-//#include "LED.h"
-//#include "Button.h"
-//#include "beep.h"
-//#include "EEPROM_AT24C02.h"
+#include "LED.h"
+#include "Button.h"
+#include "beep.h"
+#include "EEPROM_AT24C02.h"
 #include "tftlcd.h"
 #include "animations.h"
 
 // 公共
 #include "SysTick.h"		// 滴答 以后不会使用这种
 #include "setSysClk.h"	// 72M
-#include "RTC.h"
 
 // 中断
 #include "exti.h"
@@ -30,12 +29,10 @@ int main(void)
 	//KEY_init();
 	//Beep_Init(PWM);
 	//EEPROM_Init();
-	
 	ADCx_GPIO_Init();
 	
-	delay_Config();									// systick
-	// BASIC_TIM6_Config();
-	// EXTI_Key_Config();						// 中断设置
+	delay_Config();					// systick
+	EXTI_Key_Config();		// 中断设置
 	EXTI_USART1_Config(115200);
 	ADCx_Mode_Config();
 	TFTLCD_Init();
@@ -49,8 +46,10 @@ int main(void)
 	
 	while(1)
 	{
-		show_voltmeter_chart_value();
-		refresh_voltmeter_chart();
+		//printf("data=%d\r\n",123);
+			refresh_voltmeter_chart();
+			show_voltmeter_chart_value();
+		
 	}
 }
 

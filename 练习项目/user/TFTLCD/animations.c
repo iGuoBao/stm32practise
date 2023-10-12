@@ -1,7 +1,7 @@
 #include "animations.h"
 // 1.2KB   x,y
 
-u16 arr_coordinate_X_memory[voltmeter_chart_line_lengthX ]; // Êµ¼Ê×îÓÅ½â-2 (-1ÏÂ±ê -1×ø±êÖá)
+u16 arr_coordinate_X_memory[voltmeter_chart_line_lengthX ]; // Êµï¿½ï¿½ï¿½ï¿½ï¿½Å½ï¿½-2 (-1ï¿½Â±ï¿½ -1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 u16 arr_coordinate_Y_memory[voltmeter_chart_line_lengthX ];
 int arr_coordinate_X_memory_write_index = 0;
 
@@ -52,88 +52,88 @@ void draw_voltmeter_chart_value_time_line(void)
 }
 
 /*
-	@brief£ºÓÃÓÚµçÑ¹±í¶¯Í¼Ë¢ÐÂ
-	@param£ºÓÃÓÚÃèÊöº¯ÊýµÄ²ÎÊý£¬°üÀ¨²ÎÊýÃûºÍÃèÊö¡£
-	@note£º			×Ô¼ºÐ´×ÅÍæµÄ
-		¿ÉÓÅ»¯¿Õ¼ä·Ç³£´ó
-		Í¨ÓÃÐÔ£º
-			ÒÆÖ²ÓÐÎÊÌâ¡£Èç¹û·ÅÖÐ¶ÏÀï¾Í²»ÐÐ£»Í¬ÑùµÄË¢ÐÂµçÑ¹±í£¬ËûµÄÏÔÊ¾ÊÇÕý³£µÄ¡£
-			ÀýÈç½çÃæµÄ¸üÐÂ¡£¹ØÓÚÏñËØµãÉú³É£¬Ô­Éú³ÉË¼Â·ÊÇ°ÑÊý¾ÝÒ»ÏñËØÒ»ÏñËØµÄxÖá¼ä¸ô¾àÀëÉú³É;´Ëº¯ÊýÒÔÐ´ËÀ£¬²»ÄÜµ÷ÕûÏñËØ¼äÉú³ÉµÄµã¼ä¾à¡£
-			×ÜÖ®ÊºÉ½Ò»Ñù£¬ÂýÂý¸Ä°É¡£
-		ÐÔÄÜÓÅ»¯µã£º
-			ÓÃÁËÊý×é´æ´¢µãµÄÎ»ÖÃ¡£ÓÉÓÚÏÖÔÚÊÇÖ±½Óµ÷ÓÃ»­µãµÄÐÎÊ½(¶¯Ì¬Ë¢ÐÂ)£¬Òò´ËÊý×é¿Õ¼ä²»´ó£¬ÊÇ·ñ¿ÉÒÔÍ¨¹ý·ÃÎÊÒ»ÁÐÒ»ÁÐµÄÏÔÊ¾Æ÷ÏÔ´æµÄÊý¾ÝÀ´¾²Ì¬Ë¢ÐÂ¡£
-			»­ÏßµÄ¶¯Ì¬ÐÎÊ½Éú³ÉÏûºÄÁË´ó²¿·Ö×ÊÔ´¡£ ÐÂÊý¾ÝÓÃ»­Ïß£¬¾ÉÊý¾ÝÓ¦µ±±éÀúÏà¶ÔÒòÇøÓòµÄÏñËØµã£¬È»ºó¸´ÖÆð¤ÌùÒ»ÑùÒÆ¶¯¡£
+	@briefï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Í¼Ë¢ï¿½ï¿½
+	@paramï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	@noteï¿½ï¿½			ï¿½Ô¼ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½
+		ï¿½ï¿½ï¿½Å»ï¿½ï¿½Õ¼ï¿½Ç³ï¿½ï¿½ï¿½
+		Í¨ï¿½ï¿½ï¿½Ô£ï¿½
+			ï¿½ï¿½Ö²ï¿½ï¿½ï¿½ï¿½ï¿½â¡£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½Í²ï¿½ï¿½Ð£ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Ë¢ï¿½Âµï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½
+			ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½É£ï¿½Ô­ï¿½ï¿½ï¿½ï¿½Ë¼Â·ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Øµï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½;ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ÉµÄµï¿½ï¿½à¡£
+			ï¿½ï¿½Ö®ÊºÉ½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä°É¡ï¿½
+		ï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½ï¿½ã£º
+			ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½Î»ï¿½Ã¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Óµï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½(ï¿½ï¿½Ì¬Ë¢ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ä²»ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ò»ï¿½Ðµï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¬Ë¢ï¿½Â¡ï¿½
+			ï¿½ï¿½ï¿½ßµÄ¶ï¿½Ì¬ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë´ó²¿·ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµã£¬È»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½
 			
 
-	@warning£º¹ØÓÚchart_TEMP_pointµãÉú³É¡£ÔÚifµÄÃ¿¸ö·ÖÖÓ¶¼ÓÃµ½ÁË  µ«ÊÇ²»ÄÜÌáÇ°£¬»á³öÏÖÐÂµÄµãÖ»ÔÚµÚÒ»ÁÐË¢ÐÂ¶ø²»Ç°½øµÄÎÊÌâ¡£(´ÓÂß¼­ÉÏÀí²»ÇåÔ­Òò)
+	@warningï¿½ï¿½ï¿½ï¿½ï¿½ï¿½chart_TEMP_pointï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½ï¿½ï¿½ifï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½Ãµï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄµï¿½Ö»ï¿½Úµï¿½Ò»ï¿½ï¿½Ë¢ï¿½Â¶ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â¡£(ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½)
 */
 void refresh_voltmeter_chart(void)
 {
-	// ADC_Cmd(ADCx,ENABLE);  // ADC¸ú×ÅË¢ÐÂ×ß  ºÄ×ÊÔ´
+	// ADC_Cmd(ADCx,ENABLE);  // ADCï¿½ï¿½ï¿½ï¿½Ë¢ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½Ô´
 	//int refresh_skip_distance;
 	if(!chart_overflow){
-		// µÚÒ»´Î 		/**/ /**/ /**/ /**/ /**/ /**/ 
+		// ï¿½ï¿½Ò»ï¿½ï¿½ 		/**/ /**/ /**/ /**/ /**/ /**/ 
 		if(arr_coordinate_X_memory_write_index == 0)
 		{
-			// bug chart_TEMP_pointXY Á½¸öµÄ¼ÆËã²»ÄÜÌáÇ°  Ò»ÌáÇ°¾ÍÃ»ÓÐÇúÏß Ô­µØË¢ÐÂ
+			// bug chart_TEMP_pointXY ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ã²»ï¿½ï¿½ï¿½ï¿½Ç°  Ò»ï¿½ï¿½Ç°ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ô­ï¿½ï¿½Ë¢ï¿½ï¿½
 			chart_TEMP_pointX = chart_origin_pointX + 1;
-			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // ÁÙÊ±½â¾ö -27
+			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ -27
 			arr_coordinate_X_memory[0] = chart_TEMP_pointX;
 			arr_coordinate_Y_memory[0] = chart_TEMP_pointY;
 			arr_coordinate_X_memory_write_index = 1;
 		}
-		// Ã»Âú¸ñÇ°µÄ²Ù×÷
-		else if (arr_coordinate_X_memory_write_index < voltmeter_chart_line_lengthX -2 )	// ×ø±êÖá ¿í¶È³¤
+		// Ã»ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Ä²ï¿½ï¿½ï¿½
+		else if (arr_coordinate_X_memory_write_index < voltmeter_chart_line_lengthX -2 )	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½È³ï¿½
 		{
-			// bug chart_TEMP_pointXY Á½¸öµÄ¼ÆËã²»ÄÜÌáÇ°  Ò»ÌáÇ°¾ÍÃ»ÓÐÇúÏß Ô­µØË¢ÐÂ
+			// bug chart_TEMP_pointXY ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ã²»ï¿½ï¿½ï¿½ï¿½Ç°  Ò»ï¿½ï¿½Ç°ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ô­ï¿½ï¿½Ë¢ï¿½ï¿½
 			chart_TEMP_pointX = chart_TEMP_pointX + 1;
-			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // ÁÙÊ±½â¾ö  -27
+			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // ï¿½ï¿½Ê±ï¿½ï¿½ï¿½  -27
 			arr_coordinate_X_memory[arr_coordinate_X_memory_write_index] = chart_TEMP_pointX;
 			arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index] = chart_TEMP_pointY;
 			
 			LCD_DrawLine_Color(arr_coordinate_X_memory[arr_coordinate_X_memory_write_index-1],arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index-1],chart_TEMP_pointX,chart_TEMP_pointY,RED);
 			arr_coordinate_X_memory_write_index = arr_coordinate_X_memory_write_index + 1;
 		}
-		// ÂúÇ°µÄÒ»²½
+		// ï¿½ï¿½Ç°ï¿½ï¿½Ò»ï¿½ï¿½
 		else if(arr_coordinate_X_memory_write_index == voltmeter_chart_line_lengthX -2)
 		{
-			// bug chart_TEMP_pointXY Á½¸öµÄ¼ÆËã²»ÄÜÌáÇ°  Ò»ÌáÇ°¾ÍÃ»ÓÐÇúÏß Ô­µØË¢ÐÂ
+			// bug chart_TEMP_pointXY ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ã²»ï¿½ï¿½ï¿½ï¿½Ç°  Ò»ï¿½ï¿½Ç°ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ô­ï¿½ï¿½Ë¢ï¿½ï¿½
 			chart_TEMP_pointX = chart_TEMP_pointX + 1;
-			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // ÁÙÊ±½â¾ö -27
+			chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ -27
 			arr_coordinate_X_memory[arr_coordinate_X_memory_write_index] = chart_TEMP_pointX;
 			arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index] = chart_TEMP_pointY;
 			
-			//»­Ïß
+			//ï¿½ï¿½ï¿½ï¿½
 			LCD_DrawLine_Color(arr_coordinate_X_memory[arr_coordinate_X_memory_write_index-1],arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index-1],chart_TEMP_pointX,chart_TEMP_pointY,RED);
 			
-			chart_overflow = 1;		//»­ÂúÁË ¿ªÊ¼×óÒÆ ¶¯»­
-			arr_coordinate_X_memory_write_index = 0;	// ¿ÉºöÂÔ ¶ÁÐ´Î»ÖÃÎª0
+			chart_overflow = 1;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			arr_coordinate_X_memory_write_index = 0;	// ï¿½Éºï¿½ï¿½ï¿½ ï¿½ï¿½Ð´Î»ï¿½ï¿½Îª0
 			
 		} 
 	}
 	else
 	{
-		// bug chart_TEMP_pointXY Á½¸öµÄ¼ÆËã²»ÄÜÌáÇ°  Ò»ÌáÇ°¾ÍÃ»ÓÐÇúÏß Ô­µØË¢ÐÂ
+		// bug chart_TEMP_pointXY ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ã²»ï¿½ï¿½ï¿½ï¿½Ç°  Ò»ï¿½ï¿½Ç°ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ô­ï¿½ï¿½Ë¢ï¿½ï¿½
 		chart_TEMP_pointX = value_line_end_pointX + 1;	
-		chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // ÁÙÊ±½â¾ö -27
+		chart_TEMP_pointY = (1 - (GetValue()/3.3)) * (voltmeter_chart_line_lengthY - 27) + value_line_start_pointY;  // ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ -27
 		arr_coordinate_X_memory[voltmeter_chart_line_lengthX - 1] = chart_TEMP_pointX;
 		arr_coordinate_Y_memory[voltmeter_chart_line_lengthX - 1] = chart_TEMP_pointY;
 		
 		for(int i = 1; i < voltmeter_chart_line_lengthX - 1; i = i + 1)
 		{
-			// Í¼ÐÎ×óÒÆ  Í¨¹ý¸Ä±äÏà¶ÔÒòµÄyÖá×ø±ê
-			LCD_DrawLine_Color(arr_coordinate_X_memory[i-1], arr_coordinate_Y_memory[i-1],arr_coordinate_X_memory[i], arr_coordinate_Y_memory[i],BLACK); 		// Ïû³ý
-			LCD_DrawLine_Color(arr_coordinate_X_memory[i-1], arr_coordinate_Y_memory[i],arr_coordinate_X_memory[i], arr_coordinate_Y_memory[i+1],RED); 			// »­Ïß
-			// Êý×éÊý¾Ý×óÒÆ
+			// Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  Í¨ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			LCD_DrawLine_Color(arr_coordinate_X_memory[i-1], arr_coordinate_Y_memory[i-1],arr_coordinate_X_memory[i], arr_coordinate_Y_memory[i],BLACK); 		// ï¿½ï¿½ï¿½ï¿½
+			LCD_DrawLine_Color(arr_coordinate_X_memory[i-1], arr_coordinate_Y_memory[i],arr_coordinate_X_memory[i], arr_coordinate_Y_memory[i+1],RED); 			// ï¿½ï¿½ï¿½ï¿½
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			arr_coordinate_Y_memory[i-1] = arr_coordinate_Y_memory[i];
 		}
-			// ×îºóÐÂÊý¾Ý×óÒÆ  ²»Ð´ÉÏÃæÊÇ·ÀÒç³ö
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
 			arr_coordinate_Y_memory[voltmeter_chart_line_lengthX - 2] = arr_coordinate_Y_memory[voltmeter_chart_line_lengthX - 1];
 	}
 	
 	/*
-	±£Áô
-	±©Á¦Ë¢ÐÂ  µ«ÊÇÓÖ×¼ÓÖÏ¸ÓÖ¿ì
+	ï¿½ï¿½ï¿½ï¿½
+	ï¿½ï¿½ï¿½ï¿½Ë¢ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½Ï¸ï¿½Ö¿ï¿½
 	else
 	{
 		LCD_Fill(value_line_start_pointX + 1 ,
@@ -146,7 +146,7 @@ void refresh_voltmeter_chart(void)
 	*/
 	
 	/*
-	Ê§°ÜÊ§°Ü
+	Ê§ï¿½ï¿½Ê§ï¿½ï¿½
 	
 	else
 	{
@@ -157,7 +157,7 @@ void refresh_voltmeter_chart(void)
 		//printf("T(%u16)(%u16)\r\n",arr_coordinate_X_memory[voltmeter_chart_line_lengthX],arr_coordinate_Y_memory[voltmeter_chart_line_lengthX]);
 		for(u16 i=0;i<voltmeter_chart_line_lengthX-1;i++)
 		{
-			// ÒÔÇ°µÄµãÈ¥³ý
+			// ï¿½ï¿½Ç°ï¿½Äµï¿½È¥ï¿½ï¿½
 			LCD_DrawLine_Color(arr_coordinate_X_memory[i],arr_coordinate_Y_memory[i],
 													arr_coordinate_X_memory[i+1],arr_coordinate_Y_memory[i+1],BLACK);
 			
@@ -170,7 +170,7 @@ void refresh_voltmeter_chart(void)
 			}
 		}
 		chart_TEMP_pointX = voltmeter_chart_line_lengthX;
-		chart_TEMP_pointY = (1 - (GetValue()/3.3)) * voltmeter_chart_line_lengthY + (voltmeter_chart_height/7)+ 10;  // ÁÙÊ±½â¾ö(voltmeter_chart_height/7)+ 10
+		chart_TEMP_pointY = (1 - (GetValue()/3.3)) * voltmeter_chart_line_lengthY + (voltmeter_chart_height/7)+ 10;  // ï¿½ï¿½Ê±ï¿½ï¿½ï¿½(voltmeter_chart_height/7)+ 10
 		arr_coordinate_X_memory[voltmeter_chart_line_lengthX] = chart_TEMP_pointX;
 		arr_coordinate_Y_memory[voltmeter_chart_line_lengthX] = chart_TEMP_pointY;
 		LCD_DrawLine_Color(arr_coordinate_X_memory[voltmeter_chart_line_lengthX-1],arr_coordinate_Y_memory[voltmeter_chart_line_lengthX-1],
@@ -181,16 +181,16 @@ void refresh_voltmeter_chart(void)
 	
 	*/
 	/*
-	ÀíÏë×îÓÅ½â Ê§°Ü  »¹ÐèÒªÊ±¼ä
-	// Âú¸ñºó
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å½ï¿½ Ê§ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ÒªÊ±ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½
 	else
 	{
-		// ×ó»ØÒÆ¾ÉÊý¾Ý
-		for(u16 i=0;i<=voltmeter_chart_line_lengthX - 1;i++)	// ¹Ì¶¨´ÎÊý ¾ÉÊý¾Ý
+		// ï¿½ï¿½ï¿½ï¿½Æ¾ï¿½ï¿½ï¿½ï¿½ï¿½
+		for(u16 i=0;i<=voltmeter_chart_line_lengthX - 1;i++)	// ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		{
 			if(arr_coordinate_X_memory_write_index == voltmeter_chart_line_lengthX)
 			{
-				// ÒÔÇ°µÄµãÈ¥³ý
+				// ï¿½ï¿½Ç°ï¿½Äµï¿½È¥ï¿½ï¿½
 				LCD_DrawFRONT_COLOR(arr_coordinate_X_memory[arr_coordinate_X_memory_write_index],arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index],BLACK);
 				LCD_DrawLine_Color(arr_coordinate_X_memory[arr_coordinate_X_memory_write_index],
 													arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index],
@@ -202,7 +202,7 @@ void refresh_voltmeter_chart(void)
 			else 
 			{
 				arr_coordinate_X_memory_write_index++;
-				// ÒÔÇ°µÄµãÈ¥³ý
+				// ï¿½ï¿½Ç°ï¿½Äµï¿½È¥ï¿½ï¿½
 				LCD_DrawFRONT_COLOR(arr_coordinate_X_memory[arr_coordinate_X_memory_write_index],arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index],BLACK);
 				LCD_DrawLine_Color(arr_coordinate_X_memory[arr_coordinate_X_memory_write_index],
 													arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index],
@@ -211,9 +211,9 @@ void refresh_voltmeter_chart(void)
 													RED);
 			}
 		}
-		// ÐÂÊý¾Ý
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		chart_TEMP_pointX = voltmeter_chart_line_lengthX;
-		chart_TEMP_pointY = (1 - (GetValue()/3.3)) * voltmeter_chart_line_lengthY + (voltmeter_chart_height/7)+ 10;  // ÁÙÊ±½â¾ö(voltmeter_chart_height/7)+ 10
+		chart_TEMP_pointY = (1 - (GetValue()/3.3)) * voltmeter_chart_line_lengthY + (voltmeter_chart_height/7)+ 10;  // ï¿½ï¿½Ê±ï¿½ï¿½ï¿½(voltmeter_chart_height/7)+ 10
 		arr_coordinate_X_memory[arr_coordinate_X_memory_write_index] = chart_TEMP_pointX;
 		arr_coordinate_Y_memory[arr_coordinate_X_memory_write_index] = chart_TEMP_pointY;
 		
@@ -226,17 +226,18 @@ void refresh_voltmeter_chart(void)
 	*/
 }
 
-void show_voltmeter_chart_value(void) 
-{
+void show_voltmeter_chart_value(void) {
     float value = GetValue();
 
-    // ÌáÈ¡ÕûÊý²¿·ÖºÍÐ¡Êý²¿·Ö
+    // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öºï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     int intValue = (int)value;
-    int decimalPart = (int)((value - intValue) * 100);  // ¼ÙÉè±£ÁôÁ½Î»Ð¡Êý
+    int decimalPart = (int)((value - intValue) * 100);  // ï¿½ï¿½ï¿½è±£ï¿½ï¿½ï¿½ï¿½Î»Ð¡ï¿½ï¿½
 
-    // ½«ÕûÊý²¿·ÖºÍÐ¡Êý²¿·Ö×ª»»Îª×Ö·ûÊý×é
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öºï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½
     char show_value_char[20];
     snprintf(show_value_char, sizeof(show_value_char), "%d.%02d", intValue, decimalPart);
+
+    printf("data=%f\r\n", value);
     LCD_ShowString(value_line_start_pointX, value_line_start_pointY-16, 100, 16, 16, (u8*)show_value_char);
 }
 

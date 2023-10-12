@@ -10,8 +10,8 @@
 #define voltmeter_window_height   200 
 
 
-#define voltmeter_chart_start_pointX  	5  + voltmeter_window_start_pointX
-#define voltmeter_chart_start_pointY 		10 + voltmeter_window_start_pointY
+#define voltmeter_chart_start_pointX  5  + voltmeter_window_start_pointX
+#define voltmeter_chart_start_pointY 	10 + voltmeter_window_start_pointY
 #define voltmeter_chart_width    				300
 #define voltmeter_chart_height    			180
 #define voltmeter_chart_line_lengthX		240
