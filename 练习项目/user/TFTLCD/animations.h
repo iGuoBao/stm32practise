@@ -4,8 +4,8 @@
 #include "tftlcd.h"
 #include	"ADC.h"
 
-#define voltmeter_window_start_pointX 	1
-#define voltmeter_window_start_pointY		1
+#define voltmeter_window_start_pointX 	0
+#define voltmeter_window_start_pointY		0
 #define voltmeter_window_width    320
 #define voltmeter_window_height   200 
 

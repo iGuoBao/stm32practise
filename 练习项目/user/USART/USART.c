@@ -26,7 +26,7 @@ void USART1_Init(u32 bound)
 	GPIO_Init(USART_TX_Port,&GPIO_InitStructure);  			
 	// 串口输入
 	GPIO_InitStructure.GPIO_Pin = USART_RX_PIN;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;		  // 模拟输入
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;		  // 浮空输入
 	GPIO_Init(USART_RX_Port,&GPIO_InitStructure); 
 	
 	

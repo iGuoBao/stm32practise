@@ -17,6 +17,8 @@ void ADCx_GPIO_Init(void)
 
 void ADCx_Mode_Config(void)
 {
+	ADCx_GPIO_Init();	// from adc.c
+	
 	ADC_APB_FUN ( ADC_RCC, ENABLE );	// ´ò¿ª ADC Ê±ÖÓ
 	
 	ADC_InitTypeDef ADC_InitStructure;

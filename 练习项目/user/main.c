@@ -24,12 +24,11 @@ int main(void)
 	uint8_t eedata;
 	
 	setSysClkHSE();				
-	//LED_init();						
+	LED_init();						
 	//JLED_init();
-	//KEY_init();
-	//Beep_Init(PWM);
-	//EEPROM_Init();
-	ADCx_GPIO_Init();
+	KEY_init();
+	Beep_Init(PWM);
+	EEPROM_Init();
 	
 	delay_Config();					// systick
 	EXTI_Key_Config();		// 中断设置
@@ -37,9 +36,9 @@ int main(void)
 	ADCx_Mode_Config();
 	TFTLCD_Init();
 	// RTC_Init();
-	// I2C_Config(EEPROM_I2Cx_Write_ADDRESS);
+	I2C_Config(EEPROM_I2Cx_Write_ADDRESS);
 
-	LCD_Clear(BLACK);
+	LCD_Clear(WHITE);
 	draw_voltmeter_window();
 	draw_voltmeter_chart();
 	draw_voltmeter_chart_value_time_line();

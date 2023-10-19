@@ -50,8 +50,8 @@ static void NVCI_Config()
 	NVIC_Init(&NVIC_InitStructure);	
 	// ADC PA1
 	NVIC_InitStructure.NVIC_IRQChannel = ADC_IRQ;							//定时器中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;	//抢占优先级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;				//子优先级
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;				//子优先级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
 	
@@ -78,15 +78,24 @@ void EXTI_USART1_Config(u32 b)
 
 void USART1_IRQHandler(void)                
 {
-	
-	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)		// 接收中断
+	if (USART_GetFlagStatus(USART1, USART_FLAG_ORE) != RESET)
 	{
-		
-		buffer[writeIndex++] = USART_ReceiveData(USART1);		// 将数据存储到缓冲区
-		
+		//USART_ReceiveData(USART1);
+		//buffer[writeIndex++] = USART_ReceiveData(USART1);		// 将数据存储到缓冲区
+		if(USART_ReceiveData(USART1) == 1)
+		{
+			float value = GetValue();
+
+			int intValue = (int)value;
+			int decimalPart = (int)((value - intValue) * 100); 
+
+			printf("data=%f\r\n", value);
+			ADC_Cmd(ADCx,DISABLE);
+			ADC_ClearITPendingBit(ADC1,ADC_IT_EOC);		
+		}
 		
   	USART_ClearITPendingBit(USART1, USART_IT_RXNE); // 清除中断标志位
-		if(writeIndex >=128) writeIndex = 0;
+		//if(writeIndex >=128) writeIndex = 0;
 	}
 } 	
 
@@ -168,7 +177,7 @@ void ADC_IRQHandler(void)
 		ADC_ClearITPendingBit(ADCx,ADC_IT_EOC);
 	
 		ADC_Cmd(ADCx,DISABLE);
-		
+		ADC_ClearITPendingBit(ADC1,ADC_IT_EOC);
 	}
 
 }
