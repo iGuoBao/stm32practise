@@ -42,6 +42,12 @@ static void NVCI_Config()
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			
 	NVIC_Init(&NVIC_InitStructure);	
+	// USART2
+	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			
+	NVIC_Init(&NVIC_InitStructure);	
 	// TIM6
 	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;						//定时器中断通道
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
@@ -66,11 +72,11 @@ void EXTI_Key_Config(void)
 	NVCI_Config();																
 }	
 
-void EXTI_USART1_Config(u32 b)
+void EXTI_USARTn_Config(u8 number,u32 b)
 {
-	USART1_Init(b);
+	USARTn_Init(number,b);
 	NVCI_Config();		// NVCI
-	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+
 }
 
 
@@ -84,21 +90,25 @@ void USART1_IRQHandler(void)
 		//buffer[writeIndex++] = USART_ReceiveData(USART1);		// 将数据存储到缓冲区
 		if(USART_ReceiveData(USART1) == 1)
 		{
-			float value = GetValue();
-
-			int intValue = (int)value;
-			int decimalPart = (int)((value - intValue) * 100); 
-
-			printf("data=%f\r\n", value);
-			ADC_Cmd(ADCx,DISABLE);
-			ADC_ClearITPendingBit(ADC1,ADC_IT_EOC);		
+			ToggleLED(0);
 		}
 		
   	USART_ClearITPendingBit(USART1, USART_IT_RXNE); // 清除中断标志位
 		//if(writeIndex >=128) writeIndex = 0;
 	}
 } 	
-
+void USART2_IRQHandler(void)                
+{
+	
+	if (USART_GetFlagStatus(USART2, USART_FLAG_ORE) != RESET)
+	{
+		if(USART_ReceiveData(USART2) == 1)
+		{
+			ToggleLED(1);
+		}
+		USART_ClearITPendingBit(USART2, USART_IT_RXNE); // 清除中断标志位
+	}
+} 	
 
 
 void KEY0_IRQHandler(void)	
@@ -107,7 +117,7 @@ void KEY0_IRQHandler(void)
 	{
 		if(IsKeyPressed(KEY0_PORT,KEY0_PIN))
 		{
-			Beep_Music_Do(CM, VOLUME1, B1);
+			
 		}
 		EXTI_ClearITPendingBit(KEY0_EXTI_LINE);
 	}
@@ -187,5 +197,5 @@ void ADC_IRQHandler(void)
 void RTC_IRQHandler(void)
 {
 	showTimeToScreen();
-
+	
 }

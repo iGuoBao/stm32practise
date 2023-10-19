@@ -13,15 +13,26 @@ extern u16 writeIndex;
 #define USART_TX_CLK  					( RCC_APB2Periph_GPIOA | RCC_APB2Periph_USART1 )
 #define USART_TX_Port  					GPIOA
 #define USART_TX_PIN 						GPIO_Pin_9
-
-
 #define USART_RX_CLK  					( RCC_APB2Periph_GPIOA | RCC_APB2Periph_USART1 )
 #define USART_RX_Port  					GPIOA
 #define USART_RX_PIN 						GPIO_Pin_10	
+//---------USART2----------
+// RS485 RE-PD7  PA2-USART2_TX  PA3/USART2_RX
+#define USART2_TX_CLK  						RCC_APB2Periph_GPIOA
+#define USART2_TX_CLK2 						RCC_APB1Periph_USART2 //RCC_APB1PeriphClockCmd
+#define USART2_TX_Port  					GPIOA
+#define USART2_TX_PIN 						GPIO_Pin_2
+#define USART2_RX_CLK  						RCC_APB2Periph_GPIOA
+#define USART2_RX_Port  					GPIOA
+#define USART2_RX_PIN 						GPIO_Pin_3	
+#define USART2_RS485_RE_CLK  		  RCC_APB2Periph_GPIOD
+#define USART2_RS485_RE_CLK2 			RCC_APB1Periph_USART2 
+#define USART2_RS485_RE_Port  		GPIOD
+#define USART2_RS485_RE_PIN 			GPIO_Pin_7
 
 
-void USART1_Init(u32 bound);
-
+void USARTn_Init(u8 number,u32 bound);
+void RS485_ENABLE();
 void sendString(char* str);
 u8 getDate();
 

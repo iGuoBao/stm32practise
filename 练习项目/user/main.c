@@ -32,7 +32,11 @@ int main(void)
 	
 	delay_Config();					// systick
 	EXTI_Key_Config();		// 中断设置
-	EXTI_USART1_Config(115200);
+	EXTI_USARTn_Config(1,115200);
+	printf("usart1_init");	
+	EXTI_USARTn_Config(2,115200);
+	RS485_ENABLE();
+	printf("usart2_init");	
 	ADCx_Mode_Config();
 	TFTLCD_Init();
 	// RTC_Init();
@@ -45,7 +49,7 @@ int main(void)
 	
 	while(1)
 	{
-		//printf("data=%d\r\n",123);
+			
 			refresh_voltmeter_chart();
 			show_voltmeter_chart_value();
 		
