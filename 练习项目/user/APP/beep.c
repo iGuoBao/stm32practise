@@ -1,8 +1,7 @@
 #include "beep.h"
 
 #include <stdio.h>
-
-
+u8 music_station=1;
 int noteFrequencies[] = {
     0,262, 294, 330, 349, 392, 440, 494,
     523, 587, 659, 698, 784, 880, 988,
@@ -45,6 +44,13 @@ void Beep_Init(Beep_Mode mode)
 		TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low; 	
 		Beep_PWM_OCxInit(Beep_PWM_TIMx, &TIM_OCInitStructure);				//使能通道和预装载
 		Beep_PWM_OCxPreloadConfig(Beep_PWM_TIMx, TIM_OCPreload_Enable);
+		music_station = 1;
+	}
+	else
+	{
+    RCC_APB2PeriphClockCmd(Beep_PORT_RCC, DISABLE);
+		TIM_Cmd(Beep_PWM_TIMx, DISABLE);	// 使能
+		music_station = 0;
 	}
 }
 
@@ -102,14 +108,17 @@ void Beep_Usart_decode(u8 encoded, Beep_Music_Note *note, Beep_Music_Volume *vol
 // 音乐机工作
 void Beep_Music_Do(Beep_Music_Note key, Beep_Music_Volume volume, Beep_Music_Duration duration)
 {    
-		Set_Beep_PWM_HZ(noteFrequencies[key]);
-		delay_ms(DurationNum[duration]);
-		Set_Beep_PWM_HZ(0);
+		if(music_station){
+			Set_Beep_PWM_HZ(noteFrequencies[key]);
+			delay_ms(DurationNum[duration]);
+			Set_Beep_PWM_HZ(0);
+		}
 }
 
 
 void Beep_Music()
 {
+	if(music_station==1){
 	// 国际歌
 	Beep_Music_Do(GM, VOLUME1, B1);
 
@@ -261,4 +270,5 @@ void Beep_Music()
 
 	Beep_Music_Do(EH,VOLUME1,B2);
 	Beep_Music_Do(EH,VOLUME1,B2);
+}
 }

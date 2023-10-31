@@ -22,6 +22,7 @@
 typedef enum {
   Normal,
   PWM,
+	DOWN,
 }Beep_Mode;
 
 

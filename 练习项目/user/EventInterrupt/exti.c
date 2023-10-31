@@ -1,7 +1,7 @@
 #include "exti.h"
 
 extern float  ADC_ConvertedValue; // from ADC
-
+extern u8 music_station;
 
 
 
@@ -14,26 +14,26 @@ static void NVCI_Config()
 	NVIC_InitTypeDef NVIC_InitStructure;
 	// EXTI4--KEY0 
 	NVIC_InitStructure.NVIC_IRQChannel = KEY0_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);														
 	// EXTI3--KEY1
 	NVIC_InitStructure.NVIC_IRQChannel = KEY1_EXTI_IRQ;				
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;		
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);															
 	// EXTI2--KEY2
 	NVIC_InitStructure.NVIC_IRQChannel = KEY2_EXTI_IRQ;					
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);															
 	// EXTI0--WKUP
 	NVIC_InitStructure.NVIC_IRQChannel = WKUP_EXTI_IRQ;					
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;		
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;					
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;		
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);		
 	// USART
@@ -44,14 +44,14 @@ static void NVCI_Config()
 	NVIC_Init(&NVIC_InitStructure);	
 	// TIM6
 	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;						//定时器中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;	//抢占优先级
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				//子优先级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
 	// ADC PA1
 	NVIC_InitStructure.NVIC_IRQChannel = ADC_IRQ;							//定时器中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;				//子优先级
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;	//抢占优先级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				//子优先级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
 	
@@ -105,24 +105,32 @@ void KEY0_IRQHandler(void)
 {
 	if (EXTI_GetITStatus(KEY0_EXTI_LINE) != RESET)		
 	{
+		EXTI_ClearITPendingBit(KEY0_EXTI_LINE);
 		if(IsKeyPressed(KEY0_PORT,KEY0_PIN))
 		{
-			Beep_Music_Do(CM, VOLUME1, B1);
+			Beep_Init(PWM);
+			ToggleLED(0);
+			delay_ms(1000);
+			ToggleLED(0);
+			Beep_Init(DOWN);
 		}
-		EXTI_ClearITPendingBit(KEY0_EXTI_LINE);
 	}
 }
 
 void KEY1_IRQHandler(void)
 {
-		if (EXTI_GetITStatus(KEY1_EXTI_LINE) != RESET)			
+	if (EXTI_GetITStatus(KEY1_EXTI_LINE) != RESET)			
 	{
+		EXTI_ClearITPendingBit(KEY1_EXTI_LINE);
 		if(IsKeyPressed(KEY1_PORT,KEY1_PIN))
 		{
-			Beep_Music_Do(GM, VOLUME1, B1);
+			Beep_Init(PWM);
+			ToggleLED(1);
+			delay_ms(1000);
+			ToggleLED(1);
+			Beep_Init(DOWN);
+			
 		}
-		
-			EXTI_ClearITPendingBit(KEY1_EXTI_LINE);
 	}
 }
 
@@ -130,11 +138,14 @@ void KEY2_IRQHandler(void)
 {
 	if (EXTI_GetITStatus(KEY2_EXTI_LINE) != RESET)			
 	{
+		EXTI_ClearITPendingBit(KEY2_EXTI_LINE);
 		if(IsKeyPressed(KEY2_PORT,KEY2_PIN))
 		{
+			Beep_Init(PWM);
 			Beep_Music();
+			Beep_Init(DOWN);
+
 		}
-	EXTI_ClearITPendingBit(KEY2_EXTI_LINE);
 	}
 }
 
