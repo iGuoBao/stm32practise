@@ -2,19 +2,22 @@
 
 void BASIC_TIM3_Config(void)
 {
+	if (1){
 		// 开时钟
-	BASIC_TIM4_APBxClock_FUN(BASIC_TIM4_CLK, ENABLE);	
-	
+		BASIC_TIM4_APBxClock_FUN(BASIC_TIM4_CLK, ENABLE);	
+		
 		// 基础定时器时钟结构体
-	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	// TIM3配置
-	TIM_TimeBaseStructure.TIM_Period = 0;											// 自动重装值   PER = 1 000 000 / HZ
-	TIM_TimeBaseStructure.TIM_Prescaler = 0;										// 预分频系数  1440hz 估值
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;		// 向上计数
-	TIM_TimeBaseInit(BASIC_TIM4, &TIM_TimeBaseStructure); 
+		TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+		// TIM3配置
+		TIM_TimeBaseStructure.TIM_Period = 0;												// 刚好数1us
+		TIM_TimeBaseStructure.TIM_Prescaler = 71;										//  1M
+		TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;	// 向上计数
+		TIM_TimeBaseInit(BASIC_TIM4, &TIM_TimeBaseStructure); 
+		
+		TIM_Cmd(Beep_PWM_TIMx, ENABLE);	// 使能
+	}
 	
-	TIM_Cmd(Beep_PWM_TIMx, ENABLE);	// 使能
-	
+
 }
 
 void BASIC_TIM4_Config(void)
@@ -25,8 +28,8 @@ void BASIC_TIM4_Config(void)
 		// 基础定时器时钟结构体
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	// TIM4配置
-	TIM_TimeBaseStructure.TIM_Period = 0;											// 自动重装值   PER = 1 000 000 / HZ
-	TIM_TimeBaseStructure.TIM_Prescaler = 0;										// 预分频系数  1440hz 估值
+	TIM_TimeBaseStructure.TIM_Period = 0;												// 刚好数1us
+	TIM_TimeBaseStructure.TIM_Prescaler = 71;										//  1M
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;		// 向上计数
 	TIM_TimeBaseInit(BASIC_TIM4, &TIM_TimeBaseStructure); 
 	

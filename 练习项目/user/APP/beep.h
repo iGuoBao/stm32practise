@@ -11,6 +11,7 @@
 #define Beep_PIN 						GPIO_Pin_8
 #define Beep_PORT_RCC				RCC_APB2Periph_GPIOB
 #define Beep_PWM_PORT_RCC		(Beep_PORT_RCC|RCC_APB2Periph_AFIO)
+
 #define Beep_PWM_TIMx				TIM4
 #define Beep_PWM_CCRx 			CCR3				// TIM4 CH3 PB8
 #define Beep_PWM_OCxInit 		TIM_OC3Init	// ≥ı ºªØ
@@ -90,4 +91,8 @@ u8 Beep_Usart_encode(Beep_Music_Note note, Beep_Music_Volume volume, Beep_Music_
 void Beep_Usart_decode(u8 encoded, Beep_Music_Note *note, Beep_Music_Volume *volume, Beep_Music_Duration *duration);
 void Beep_Music_Do(Beep_Music_Note key,Beep_Music_Volume,Beep_Music_Duration);
 void Beep_Music();
+
+
+
+
 #endif

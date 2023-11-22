@@ -13,6 +13,8 @@
 #include "RTC.h"
 #include "animations.h"
 #include "tftlcd.h"
+#include "infrared_ray.h"
+
 
 static void  NVCI_Config();
 

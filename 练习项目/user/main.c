@@ -4,9 +4,11 @@
 #include "LED.h"
 #include "Button.h"
 #include "beep.h"
-#include "EEPROM_AT24C02.h"
-#include "tftlcd.h"
-#include "animations.h"
+//#include "EEPROM_AT24C02.h"
+//#include "tftlcd.h"
+//#include "animations.h"
+#include "infrared_ray.h"
+
 
 // 公共
 #include "SysTick.h"		// 滴答 以后不会使用这种
@@ -16,38 +18,50 @@
 #include "exti.h"
 
 // 协议
-#include "i2c.h"
+//#include "i2c.h"
 #include "USART.h"
 
 int main(void)
 {	
-	uint8_t eedata;
 	
-	setSysClkHSE();				
-	LED_init();						
+	
+	setSysClkHSE();		
+	EXTI_Key_Config();		  // 中断设置
+	EXTI_USART1_Config(115200);
+	
+
+
+	//LED_init();						
 	//JLED_init();
-	KEY_init();
-	Beep_Init(PWM);
-	EEPROM_Init();
+	//KEY_init();
+	//Beep_Init(PWM);
+	//EEPROM_Init();
+	Infrared_ray_Init();
+	
+	
 	
 	delay_Config();					// systick
-	EXTI_Key_Config();		// 中断设置
-	EXTI_USART1_Config(115200);
-	ADCx_Mode_Config();
-	TFTLCD_Init();
-	// RTC_Init();
-	I2C_Config(EEPROM_I2Cx_Write_ADDRESS);
-
-	LCD_Clear(WHITE);
-	draw_voltmeter_window();
-	draw_voltmeter_chart();
-	draw_voltmeter_chart_value_time_line();
+	//EXTI_Key_Config();		  // 中断设置
 	
+	//ADCx_Mode_Config();
+	//TFTLCD_Init();
+	// RTC_Init();
+	//I2C_Config(EEPROM_I2Cx_Write_ADDRESS);
+
+	//LCD_Clear(WHITE);
+	//draw_voltmeter_window();
+	//draw_voltmeter_chart();
+	//draw_voltmeter_chart_value_time_line();
+	
+	
+	
+	
+	printf("work!\r\n");
 	while(1)
 	{
 		//printf("data=%d\r\n",123);
-			refresh_voltmeter_chart();
-			show_voltmeter_chart_value();
+			//refresh_voltmeter_chart();
+			//show_voltmeter_chart_value();
 		
 	}
 }

@@ -706,6 +706,16 @@
               <FileType>1</FileType>
               <FilePath>..\user\Public\ADC.c</FilePath>
             </File>
+            <File>
+              <FileName>Infrared_ray.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\APP\Infrared_ray.c</FilePath>
+            </File>
+            <File>
+              <FileName>Infrared_ray.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\APP\Infrared_ray.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

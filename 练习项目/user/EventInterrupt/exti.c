@@ -2,8 +2,9 @@
 
 extern float  ADC_ConvertedValue; // from ADC
 extern u8 music_station;
-
-
+extern int Infrared_ray_Receive_Data[];
+extern u32 Infrared_ray_time_steps_up,Infrared_ray_time_steps_down;
+extern u8 Infrared_ray_Receive_bit;
 
 
 // 突然意识到  虽然很好对照优先级，但是后续不方便，还是需要写到各个的NVCI下
@@ -12,6 +13,8 @@ static void NVCI_Config()
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);							
 
 	NVIC_InitTypeDef NVIC_InitStructure;
+	
+	/*
 	// EXTI4--KEY0 
 	NVIC_InitStructure.NVIC_IRQChannel = KEY0_EXTI_IRQ;					
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		
@@ -55,6 +58,23 @@ static void NVCI_Config()
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
 	
+	
+	
+	
+	// IR LED
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;   //打开全局中断 !< External Line[9:5] Interrupts 
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //抢占优先级为0
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1; 	 //响应优先级为1
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;   //使能
+	NVIC_Init(&NVIC_InitStructure);
+	*/
+	// TIM4
+	NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;						//定时器中断通道
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;	//抢占优先级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				//子优先级
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
+	NVIC_Init(&NVIC_InitStructure);	
+
 }
 
 
@@ -74,7 +94,39 @@ void EXTI_USART1_Config(u32 b)
 }
 
 
+
+
+
 // 中断函数定义
+
+
+void EXTI3_IRQHandler(void)
+{
+	if (EXTI_GetITStatus(KEY1_EXTI_LINE) != RESET)			
+	{
+		if(IsKeyPressed(KEY1_PORT,KEY1_PIN))
+		{
+			Beep_Init(PWM);
+			ToggleLED(1);
+			delay_ms(1000);
+			ToggleLED(1);
+			Beep_Init(DOWN);
+		}
+		EXTI_ClearITPendingBit(KEY1_EXTI_LINE);
+	}
+	
+	
+	//红外
+  if(EXTI_GetITStatus(EXTI_Line3) != RESET)
+  {
+		TIM_Cmd(infrared_ray_TIMx, ENABLE);	// 使能
+				
+    
+    //清除标志位  
+    EXTI_ClearITPendingBit(EXTI_Line3);
+  }
+}
+
 
 void USART1_IRQHandler(void)                
 {
@@ -117,22 +169,6 @@ void KEY0_IRQHandler(void)
 	}
 }
 
-void KEY1_IRQHandler(void)
-{
-	if (EXTI_GetITStatus(KEY1_EXTI_LINE) != RESET)			
-	{
-		EXTI_ClearITPendingBit(KEY1_EXTI_LINE);
-		if(IsKeyPressed(KEY1_PORT,KEY1_PIN))
-		{
-			Beep_Init(PWM);
-			ToggleLED(1);
-			delay_ms(1000);
-			ToggleLED(1);
-			Beep_Init(DOWN);
-			
-		}
-	}
-}
 
 void KEY2_IRQHandler(void)
 {
@@ -158,6 +194,36 @@ void WKUP_IRQHandler(void)
 	}
 	EXTI_ClearITPendingBit(WKUP_EXTI_LINE);
 }
+
+void TIM3_IRQHandler(void)
+{
+	if(TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) //检查TIM6更新中断发生与否
+  {
+		show_voltmeter_chart_value();
+		if(ADC_GetSoftwareStartConvStatus(ADC1)==ENABLE)
+		{
+			ADC_Cmd(ADCx,DISABLE);
+		}
+		else if(ADC_GetSoftwareStartConvStatus(ADC1)==DISABLE)
+		{
+			ADC_Cmd(ADCx,ENABLE);
+		}
+	}
+	TIM_ClearITPendingBit(TIM6, TIM_IT_Update);  //清除TIMx更新中断标志 
+}
+
+void TIM4_IRQHandler(void)
+{
+	
+    if (TIM_GetITStatus(infrared_ray_TIMx, TIM_IT_CC4) != RESET)
+    {
+			
+			
+			
+			TIM_ClearITPendingBit(infrared_ray_TIMx, TIM_IT_CC4);
+    }
+}
+
 
 void TIM6_IRQHandler(void)
 {
@@ -200,3 +266,5 @@ void RTC_IRQHandler(void)
 	showTimeToScreen();
 
 }
+
+
