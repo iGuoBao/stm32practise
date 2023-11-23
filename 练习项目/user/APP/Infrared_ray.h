@@ -4,10 +4,6 @@
 #include "stm32f10x.h"
 #include "SysTick.h"
 #include "USART.h"
- 
-#define TRUE			0
-#define FALSE			1
- 
 
 // IO  Infrared_ray_  红外接收引脚 Send, Receive
 #define Infrared_ray_Receive_PORT              GPIOB

@@ -23,7 +23,7 @@
 int main(void)
 {	
 	setSysClkHSE();		
-	EXTI_Key_Config();		  // 中断设置
+	//EXTI_Key_Config();		  // 中断设置
 	EXTI_USART1_Config(115200);
 
 	//LED_init();						
@@ -31,6 +31,7 @@ int main(void)
 	//KEY_init();
 	//Beep_Init(PWM);
 	//EEPROM_Init();
+	printf("init....");
 	Infrared_ray_init();
 	
 	delay_Config();					// systick
@@ -47,11 +48,24 @@ int main(void)
 	//draw_voltmeter_chart_value_time_line();
 	
 	printf("work!\r\n");
-	
+
+	extern u8 Infrared_ray_Receive_Data_Index;
+	extern int Infrared_ray_Receive_Data[300];
 	while(1)
-	{
-		//printf("data=%d\r\n",123);
-			//refresh_voltmeter_chart();
-			//show_voltmeter_chart_value();
+	{	
+		printf("--------");
+		delay_ms(1000);
+		delay_ms(1000);
+		delay_ms(1000);
+		// Infrared_ray_Receive_Data[32]数组 打印全部
+		
+		for (int i = 0; i < 64; i++)
+		{
+			printf("%d ",Infrared_ray_Receive_Data[i]);
+			Infrared_ray_Receive_Data_Index = 0;
+			Infrared_ray_Receive_Data[i] = 5;
+		}
+		printf("\r\n");
+		printf("--------");
 	}
 }
