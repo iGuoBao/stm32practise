@@ -9,7 +9,6 @@
 //#include "animations.h"
 #include "infrared_ray.h"
 
-
 // 公共
 #include "SysTick.h"		// 滴答 以后不会使用这种
 #include "setSysClk.h"	// 72M
@@ -23,22 +22,16 @@
 
 int main(void)
 {	
-	
-	
 	setSysClkHSE();		
 	EXTI_Key_Config();		  // 中断设置
 	EXTI_USART1_Config(115200);
-	
-
 
 	//LED_init();						
 	//JLED_init();
 	//KEY_init();
 	//Beep_Init(PWM);
 	//EEPROM_Init();
-	Infrared_ray_Init();
-	
-	
+	Infrared_ray_init();
 	
 	delay_Config();					// systick
 	//EXTI_Key_Config();		  // 中断设置
@@ -53,17 +46,12 @@ int main(void)
 	//draw_voltmeter_chart();
 	//draw_voltmeter_chart_value_time_line();
 	
-	
-	
-	
 	printf("work!\r\n");
+	
 	while(1)
 	{
 		//printf("data=%d\r\n",123);
 			//refresh_voltmeter_chart();
 			//show_voltmeter_chart_value();
-		
 	}
 }
-
-

@@ -2,9 +2,13 @@
 
 extern float  ADC_ConvertedValue; // from ADC
 extern u8 music_station;
-extern int Infrared_ray_Receive_Data[];
-extern u32 Infrared_ray_time_steps_up,Infrared_ray_time_steps_down;
+
+extern u8 Infrared_ray_synchronous_Receive_flag;
 extern u8 Infrared_ray_Receive_bit;
+extern u8 Infrared_ray_Receive_flag;
+extern u8 Infrared_ray_Receive_Data_Index;
+extern u32 Infrared_ray_Receive_Data[];
+extern u32 Infrared_ray_timeus_up, Infrared_ray_timeus_down;
 
 
 // 突然意识到  虽然很好对照优先级，但是后续不方便，还是需要写到各个的NVCI下
@@ -77,8 +81,6 @@ static void NVCI_Config()
 
 }
 
-
-
 void EXTI_Key_Config(void)
 {
 	RCC_APB2PeriphClockCmd(KEY0_EXTI_RCC,ENABLE);										
@@ -93,15 +95,11 @@ void EXTI_USART1_Config(u32 b)
 	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 }
 
-
-
-
-
 // 中断函数定义
-
 
 void EXTI3_IRQHandler(void)
 {
+	/*
 	if (EXTI_GetITStatus(KEY1_EXTI_LINE) != RESET)			
 	{
 		if(IsKeyPressed(KEY1_PORT,KEY1_PIN))
@@ -114,19 +112,9 @@ void EXTI3_IRQHandler(void)
 		}
 		EXTI_ClearITPendingBit(KEY1_EXTI_LINE);
 	}
+	*/
 	
-	
-	//红外
-  if(EXTI_GetITStatus(EXTI_Line3) != RESET)
-  {
-		TIM_Cmd(infrared_ray_TIMx, ENABLE);	// 使能
-				
-    
-    //清除标志位  
-    EXTI_ClearITPendingBit(EXTI_Line3);
-  }
 }
-
 
 void USART1_IRQHandler(void)                
 {
@@ -151,8 +139,6 @@ void USART1_IRQHandler(void)
 	}
 } 	
 
-
-
 void KEY0_IRQHandler(void)	
 {
 	if (EXTI_GetITStatus(KEY0_EXTI_LINE) != RESET)		
@@ -168,7 +154,6 @@ void KEY0_IRQHandler(void)
 		}
 	}
 }
-
 
 void KEY2_IRQHandler(void)
 {
@@ -214,14 +199,62 @@ void TIM3_IRQHandler(void)
 
 void TIM4_IRQHandler(void)
 {
-	
-    if (TIM_GetITStatus(infrared_ray_TIMx, TIM_IT_CC4) != RESET)
+	// tim4 溢出中断
+	if(TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET) 
     {
-			
-			
-			
-			TIM_ClearITPendingBit(infrared_ray_TIMx, TIM_IT_CC4);
+		// 引脚上升沿 
+		if (Infrared_ray_Receive_flag)
+		{
+			Infrared_ray_timeus_down++;
+		}
+		// 引脚下降沿  开始数up
+		else if (!Infrared_ray_Receive_flag)
+		{
+			Infrared_ray_timeus_up++;
+		}
+	  TIM_ClearITPendingBit(TIM4, TIM_IT_Update);  //清除TIMx更新中断标志
     }
+
+	// tim4 通道4中断
+	if(TIM_GetITStatus(TIM4, TIM_IT_CC4) != RESET)
+	{
+		// 读取通道4 gpio电平
+		Infrared_ray_Receive_flag = GPIO_ReadInputDataBit(Infrared_ray_Receive_PORT, Infrared_ray_Receive_PIN);
+		
+		// 没同步前
+		if (!Infrared_ray_synchronous_Receive_flag)
+		{
+			//Infrared_ray_timeus_up在9000us左右 down在4500左右 同步
+			Infrared_ray_synchronous_Receive_flag = (Infrared_ray_timeus_up > 8990 && Infrared_ray_timeus_up < 9010 && Infrared_ray_timeus_down > 4490 && Infrared_ray_timeus_down < 4510);
+		}
+		// 同步后
+		else if (Infrared_ray_synchronous_Receive_flag)
+		{
+			// 下降沿
+			if (!Infrared_ray_Receive_flag) 
+			{
+				if (Infrared_ray_timeus_up > 550 && Infrared_ray_timeus_up < 570 && Infrared_ray_timeus_down > 550 && Infrared_ray_timeus_down < 570)
+				{
+					//逻辑0 数据存放到Infrared_ray_Receive_Data[]数组
+					Infrared_ray_Receive_Data[Infrared_ray_Receive_Data_Index++] = 0;
+
+				}
+				else if (Infrared_ray_timeus_up > 550 && Infrared_ray_timeus_up < 570 && Infrared_ray_timeus_down > 1740 && Infrared_ray_timeus_down < 1760)
+				{
+					//逻辑0 数据存放到Infrared_ray_Receive_Data[]数组
+					Infrared_ray_Receive_Data[Infrared_ray_Receive_Data_Index++] = 1;
+				}
+				//清空时间记时
+				Infrared_ray_timeus_up = 0;
+				Infrared_ray_timeus_down = 0;
+			}
+		}
+		// 下降沿 
+		
+
+
+		TIM_ClearITPendingBit(TIM4, TIM_IT_CC4);
+	}
 }
 
 
@@ -264,7 +297,6 @@ void ADC_IRQHandler(void)
 void RTC_IRQHandler(void)
 {
 	showTimeToScreen();
-
 }
 
 

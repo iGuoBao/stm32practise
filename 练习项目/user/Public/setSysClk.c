@@ -8,8 +8,9 @@ int setSysClkHSE()
 	
 	// 设置频率
 	RCC_HCLKConfig(RCC_SYSCLK_Div1); 
+	RCC_PCLK1Config(RCC_HCLK_Div2); 
 	RCC_PCLK2Config(RCC_HCLK_Div1);
-	RCC_PCLK1Config(RCC_HCLK_Div2);
+	
 	RCC_PLLConfig(RCC_PLLSource_HSE_Div1,RCC_PLLMul_9);  //72M
 	RCC_PLLCmd(ENABLE);
 	
