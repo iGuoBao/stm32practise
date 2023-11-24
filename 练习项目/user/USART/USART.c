@@ -1,8 +1,18 @@
 #include "USART.h"
 
 
-uint8_t buffer[BUFFER_SIZE];
-uint16_t writeIndex = 0;
+u8 buffer[BUFFER_SIZE];
+u8 writeIndex = 0;
+
+
+
+//------------------
+
+u8 read_3phase_voltage[]={
+	0x7E,0x31,0x30,0x30,0x31,0x33,0x30,0x34,0x30,0x30,0x30,0x30,0x30,0x46,0x44,0x42,0x37,0x0D
+	};	
+
+//------------------
 
 int fputc(int ch,FILE *p)  //函数默认的，在使用printf函数时自动调用
 {
@@ -14,13 +24,15 @@ int fputc(int ch,FILE *p)  //函数默认的，在使用printf函数时自动调
 
 void USARTn_Init(u8 number,u32 bound)
 {
-	USART_DeInit(USART1);
-	USART_DeInit(USART2);
+	//USART_DeInit(USART1);
+	//USART_DeInit(USART2);
 	
 	// 串口1
 	if(number == 1)
 	{
 		RCC_APB2PeriphClockCmd(USART_TX_CLK,ENABLE);
+
+
 		// GPIO结构体
 		GPIO_InitTypeDef GPIO_InitStructure;
 		// 串口输出
@@ -50,11 +62,11 @@ void USARTn_Init(u8 number,u32 bound)
 	}
 	else if(number == 2)
 	{
+
 		RCC_APB1PeriphClockCmd(USART2_TX_CLK2,ENABLE);
-		RCC_APB1PeriphClockCmd(USART2_RS485_RE_CLK2,ENABLE);
 		RCC_APB2PeriphClockCmd(USART2_TX_CLK,ENABLE);
+		
 		RCC_APB2PeriphClockCmd(USART2_RS485_RE_CLK,ENABLE);
-		printf("clk");
 		
 		// GPIO结构体
 		GPIO_InitTypeDef GPIO_InitStructure;
@@ -67,14 +79,12 @@ void USARTn_Init(u8 number,u32 bound)
 		GPIO_InitStructure.GPIO_Pin = USART2_RX_PIN;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;		  // 浮空输入
 		GPIO_Init(USART2_RX_Port,&GPIO_InitStructure); 
-		// RE输出
+		// RE输出  使能
 		GPIO_InitStructure.GPIO_Pin = USART2_RS485_RE_PIN;
-		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;	    			// 推挽输出
 		GPIO_Init(USART2_RS485_RE_Port,&GPIO_InitStructure);  
 		
-		printf("gpio");
-		
+	
 		// USART结构体
 		USART_InitTypeDef USART_InitStructure;
 		// 串口2
@@ -85,33 +95,31 @@ void USARTn_Init(u8 number,u32 bound)
 		USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;		//无硬件数据流控制
 		USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;										//收发模式
 		USART_Init(USART2, &USART_InitStructure);			// 包装完毕
-		USART_Cmd(USART2, ENABLE); 									  //使能串口2
-		USART_ClearFlag(USART2, USART_FLAG_TC);				// 清除 USARTx 的待处理标志位
-		
+		USART_Cmd(USART2, ENABLE); 				  // 使能串口2
+		USART_ClearFlag(USART2, USART_FLAG_TC);	  // 清除 USARTx 的待处理标志位
 	}
-	
 }
 
-void RS485_ENABLE()
+void RS485_ENABLE(u8 work_station)
 {
-	GPIO_SetBits(USART2_RS485_RE_Port, USART2_RS485_RE_PIN);
+	if (work_station) GPIO_SetBits(USART2_RS485_RE_Port, USART2_RS485_RE_PIN);
+	else GPIO_ResetBits(USART2_RS485_RE_Port, USART2_RS485_RE_PIN);
+}
+void RS485_send_data(u8 data)
+{
+	USART_SendData(USART2,data);
+	while(USART_GetFlagStatus(USART2,USART_FLAG_TC)==RESET);
 }
 
-void sendString(char* str)
+void RS485_send_cmd(u8 buf[],u8 len)
 {
-    while(*str)
-    {
-        // 等待发送数据寄存器为空
-        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
-
-        // 发送一个字符
-        USART_SendData(USART1, *str);
-
-        // 移动到下一个字符
-        str++;
-    }
-}
-u8 getDate()
-{
-	return buffer[writeIndex];
+	u8 i;
+	//len = sizeof(buf)/sizeof(buf[0]);
+	printf("send:");
+	for(i=0;i<len;i++)
+	{
+		printf("%2x-",buf[i]);
+		RS485_send_data(buf[i]);
+	}
+	printf("\r\n");
 }

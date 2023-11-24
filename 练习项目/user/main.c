@@ -3,10 +3,10 @@
 // 用户外设
 #include "LED.h"
 #include "Button.h"
-#include "beep.h"
-#include "EEPROM_AT24C02.h"
-#include "tftlcd.h"
-#include "animations.h"
+//#include "beep.h"
+//#include "EEPROM_AT24C02.h"
+//#include "tftlcd.h"
+//#include "animations.h"
 
 // 公共
 #include "SysTick.h"		// 滴答 以后不会使用这种
@@ -16,43 +16,32 @@
 #include "exti.h"
 
 // 协议
-#include "i2c.h"
+//#include "i2c.h"
 #include "USART.h"
 
 int main(void)
 {	
-	uint8_t eedata;
-	
 	setSysClkHSE();				
 	LED_init();						
-	//JLED_init();
 	KEY_init();
-	Beep_Init(PWM);
-	EEPROM_Init();
 	
 	delay_Config();					// systick
 	EXTI_Key_Config();		// 中断设置
-	EXTI_USARTn_Config(1,115200);
-	printf("usart1_init");	
-	EXTI_USARTn_Config(2,115200);
-	RS485_ENABLE();
-	printf("usart2_init");	
-	ADCx_Mode_Config();
-	TFTLCD_Init();
-	// RTC_Init();
-	I2C_Config(EEPROM_I2Cx_Write_ADDRESS);
-
-	LCD_Clear(WHITE);
-	draw_voltmeter_window();
-	draw_voltmeter_chart();
-	draw_voltmeter_chart_value_time_line();
+	EXTI_USARTn_Config(1,9600);
+	printf("usart1_init\r\n");	
+	//delay_ms(100);
+	EXTI_USARTn_Config(2,9600);
 	
+	printf("usart2_init\r\n");	
+	BASIC_TIM6_Config();
+
+	//------ app
+		
+
+	//------ app
 	while(1)
 	{
-			
-			refresh_voltmeter_chart();
-			show_voltmeter_chart_value();
-		
+
 	}
 }
 

@@ -18,14 +18,5 @@ static void  NVCI_Config();
 
 void EXTI_Key_Config(void);
 void EXTI_USARTn_Config(u8 number,u32 b);
-
-
-// 中断函数
-void KEY0_IRQHandler(void);					
-void KEY1_IRQHandler(void);	
-void KEY2_IRQHandler(void);	
-void WKUP_IRQHandler(void);	
-void USART1_IRQHandler(void);
-void TIM6_IRQHandler(void);
 	
 #endif

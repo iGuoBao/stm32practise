@@ -2,8 +2,11 @@
 
 extern float  ADC_ConvertedValue; // from ADC
 
+extern u8 read_3phase_voltage[];  
+extern u8 buffer[BUFFER_SIZE];
+extern u8 writeIndex;
 
-
+extern u8 TIM6_100ms_step;
 
 
 // 突然意识到  虽然很好对照优先级，但是后续不方便，还是需要写到各个的NVCI下
@@ -44,26 +47,19 @@ static void NVCI_Config()
 	NVIC_Init(&NVIC_InitStructure);	
 	// USART2
 	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			
 	NVIC_Init(&NVIC_InitStructure);	
 	// TIM6
 	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;						//定时器中断通道
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				//子优先级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;			//子优先级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
-	// ADC PA1
-	NVIC_InitStructure.NVIC_IRQChannel = ADC_IRQ;							//定时器中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;	//抢占优先级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;				//子优先级
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
-	NVIC_Init(&NVIC_InitStructure);	
+
 	
 }
-
-
 
 void EXTI_Key_Config(void)
 {
@@ -75,8 +71,8 @@ void EXTI_Key_Config(void)
 void EXTI_USARTn_Config(u8 number,u32 b)
 {
 	USARTn_Init(number,b);
-	NVCI_Config();		// NVCI
 
+	
 }
 
 
@@ -92,19 +88,27 @@ void USART1_IRQHandler(void)
 		{
 			ToggleLED(0);
 		}
-		
   	USART_ClearITPendingBit(USART1, USART_IT_RXNE); // 清除中断标志位
 		//if(writeIndex >=128) writeIndex = 0;
 	}
 } 	
 void USART2_IRQHandler(void)                
 {
-	
-	if (USART_GetFlagStatus(USART2, USART_FLAG_ORE) != RESET)
+	if (USART_GetFlagStatus(USART2, USART_IT_RXNE) != RESET)
 	{
-		if(USART_ReceiveData(USART2) == 1)
+		// 接收usart2数据
+		buffer[writeIndex++] = USART_ReceiveData(USART2);		// 将数据存储到缓冲区
+		if(writeIndex >=128) writeIndex = 0;
+		printf("%c",writeIndex);
+		// 按照协议 返回数据长度30
+		if (writeIndex == 30 - 1)
 		{
-			ToggleLED(1);
+			// 打印这30个数据
+			for (int i = 0; i < 30; i++)
+			{
+				printf("%c", buffer[i]);
+			}
+			writeIndex = 0;
 		}
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE); // 清除中断标志位
 	}
@@ -125,14 +129,19 @@ void KEY0_IRQHandler(void)
 
 void KEY1_IRQHandler(void)
 {
-		if (EXTI_GetITStatus(KEY1_EXTI_LINE) != RESET)			
+	if (EXTI_GetITStatus(KEY1_EXTI_LINE) != RESET && IsKeyPressed(KEY1_PORT,KEY1_PIN))			
 	{
-		if(IsKeyPressed(KEY1_PORT,KEY1_PIN))
-		{
-			Beep_Music_Do(GM, VOLUME1, B1);
-		}
-		
-			EXTI_ClearITPendingBit(KEY1_EXTI_LINE);
+		printf("KEY1 PUSH\r\n");
+		TIM6_100ms_step = 0;
+		TIM_SetCounter(TIM6,0);
+		TIM_ITConfig(TIM6,TIM_IT_Update,ENABLE);
+		TIM_Cmd(TIM6,ENABLE);
+
+		//send read_3phase_voltage数组 用usart2
+		RS485_send_cmd(read_3phase_voltage,18);
+
+
+		EXTI_ClearITPendingBit(KEY1_EXTI_LINE);
 	}
 }
 
@@ -142,7 +151,7 @@ void KEY2_IRQHandler(void)
 	{
 		if(IsKeyPressed(KEY2_PORT,KEY2_PIN))
 		{
-			Beep_Music();
+			NVIC_SetPendingIRQ(USART2_IRQn);
 		}
 	EXTI_ClearITPendingBit(KEY2_EXTI_LINE);
 	}
@@ -153,23 +162,25 @@ void WKUP_IRQHandler(void)
 
 	if (EXTI_GetITStatus(WKUP_EXTI_LINE) != RESET)		
 	{
+		//DO
+
 		
+		EXTI_ClearITPendingBit(WKUP_EXTI_LINE);
 	}
-	EXTI_ClearITPendingBit(WKUP_EXTI_LINE);
+
 }
 
 void TIM6_IRQHandler(void)
 {
 	if(TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) //检查TIM6更新中断发生与否
-  {
-		show_voltmeter_chart_value();
-		if(ADC_GetSoftwareStartConvStatus(ADC1)==ENABLE)
+  	{
+		TIM6_100ms_step++;
+		if (TIM6_100ms_step>=5)
 		{
-			ADC_Cmd(ADCx,DISABLE);
-		}
-		else if(ADC_GetSoftwareStartConvStatus(ADC1)==DISABLE)
-		{
-			ADC_Cmd(ADCx,ENABLE);
+			//erro no echo
+			printf("no echo\r\n");
+			TIM_Cmd(TIM6,DISABLE);
+			TIM6_100ms_step = 0;
 		}
 	}
 	TIM_ClearITPendingBit(TIM6, TIM_IT_Update);  //清除TIMx更新中断标志 
