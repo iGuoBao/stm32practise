@@ -53,19 +53,6 @@ int main(void)
 	extern int Infrared_ray_Receive_Data[300];
 	while(1)
 	{	
-		printf("--------");
-		delay_ms(1000);
-		delay_ms(1000);
-		delay_ms(1000);
-		// Infrared_ray_Receive_Data[32]数组 打印全部
-		
-		for (int i = 0; i < 64; i++)
-		{
-			printf("%d ",Infrared_ray_Receive_Data[i]);
-			Infrared_ray_Receive_Data_Index = 0;
-			Infrared_ray_Receive_Data[i] = 5;
-		}
-		printf("\r\n");
-		printf("--------");
+
 	}
 }

@@ -16,7 +16,7 @@ static void NVCI_Config()
 
 	NVIC_InitTypeDef NVIC_InitStructure;
 	
-	/*
+
 	// EXTI4--KEY0 
 	NVIC_InitStructure.NVIC_IRQChannel = KEY0_EXTI_IRQ;					
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		
@@ -41,7 +41,7 @@ static void NVCI_Config()
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;					
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;							
 	NVIC_Init(&NVIC_InitStructure);		
-	// USART
+	//USART
 	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		
@@ -59,21 +59,16 @@ static void NVCI_Config()
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				//子优先级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
-	
-	
-	
-	
 	// IR LED
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;   //打开全局中断 !< External Line[9:5] Interrupts 
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //抢占优先级为0
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1; 	 //响应优先级为1
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;   //使能
-	NVIC_Init(&NVIC_InitStructure);
-	*/
+	//NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;   //打开全局中断 !< External Line[9:5] Interrupts 
+	//NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //抢占优先级为0
+	//NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1; 	 //响应优先级为1
+	//NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;   //使能
+	//NVIC_Init(&NVIC_InitStructure);
 	// TIM4
 	NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;						//定时器中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;	//抢占优先级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				//子优先级
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;	//抢占优先级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;				//子优先级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	
 
@@ -144,11 +139,7 @@ void KEY0_IRQHandler(void)
 		EXTI_ClearITPendingBit(KEY0_EXTI_LINE);
 		if(IsKeyPressed(KEY0_PORT,KEY0_PIN))
 		{
-			Beep_Init(PWM);
-			ToggleLED(0);
-			delay_ms(1000);
-			ToggleLED(0);
-			Beep_Init(DOWN);
+			
 		}
 	}
 }
@@ -160,9 +151,7 @@ void KEY2_IRQHandler(void)
 		EXTI_ClearITPendingBit(KEY2_EXTI_LINE);
 		if(IsKeyPressed(KEY2_PORT,KEY2_PIN))
 		{
-			Beep_Init(PWM);
-			Beep_Music();
-			Beep_Init(DOWN);
+
 
 		}
 	}
@@ -207,99 +196,82 @@ void TIM4_IRQHandler(void)
 			printf("up\r\n");
 			Infrared_ray_timeus_down++;
 		}
-		*/
+		
 		// 引脚下降沿  开始数up
-		//else if (!Infrared_ray_Receive_flag)
-		// debug 上升沿后读取 一直是0 所以flag恒定0 暂时不能优化
-		if (!Infrared_ray_Receive_flag)
-		{
-			Infrared_ray_timeus_up++;
-		}
-
-		// 超时 关闭溢出 节省资源
-		//if (Infrared_ray_timeus_down > 2500 || Infrared_ray_timeus_up > 1000)
-		//if (Infrared_ray_timeus_up > 10000)  // 1s = 100us  
-		if (Infrared_ray_timeus_up > 1000)  // 1s = 100us 
-
-
-		/*
-		100us  tim4 溢出时间
-
-		
-		
+		else if (!Infrared_ray_Receive_flag)
 		*/
+
+		// debug 上升沿后读取 一直是0 所以flag恒定0 暂时不能优化
+		Infrared_ray_timeus_up++;
+
+		if (Infrared_ray_timeus_up > 1000 && Infrared_ray_Receive_over_flag)  // 100ms	 1s = 10000 *100us 
 		{
-			printf("time out\r\n");
-			TIM_ITConfig(infrared_ray_TIMx,TIM_IT_Update,DISABLE);	 // 关闭溢出中断
+			printf("100ms time out\r\n");
 			Infrared_ray_Receive_over_flag = 0; 
+			Infrared_ray_Receive_Data_Index = 0;
+
+			Infrared_ray_Data_Struct Infrared_ray_Data = Decode_Infrared_ray_Receive_Data();
+			printf("Infrared_ray_Data=%2x\r\n", Infrared_ray_Data.data);
 		}
-	  TIM_ClearITPendingBit(TIM4, TIM_IT_Update);  //清除TIMx更新中断标志
+	  	TIM_ClearITPendingBit(TIM4, TIM_IT_Update);  //清除TIMx更新中断标志
     }
 
-	// tim4 通道4中断
+	// tim4 通道4捕获中断
 	if(TIM_GetITStatus(TIM4, TIM_IT_CC4) != RESET)
 	{
-
-		/*
-		// 读取通道4 gpio电平  改变上升沿下降沿flag
+		// 读取通道4 gpio电平  改变上升沿下降沿flag ==0
 		Infrared_ray_Receive_flag = GPIO_ReadInputDataBit(Infrared_ray_Receive_PORT, Infrared_ray_Receive_PIN);
-		//printf("flag=%d\r\n",Infrared_ray_Receive_flag);
 
-
-		// 没开始接受的话 下降沿  溢出中断开启开始接收
+		// 之前没开始接受的话 下降沿  溢出中断开启开始接收 接受位-置1
 		if (!Infrared_ray_Receive_flag && !Infrared_ray_Receive_over_flag)
 		{
-			printf("start receive\r\n");
-			Infrared_ray_timeus_down = 0;
 			Infrared_ray_timeus_up = 0;
+			//Infrared_ray_timeus_down = 0;
 			Infrared_ray_synchronous_Receive_flag = 0;
-			TIM_ITConfig(infrared_ray_TIMx,TIM_IT_Update,ENABLE);	
+			Infrared_ray_Receive_Data_Index = 0;
 			Infrared_ray_Receive_over_flag = 1; 
 		}
 		// 开始接受
 		else if (!Infrared_ray_Receive_flag && Infrared_ray_Receive_over_flag) 
 		{
+			// 同步过
+			
 			if (Infrared_ray_synchronous_Receive_flag)
 			{
-				//printf("%d----\r\n",Infrared_ray_timeus_up);
-				//if (Infrared_ray_timeus_up > 550 && Infrared_ray_timeus_up < 570 && Infrared_ray_timeus_down > 550 && Infrared_ray_timeus_down < 570)
-				// debug 直接读取两个下降沿的时间 判断逻辑0 1  100us
-				if(Infrared_ray_timeus_up >= 11 && Infrared_ray_timeus_down <= 12) // 1125us
-				//if(0) // 1125us
+				Infrared_ray_Receive_Data[Infrared_ray_Receive_Data_Index++] = Infrared_ray_timeus_up;
+				Infrared_ray_timeus_up = 0;
+				/*
+				if(Infrared_ray_timeus_up >= 10 && Infrared_ray_timeus_up <= 15) // 1125us  100us
 				{
 					//逻辑0 数据存放到Infrared_ray_Receive_Data[]数组
-					Infrared_ray_Receive_Data[Infrared_ray_Receive_Data_Index++] = Infrared_ray_timeus_up;
+					Infrared_ray_Receive_Data[Infrared_ray_Receive_Data_Index++] = 7;
 				}
-				//else if (Infrared_ray_timeus_up > 550 && Infrared_ray_timeus_up < 570 && Infrared_ray_timeus_down > 1740 && Infrared_ray_timeus_down < 1760)
-				else if(Infrared_ray_timeus_up >=18 && Infrared_ray_timeus_down < 28)	// 2250us
-				//else
+				else if(Infrared_ray_timeus_up >=18 && Infrared_ray_timeus_up <= 24)	// 2250us
 				{
 					//逻辑1 数据存放到Infrared_ray_Receive_Data[]数组
-					Infrared_ray_Receive_Data[Infrared_ray_Receive_Data_Index++] = 999;
+					Infrared_ray_Receive_Data[Infrared_ray_Receive_Data_Index++] = 8;
 				}
-				//清空时间记时
+				//清空时间记时 错误的数据
 				Infrared_ray_timeus_up = 0;
 				//Infrared_ray_timeus_down = 0;
+				*/
 			}
+			// 没同步
 			else
 			{
-				if(Infrared_ray_timeus_up >= 126 && Infrared_ray_timeus_down <= 130) // 同步 13.5
+				if(Infrared_ray_timeus_up >= 126 && Infrared_ray_timeus_down <= 138) // 同步 13.5
 				{
-					printf("synchronous success\r\n");
 					Infrared_ray_synchronous_Receive_flag = 1;
+					Infrared_ray_Receive_over_flag = 1;
 					Infrared_ray_timeus_up = 0;
 					//Infrared_ray_timeus_down = 0;
+					Infrared_ray_Receive_Data_Index = 0;
 				}
 			}
 		}
-		*/
-
-
-
 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC4);
 	}
 }
-
 
 void TIM6_IRQHandler(void)
 {
@@ -335,8 +307,7 @@ void ADC_IRQHandler(void)
 
 }
 
-
-// RTC 秒中断
+// RTC 计时器
 void RTC_IRQHandler(void)
 {
 	showTimeToScreen();

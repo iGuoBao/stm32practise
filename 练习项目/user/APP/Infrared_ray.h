@@ -22,12 +22,20 @@
 #define infrared_ray_TIMx_CCRx 			CCR4				// PB9 
 #define infrared_ray_TIMx_Channel 	    TIM_Channel_4
 
-
+typedef struct
+{
+	// 第一字节地址 第二字节反码 第三字节数据 第四字节数据反码	
+	u8 addr;
+	u8 addr_f;
+	u8 data;
+	u8 data_f;
+}Infrared_ray_Data_Struct;
 
 // PB9
 void Infrared_ray_init();
 
-
+void printf_Infrared_ray_Receive_Data_Decode();
+Infrared_ray_Data_Struct Decode_Infrared_ray_Receive_Data();
 
 
 #endif

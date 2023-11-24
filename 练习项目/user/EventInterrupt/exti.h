@@ -1,6 +1,12 @@
 #ifndef __EXTI_H__
 #define __EXTI_H__
 
+
+#define TEST_DEFINE  1    
+
+
+
+
 #include "stm32f10x.h"
 
 #include "Button.h"
