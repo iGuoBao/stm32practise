@@ -27,10 +27,20 @@
 #define USART2_RS485_RE_PIN 			GPIO_Pin_7
 
 
+extern u8 read_3phase_voltage[];	
+
+
+
 void USARTn_Init(u8 number,u32 bound);
 void RS485_ENABLE(u8 work_station);
 void RS485_send_data(u8 buf);
-void RS485_send_cmd(u8 buf[],u8 len);
+void RS485_send_cmd(u8* buf,u8 len);
+
+
+
+
+
+
 
 
 #endif

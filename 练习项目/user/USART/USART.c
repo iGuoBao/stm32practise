@@ -12,12 +12,15 @@ u8 read_3phase_voltage[]={
 	0x7E,0x31,0x30,0x30,0x31,0x33,0x30,0x34,0x30,0x30,0x30,0x30,0x30,0x46,0x44,0x42,0x37,0x0D
 	};	
 
+
 //------------------
 
 int fputc(int ch,FILE *p)  //函数默认的，在使用printf函数时自动调用
 {
 	USART_SendData(USART1,(u8)ch);	
 	while(USART_GetFlagStatus(USART1,USART_FLAG_TXE)==RESET);
+	//USART_SendData(USART2,(u8)ch);	
+	//while(USART_GetFlagStatus(USART2,USART_FLAG_TXE)==RESET);
 	return ch;
 }
 
@@ -56,6 +59,9 @@ void USARTn_Init(u8 number,u32 bound)
 		USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;		//无硬件数据流控制
 		USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;										//收发模式
 		USART_Init(USART1, &USART_InitStructure);			// 包装完毕
+
+
+		USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);// 开启中断
 		USART_Cmd(USART1, ENABLE); 									  //使能串口1 
 		USART_ClearFlag(USART1, USART_FLAG_TC);				// 清除 USARTx 的待处理标志位
 		
@@ -65,7 +71,6 @@ void USARTn_Init(u8 number,u32 bound)
 
 		RCC_APB1PeriphClockCmd(USART2_TX_CLK2,ENABLE);
 		RCC_APB2PeriphClockCmd(USART2_TX_CLK,ENABLE);
-		
 		RCC_APB2PeriphClockCmd(USART2_RS485_RE_CLK,ENABLE);
 		
 		// GPIO结构体
@@ -88,13 +93,15 @@ void USARTn_Init(u8 number,u32 bound)
 		// USART结构体
 		USART_InitTypeDef USART_InitStructure;
 		// 串口2
-		USART_InitStructure.USART_BaudRate = bound;								 	//波特率设置
-		USART_InitStructure.USART_WordLength = USART_WordLength_8b;	//字长为8位数据格式
+		USART_InitStructure.USART_BaudRate = bound;						//波特率设置
+		USART_InitStructure.USART_WordLength = USART_WordLength_8b;		//字长为8位数据格式
 		USART_InitStructure.USART_StopBits = USART_StopBits_1;			//一个停止位
-		USART_InitStructure.USART_Parity = USART_Parity_No;					//无奇偶校验位
+		USART_InitStructure.USART_Parity = USART_Parity_No;				//无奇偶校验位
 		USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;		//无硬件数据流控制
 		USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;										//收发模式
-		USART_Init(USART2, &USART_InitStructure);			// 包装完毕
+		USART_Init(USART2, &USART_InitStructure); 
+
+		USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);// 开启中断
 		USART_Cmd(USART2, ENABLE); 				  // 使能串口2
 		USART_ClearFlag(USART2, USART_FLAG_TC);	  // 清除 USARTx 的待处理标志位
 	}
@@ -111,15 +118,29 @@ void RS485_send_data(u8 data)
 	while(USART_GetFlagStatus(USART2,USART_FLAG_TC)==RESET);
 }
 
-void RS485_send_cmd(u8 buf[],u8 len)
+void RS485_send_cmd(u8* buf,u8 len)
 {
 	u8 i;
-	//len = sizeof(buf)/sizeof(buf[0]);
-	printf("send:");
 	for(i=0;i<len;i++)
 	{
-		printf("%2x-",buf[i]);
-		RS485_send_data(buf[i]);
+		u8 data_temp = buf[i];
+		while(USART_GetFlagStatus(USART2,USART_FLAG_TC)==RESET);
+		USART_SendData(USART2,data_temp);
 	}
-	printf("\r\n");
+}
+
+
+void HexToAscii(const unsigned char* hexData, int dataSize, char* asciiString) {
+    int i;
+    for (i = 0; i < dataSize; i++) {
+        sprintf(&asciiString[i * 2], "%02X", hexData[i]);
+    }
+}
+
+
+void AsciiToHex(const char* asciiString, int stringSize, unsigned char* hexData) {
+    int i;
+    for (i = 0; i < stringSize / 2; i++) {
+        sscanf(&asciiString[i * 2], "%02X", &hexData[i]);
+    }
 }

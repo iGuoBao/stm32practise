@@ -28,10 +28,8 @@ int main(void)
 	delay_Config();					// systick
 	EXTI_Key_Config();		// 中断设置
 	EXTI_USARTn_Config(1,9600);
-	printf("usart1_init\r\n");	
-	//delay_ms(100);
 	EXTI_USARTn_Config(2,9600);
-	
+	//RS485_ENABLE(1);
 	printf("usart2_init\r\n");	
 	BASIC_TIM6_Config();
 
@@ -41,6 +39,8 @@ int main(void)
 	//------ app
 	while(1)
 	{
+		ToggleLED(0);
+		delay_ms(1000);
 
 	}
 }
