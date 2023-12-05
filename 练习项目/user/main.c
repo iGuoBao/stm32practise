@@ -3,6 +3,7 @@
 // 用户外设
 #include "LED.h"
 #include "Button.h"
+#include "RTC.h"
 //#include "beep.h"
 //#include "EEPROM_AT24C02.h"
 //#include "tftlcd.h"
@@ -24,25 +25,37 @@ int main(void)
 	setSysClkHSE();				
 	LED_init();						
 	KEY_init();
+
+	
 	
 	delay_Config();					// systick
 	EXTI_Key_Config();		// 中断设置
 	EXTI_USARTn_Config(1,9600);
 	EXTI_USARTn_Config(2,9600);
-	//RS485_ENABLE(1);
+	RS485_ENABLE(1);
 	printf("usart2_init\r\n");	
-	BASIC_TIM6_Config();
-
+	BASIC_TIM4_Config();
 	//------ app
-		
+	
+	RTC_Init();
+	printf("RTC_init\r\n");	
 
+	extern u8 buffer[BUFFER_SIZE];
+	extern u8 writeIndex;
 	//------ app
+
+	
 	while(1)
 	{
-		ToggleLED(0);
-		delay_ms(1000);
+		delay_ms(500);
+		SetLED(1,1);
+		delay_ms(500);
+		SetLED(1,0);
+			
 
 	}
+
+	
 }
 
 

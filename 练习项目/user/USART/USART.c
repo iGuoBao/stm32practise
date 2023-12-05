@@ -4,6 +4,8 @@
 u8 buffer[BUFFER_SIZE];
 u8 writeIndex = 0;
 
+u8 RS485_send_cmd_flag = 0;
+
 
 
 //------------------
@@ -12,8 +14,15 @@ u8 read_3phase_voltage[]={
 	0x7E,0x31,0x30,0x30,0x31,0x33,0x30,0x34,0x30,0x30,0x30,0x30,0x30,0x46,0x44,0x42,0x37,0x0D
 	};	
 
+u8 read_DCFU02[]={
+	0x7E,0x42,0x20,0x00,0xff,0x9e
+};
 
 //------------------
+
+
+
+
 
 int fputc(int ch,FILE *p)  //函数默认的，在使用printf函数时自动调用
 {
@@ -124,23 +133,87 @@ void RS485_send_cmd(u8* buf,u8 len)
 	for(i=0;i<len;i++)
 	{
 		u8 data_temp = buf[i];
-		while(USART_GetFlagStatus(USART2,USART_FLAG_TC)==RESET);
-		USART_SendData(USART2,data_temp);
+		while(USART_GetFlagStatus(USART2, USART_FLAG_TC)==RESET);
+		USART_SendData(USART2, data_temp);
 	}
 }
 
 
-void HexToAscii(const unsigned char* hexData, int dataSize, char* asciiString) {
-    int i;
-    for (i = 0; i < dataSize; i++) {
-        sprintf(&asciiString[i * 2], "%02X", hexData[i]);
+u8 hexToAsciiU8(u8 hexValue) 
+{
+	u8 temp;
+    if (hexValue >= 0 && hexValue <= 9) 
+	{
+        return hexValue + 0x30;  // 将0-9的十六进制数转换为对应的ASCII数字
+    } 
+	else if (hexValue >= 10 && hexValue <= 15)
+	{
+    	return hexValue + 0x37;  // 将A-F的十六进制数转换为对应的ASCII数字
+    } 
+	else if (hexValue >= 17 && hexValue <= 22) 
+	{
+        return hexValue + 0x57;  // 将a-f的十六进制数转换为对应的ASCII数字
+    } 
+	else 
+	{
+        return 0;  // 非法输入
     }
 }
 
-
-void AsciiToHex(const char* asciiString, int stringSize, unsigned char* hexData) {
-    int i;
-    for (i = 0; i < stringSize / 2; i++) {
-        sscanf(&asciiString[i * 2], "%02X", &hexData[i]);
+u8 asciiU8ToHex(u8 asciiNum) {
+    // 将ASCII格式的数字转换为十六进制
+    u8 hexValue = 0;
+    if (asciiNum >= 0x30 && asciiNum <= 0x39) 
+	{
+        hexValue = asciiNum - 0x30;  // 将0-9的ASCII数字转换为对应的十六进制数
+    } else if (asciiNum >= 0x41 && asciiNum <= 0x46) 
+	{
+        hexValue = asciiNum - 0x37;  // 将A-F的ASCII数字转换为对应的十六进制数
+    } else if (asciiNum >= 0x61 && asciiNum <= 0x66) 
+	{
+        hexValue = asciiNum - 0x57;  // 将a-f的ASCII数字转换为对应的十六进制数
+    } else 
+	{
+        return 0;
     }
+	return hexValue;
+}
+
+
+
+// 根据接收的数组 组进结构体
+void f_ProtocolFrame_3phase_voltage(ProtocolFrame_3phase_voltage* frame, u8* buf)
+{
+	u8 i = 0,LENID;
+	frame->SOI = buf[i++]; // SOI和EOI是以16进制解释16进制传输
+	frame->VER = (asciiU8ToHex(buf[i++]) << 4) + asciiU8ToHex(buf[i++]); // 一字节数据 转 ASCII分两字节传输
+	frame->ADR = (asciiU8ToHex(buf[i++]) << 4) + asciiU8ToHex(buf[i++]);
+	frame->CID1 = (asciiU8ToHex(buf[i++]) << 4) + asciiU8ToHex(buf[i++]);
+	frame->CID2 = (asciiU8ToHex(buf[i++]) << 4) + asciiU8ToHex(buf[i++]);
+	frame->LENGTH = (asciiU8ToHex(buf[i++]) << 12) + (asciiU8ToHex(buf[i++]) << 8) + (asciiU8ToHex(buf[i++]) << 4) + asciiU8ToHex(buf[i++]);
+	frame->LENGTH_LENID = (frame->LENGTH & 0x0FFF);		// LENID = 取frame->LENGTH后12位
+
+	for (int index = 0; index < (frame->LENGTH_LENID); index++)
+	{
+		frame->INFO[index] = (asciiU8ToHex(buf[i++]) << 4) + asciiU8ToHex(buf[i++]);
+	}
+	//frame->INFO = buf[i++];
+	frame->CHKSUM = buf[i++];
+	frame->EOI = buf[i++];	// SOI和EOI是以16进制解释16进制传输
+}
+
+void f_ProtocolFrame_DCFU02(ProtocolFrame_DCFU02* frame, u8* buf)
+{
+	u8 i = 0;
+	frame->SOI = buf[i++]; 
+	frame->ADR = buf[i++]; 
+	frame->CMD = buf[i++]; 
+	frame->LEN = buf[i++]; 
+	
+	for (int index = 0; index < frame->LEN; index++)
+	{
+		frame->DATAINFO[index] = buf[i++];
+
+	}
+	frame->CHKSUM = buf[i++]; 
 }
