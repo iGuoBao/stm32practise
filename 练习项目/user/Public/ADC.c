@@ -26,7 +26,7 @@ void ADCx_Mode_Config(void)
 	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;									// 独立模式
 	ADC_InitStructure.ADC_ScanConvMode = DISABLE ;  										// 禁止扫描模式
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE; 									// 连续转换模式
-	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None; // 关闭外部触发转换  通常都用软件
+	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None; 			// 关闭外部触发转换  通常都用软件
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;							// 转换结果右对齐
 	ADC_InitStructure.ADC_NbrOfChannel = 1;															// 转换通道 1 个
 	ADC_Init(ADCx, &ADC_InitStructure);
@@ -38,7 +38,6 @@ void ADCx_Mode_Config(void)
 	// 配置中断
 	ADC_ITConfig(ADCx, ADC_IT_EOC, ENABLE);		// ADC 转换结束产生中断，在中断服务程序中读取转换值
 
-	
 	// 开启 ADC ，并开始转换
 	ADC_Cmd(ADCx, ENABLE);
 

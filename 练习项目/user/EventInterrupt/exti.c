@@ -187,7 +187,7 @@ void ADC_IRQHandler(void)
 		
 		ADC_ClearITPendingBit(ADCx,ADC_IT_EOC);
 	
-		ADC_Cmd(ADCx,DISABLE);
+		ADC_ITConfig(ADCx, ADC_IT_EOC, DISABLE);		// ADC 转换结束产生中断，在中断服务程序中读取转换值
 		ADC_ClearITPendingBit(ADC1,ADC_IT_EOC);
 	}
 

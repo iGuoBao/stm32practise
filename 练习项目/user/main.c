@@ -7,6 +7,7 @@
 #include "EEPROM_AT24C02.h"
 #include "tftlcd.h"
 #include "animations.h"
+#include "ADC.h"
 
 // 公共
 #include "SysTick.h"		// 滴答 以后不会使用这种
@@ -27,7 +28,7 @@ int main(void)
 	LED_init();						
 	//JLED_init();
 	KEY_init();
-	Beep_Init(PWM);
+	//Beep_Init(PWM);
 	EEPROM_Init();
 	
 	delay_Config();					// systick
@@ -46,8 +47,8 @@ int main(void)
 	while(1)
 	{
 		//printf("data=%d\r\n",123);
-			refresh_voltmeter_chart();
-			show_voltmeter_chart_value();
+		refresh_voltmeter_chart();
+		show_voltmeter_chart_value();
 		
 	}
 }

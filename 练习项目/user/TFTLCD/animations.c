@@ -1,7 +1,7 @@
 #include "animations.h"
-// 1.2KB   x,y
 
-// �߶γ���Ϊx�᳤��
+
+
 
 int arr_coordinate_X_memory_write_index = 0;
 u8 chart_overflow = 0;
@@ -50,7 +50,7 @@ void draw_voltmeter_chart_value_time_line(void)
 
 void refresh_voltmeter_chart(void)
 {
-	ADC_Cmd(ADCx,ENABLE);
+	//ADC_Cmd(ADCx,ENABLE);
 	//int refresh_skip_distance;
 	if(!chart_overflow){
 		if(arr_coordinate_X_memory_write_index == 0)
@@ -103,16 +103,18 @@ void refresh_voltmeter_chart(void)
 		}
 			arr_coordinate_Y_memory[voltmeter_chart_line_lengthX - 2] = arr_coordinate_Y_memory[voltmeter_chart_line_lengthX - 1];
 	}
+
+	ADC_ITConfig(ADCx, ADC_IT_EOC, ENABLE);		// ADC 转换结束产生中断，在中断服务程序中读取转换值
 }
 
 void show_voltmeter_chart_value(void) {
     float value = GetValue();
 
-    // ????????????��??????
+    // ????????????��??????
     int intValue = (int)value;
-    int decimalPart = (int)((value - intValue) * 100);  // ???�b????�˧�??
+    int decimalPart = (int)((value - intValue) * 100);  // ???�b????�˧�??
 
-    // ???????????��?????????????????
+    // ???????????��?????????????????
     char show_value_char[20];
     snprintf(show_value_char, sizeof(show_value_char), "%d.%02d", intValue, decimalPart);
 
