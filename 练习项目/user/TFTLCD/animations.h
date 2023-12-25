@@ -2,7 +2,10 @@
 #define __ANIMATIONS_H__
 
 #include "tftlcd.h"
-#include	"ADC.h"
+#include  "ADC.h"
+#include "NTC.h"
+
+
 
 #define voltmeter_window_start_pointX 	0
 #define voltmeter_window_start_pointY		0
@@ -25,6 +28,7 @@ void draw_voltmeter_chart_value_time_line(void);
 
 void refresh_voltmeter_chart(void);
 void show_voltmeter_chart_value(void);
+void show_temperature_chart_value(void);
 
 
 

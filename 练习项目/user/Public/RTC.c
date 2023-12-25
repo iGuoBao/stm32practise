@@ -298,34 +298,4 @@ u8 RTC_Get_Week(u16 year,u8 month,u8 day)
 }
 
 
-void showTimeToScreen()
-{
-	if (RTC_GetITStatus(RTC_IT_SEC) != RESET)//秒钟中断
-	{							
-		RTC_Get();//更新时间  
-		printf("RTC Time:%d-%d-%d %d:%d:%d\r\n",
-		calendar.w_year,
-		calendar.w_month,
-		calendar.w_date,
-		calendar.hour,
-		calendar.min,
-		calendar.sec);//输出闹铃时间	
-				
- 	}
-	
-	char showRTCString[20];
-	sprintf(showRTCString, "%d/", calendar.w_year);
-	LCD_ShowString(30,300,100,16,16,showRTCString);
-	sprintf(showRTCString, "%d/",calendar.w_month);
-	LCD_ShowString(30+50,300,100,16,16,showRTCString);
-	sprintf(showRTCString, "%d",calendar.w_date);
-	LCD_ShowString(30+100,300,100,16,16,showRTCString);
-	sprintf(showRTCString, "%d:",calendar.hour);
-	LCD_ShowString(30,340,100,16,16,showRTCString);
-	sprintf(showRTCString, "%d:",calendar.min);
-	LCD_ShowString(30+50,340,100,16,16,showRTCString);
-	sprintf(showRTCString, "%d",calendar.sec);
-	LCD_ShowString(30+100,340,100,16,16,showRTCString);
-	
-}
 

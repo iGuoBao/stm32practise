@@ -706,6 +706,11 @@
               <FileType>1</FileType>
               <FilePath>..\user\Public\ADC.c</FilePath>
             </File>
+            <File>
+              <FileName>NTC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\APP\NTC.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

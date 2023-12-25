@@ -104,21 +104,37 @@ void refresh_voltmeter_chart(void)
 			arr_coordinate_Y_memory[voltmeter_chart_line_lengthX - 2] = arr_coordinate_Y_memory[voltmeter_chart_line_lengthX - 1];
 	}
 
-	ADC_ITConfig(ADCx, ADC_IT_EOC, ENABLE);		// ADC 转换结束产生中断，在中断服务程序中读取转换值
+	ADC_ITConfig(ADCx, ADC_IT_EOC, ENABLE);		// ADC
 }
 
 void show_voltmeter_chart_value(void) {
     float value = GetValue();
 
-    // ????????????��??????
-    int intValue = (int)value;
-    int decimalPart = (int)((value - intValue) * 100);  // ???�b????�˧�??
 
-    // ???????????��?????????????????
+    int intValue = (int)value;
+    int decimalPart = (int)((value - intValue) * 100);  
+
+
     char show_value_char[20];
     snprintf(show_value_char, sizeof(show_value_char), "%d.%02d", intValue, decimalPart);
 
     //printf("data=%f\r\n", value);
     LCD_ShowString(value_line_start_pointX, value_line_start_pointY-16, 100, 16, 16, (u8*)show_value_char);
+}
+
+void show_temperature_chart_value(void) {
+    
+	  float value = get_NTC_value();
+
+
+    int intValue = (int)value;
+    int decimalPart = intValue;
+
+
+    char show_value_char[20];
+    snprintf(show_value_char, sizeof(show_value_char), "%d.%02d", intValue, decimalPart);
+
+    //printf("data=%f\r\n", value);
+    LCD_ShowString(value_line_start_pointX, value_line_start_pointY-32, 100, 16, 16, (u8*)show_value_char);
 }
 

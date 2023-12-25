@@ -28,7 +28,7 @@ int main(void)
 	LED_init();						
 	//JLED_init();
 	KEY_init();
-	//Beep_Init(PWM);
+	Beep_Init(PWM);
 	EEPROM_Init();
 	
 	delay_Config();					// systick
@@ -49,7 +49,7 @@ int main(void)
 		//printf("data=%d\r\n",123);
 		refresh_voltmeter_chart();
 		show_voltmeter_chart_value();
-		
+		show_temperature_chart_value();
 	}
 }
 

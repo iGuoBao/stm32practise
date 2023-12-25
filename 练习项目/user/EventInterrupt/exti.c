@@ -197,6 +197,6 @@ void ADC_IRQHandler(void)
 // RTC 秒中断
 void RTC_IRQHandler(void)
 {
-	showTimeToScreen();
+
 
 }

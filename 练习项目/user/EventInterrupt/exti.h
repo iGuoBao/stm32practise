@@ -13,6 +13,7 @@
 #include "RTC.h"
 #include "animations.h"
 #include "tftlcd.h"
+#include "NTC.h"
 
 static void  NVCI_Config();
 
