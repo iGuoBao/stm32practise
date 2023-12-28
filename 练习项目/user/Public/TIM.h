@@ -32,6 +32,7 @@
 
 
 void BASIC_TIM3_Config(void);
+//TIM_SetCompare2(TIM3, 1000);
 void BASIC_TIM4_Config(void);
 void SetBASIC_TIM4_Hz(int Hz);
 void BASIC_TIM6_Config(void);

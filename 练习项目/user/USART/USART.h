@@ -5,7 +5,8 @@
 #include "stdio.h" // 标准库
 
 #define BUFFER_SIZE		128	// 最大接受字节数量  	
- 	
+
+//---------USART1----------
 #define USART_TX_CLK  					( RCC_APB2Periph_GPIOA | RCC_APB2Periph_USART1 )
 #define USART_TX_Port  					GPIOA
 #define USART_TX_PIN 					GPIO_Pin_9
@@ -27,8 +28,21 @@
 #define USART2_RS485_RE_PIN 			GPIO_Pin_7
 
 extern u8 RS485_send_cmd_flag;
-extern u8 read_3phase_voltage[];	
-extern u8 read_DCFU02[];	
+extern u8 read_3phase_voltage_send_flag;
+extern u8 DCFU02_send_flag;
+extern u8 LYTHR30EN_send_flag;
+
+//extern u8 read_3phase_voltage[];	
+//extern u8 read_DCFU02[];	
+//extern u8 read_LYTHR30EN[];
+extern u8 ask_BIBD180[];
+extern u8 send_addr1_ON_BIBD180[];
+//extern u8 send_addr2_ON_BIBD180[];
+//extern u8 send_addr3_ON_BIBD180[];
+extern u8 send_addr1_OFF_BIBD180[];
+//extern u8 send_addr2_OFF_BIBD180[];
+//extern u8 send_addr3_OFF_BIBD180[];
+
 
 // 定义帧结构体
 typedef struct {
@@ -59,16 +73,25 @@ typedef struct {
 } ProtocolFrame_DCFU02;
 
 
+typedef struct {
+    u8 ADD;      
+    u8 CMD;      
+    u8 LEN;      
+    u8 DATA[5];      
+    u8 HCRC;
+    u8 LCRC;                
+} ProtocolFrame_LYTHR30EN;
+
+
+
 void USARTn_Init(u8 number,u32 bound);
 void RS485_ENABLE(u8 work_station);
 void RS485_send_data(u8 buf);
 void RS485_send_cmd(u8* buf,u8 len);
 
-u8 hexToAsciiU8(u8 hexValue);
-u8 asciiU8ToHex(u8 asciiNum) ;
-
-
-
+void f_ProtocolFrame_3phase_voltage(ProtocolFrame_3phase_voltage* frame, u8* buf);
+void f_ProtocolFrame_DCFU02(ProtocolFrame_DCFU02* frame, u8* buf);
+void f_ProtocolFrame_LYTHR30EN(ProtocolFrame_LYTHR30EN* frame, u8* buf);
 
 
 #endif

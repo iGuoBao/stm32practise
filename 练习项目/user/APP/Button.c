@@ -76,7 +76,7 @@ int IsKeyPressed(GPIO_TypeDef * KEY_PORT,uint16_t KEY_PIN)
 	//
 	// 引脚输出模式
 	if(GPIO_ReadOutputDataBit(KEY_PORT, KEY_PIN) == 1){
-		delay_ms(15);										// 去抖
+		delay_ms(80);										// 去抖
 		if(GPIO_ReadOutputDataBit(KEY_PORT, KEY_PIN) == 1)			
 		{
 			return !GPIO_ReadInputDataBit(KEY_PORT, KEY_PIN); // 返回引脚电平的反值 若按下为1

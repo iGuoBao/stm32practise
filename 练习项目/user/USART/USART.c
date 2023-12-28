@@ -5,7 +5,9 @@ u8 buffer[BUFFER_SIZE];
 u8 writeIndex = 0;
 
 u8 RS485_send_cmd_flag = 0;
-
+u8 read_3phase_voltage_send_flag = 0;
+u8 DCFU02_send_flag = 0;
+u8 LYTHR30EN_send_flag = 0;
 
 
 //------------------
@@ -18,8 +20,42 @@ u8 read_DCFU02[]={
 	0x7E,0x42,0x20,0x00,0xff,0x9e
 };
 
-//------------------
+//温湿度传感器 LY-THR-30EN  == 01  03  00  00  00  02  C4  0B
+u8 read_LYTHR30EN[]={
+	0x01,0x03,0x00,0x00,0x00,0x02,0xC4,0x0B
+};
 
+//查询智能断路器电参数数据 01 03 00 01 00 08 15 CC
+// 地址1
+u8 ask_BIBD180[]={
+	0x01,0x03,0x00,0x01,0x00,0x08,0x15,0xCC
+};
+
+//穷举耗内存 应使用结构体 根据不同地址 寄存器 命令信息动态变化
+//往智能断路器设备 1 发送合闸指令
+u8 send_addr1_ON_BIBD180[]={
+	0x01,0x06,0x00,0x08,0x00,0x01,0xC9,0xC8
+};
+u8 send_addr1_OFF_BIBD180[]={
+	0x01,0x06,0x00,0x08,0x00,0x00,0x08,0x08
+};
+u8 send_addr2_ON_BIBD180[]={
+	//02 06 00 08 00 01 C9 FB
+	0x02,0x06,0x00,0x08,0x00,0x01,0xC9,0xFB
+};
+u8 send_addr2_OFF_BIBD180[]={
+	//02 06 00 08 00 00 08 3B
+	0x02,0x06,0x00,0x08,0x00,0x00,0x08,0x3B
+};
+u8 send_addr3_ON_BIBD180[]={
+	//03 06 00 08 00 01 CB 2A
+	0x03,0x06,0x00,0x08,0x00,0x01,0xCB,0x2A
+};
+u8 send_addr3_OFF_BIBD180[]={
+	//03 06 00 08 00 00 09 EA
+	0x03,0x06,0x00,0x08,0x00,0x00,0x09,0xEA
+};
+//------------------
 
 
 
@@ -43,7 +79,6 @@ void USARTn_Init(u8 number,u32 bound)
 	if(number == 1)
 	{
 		RCC_APB2PeriphClockCmd(USART_TX_CLK,ENABLE);
-
 
 		// GPIO结构体
 		GPIO_InitTypeDef GPIO_InitStructure;
@@ -126,15 +161,18 @@ void RS485_send_data(u8 data)
 	USART_SendData(USART2,data);
 	while(USART_GetFlagStatus(USART2,USART_FLAG_TC)==RESET);
 }
-
 void RS485_send_cmd(u8* buf,u8 len)
 {
+	// debug start
 	u8 i;
+
 	for(i=0;i<len;i++)
 	{
 		u8 data_temp = buf[i];
 		while(USART_GetFlagStatus(USART2, USART_FLAG_TC)==RESET);
 		USART_SendData(USART2, data_temp);
+		//while(USART_GetFlagStatus(USART1, USART_FLAG_TC)==RESET);
+		//USART_SendData(USART1, data_temp);
 	}
 }
 
@@ -216,4 +254,19 @@ void f_ProtocolFrame_DCFU02(ProtocolFrame_DCFU02* frame, u8* buf)
 
 	}
 	frame->CHKSUM = buf[i++]; 
+}
+
+void f_ProtocolFrame_LYTHR30EN(ProtocolFrame_LYTHR30EN* frame, u8* buf)
+{
+	u8 i = 0;
+	frame->ADD = buf[i++]; 
+	frame->CMD = buf[i++]; 
+	frame->LEN = buf[i++]; 
+	//for (int index = 0; index < frame->LEN; index++)
+	for (int index = 0; index < 4; index++)
+	{
+		frame->DATA[index] = buf[i++];
+	}
+	frame->HCRC = buf[i++]; 
+	frame->LCRC = buf[i++];
 }
