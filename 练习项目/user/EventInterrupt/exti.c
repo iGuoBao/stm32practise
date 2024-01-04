@@ -1,15 +1,17 @@
 #include "exti.h"
 
 extern float  ADC_ConvertedValue; // from ADC
-
+extern u16 dac_value;
 
 extern u8 buffer[BUFFER_SIZE];
 extern u8 writeIndex;
 extern u8 TIM4_100ms_step;
 
+u8 fake_temperature;
+
 u8 work_status = 0;		// 0  1=auto
 u8 fun_work_status = 0;		// 0  1=on
- u8 bidi_work_status;		// 0  1=on
+u8 bidi_work_status;		// 0  1=on
 
 //ProtocolFrame_3phase_voltage frame;
 
@@ -88,7 +90,8 @@ void USART1_IRQHandler(void)
 	if (USART_GetFlagStatus(USART1, USART_IT_RXNE) != RESET)
 	{
 		buffer[writeIndex] = USART_ReceiveData(USART1);		// 将数据存储到缓冲区
-		
+		fake_temperature = buffer[writeIndex];
+
 		writeIndex++;
 		USART_ClearITPendingBit(USART1, USART_IT_RXNE); // 清除中断标志位
 	}

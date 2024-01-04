@@ -7,6 +7,7 @@
 //#include "beep.h"
 //#include "EEPROM_AT24C02.h"
 #include "adc_temp.h"
+#include "dac.h"
 #include "tftlcd.h"
 //#include "animations.h"
 
@@ -34,10 +35,13 @@ int main(void)
 	EXTI_USARTn_Config(1,9600);delay_ms(50);printf("usart1_init\r\n");	
 	EXTI_USARTn_Config(2,9600);RS485_ENABLE(1);delay_ms(50);printf("usart2_init\r\n");	
 	
+	DAC1_Init();
 	BASIC_TIM4_Config();
 
 
 	//------ app
+	extern u16 dac_value;
+
 	extern u8 buffer[BUFFER_SIZE];
 	extern u8 writeIndex;
 
@@ -47,11 +51,13 @@ int main(void)
 
 	int temp;
 	u8 adc_step = 0;
-	u8 fake_temperature = 0;
+	extern u8 fake_temperature;
 
 	u8 bidi_step = 0;
 
 	u8 adc_step2 = 0;
+
+	float linearInterpolation(float input);
 	//------ app
 
 	
@@ -62,11 +68,18 @@ int main(void)
 
 	while(1)
 	{
+		//TIM_SetCompare2(TIM3,90);
+		
 		LCD_ShowString(10,10,140,20,16,"temperature");
+		LCD_ShowString(200,10,140,20,16,"fake_temp");
 		char show_temp[16];
-		float floatNum = temp / 100.0;
+		float floatNum = Get_Temperture() / 100.0;
    		sprintf(show_temp, "%.2f", floatNum);
 		LCD_ShowString(100,10,40,20,16,show_temp);
+
+		char show_fake_temp[16];
+		sprintf(show_fake_temp, "%d", fake_temperature);
+		LCD_ShowString(290,10,40,20,16,show_fake_temp);
 		
 		LCD_ShowString(10,70,140,20,16,"addr 1");
 
@@ -124,34 +137,38 @@ int main(void)
 
 
 
-
-
-		if (bidi_step++ == 100){
-			bidi_step = 0;
-			//RS485_send_cmd(ask_BIBD180,9);
-			//u8 addr = buffer[1];	
-		}
-/*
-		for(int i=0;i<9;i++){
-				printf("%02X ",buffer[i]);
-		}
-*/
-		printf("\r\n");
-		temp=Get_Temperture();
-		if(temp<0)
+		LCD_ShowString(10,110,140,20,16,"dac value");
+		char char_dac_value[16];
+		sprintf(char_dac_value, "%d", dac_value);
+		LCD_ShowString(90,110,140,20,16,char_dac_value);
+		
+		// 线性插值
+		if (fake_temperature >= 25 && fake_temperature <= 80)
 		{
-			temp=-temp;
-			printf("temp -");
+			// 线性插值 输入25-80 输出 1.0-3.3
+			float set_dac_value = linearInterpolation(fake_temperature);
+			DAC_SetChannel1Data(DAC_Align_12b_R, set_dac_value/3.3 * 4096 );			// from 3.3v 4096
 		}
-		else
+		else if (fake_temperature >= 0)
 		{
-			printf("temp +");
+			DAC_SetChannel1Data(DAC_Align_12b_R, 1.0/3.3 * 4096);			// 1v from 3.3v 4096
 		}
-		printf("%d \r\n",temp);
-		printf("%.2f C\r\n",(float)temp/100);
+
+		
+		
+
 		delay_ms(100);
-		//TIM_SetCompare2(TIM3,90);
+		
 	}	
 }
 
 
+float linearInterpolation(float input) {
+    float output;
+    if (input >= 25 && input <= 80) {
+        output = 1.0 + (input - 25) * (3.3 - 1.0) / (80 - 25);
+    } else {
+        output = -1; // 输入值不在范围内
+    }
+    return output;
+}
