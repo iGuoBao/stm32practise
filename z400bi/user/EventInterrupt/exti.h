@@ -5,13 +5,13 @@
 
 #include "Button.h"
 #include "LED.h"
-#include "beep.h"
+//#include "beep.h"
 #include "USART.h"
 #include "SysTick.h"
 #include "TIM.h"
-#include "ADC.h"
-#include "RTC.h"
-#include "animations.h"
+//#include "ADC.h"
+//#include "RTC.h"
+//#include "animations.h"
 #include "tftlcd.h"
 
 static void  NVCI_Config();

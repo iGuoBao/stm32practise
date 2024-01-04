@@ -9,7 +9,7 @@ u8 read_3phase_voltage_send_flag = 0;
 u8 DCFU02_send_flag = 0;
 u8 LYTHR30EN_send_flag = 0;
 
-
+u16 dac_value;
 //------------------
 
 u8 read_3phase_voltage[]={

@@ -32,9 +32,18 @@ extern u8 read_3phase_voltage_send_flag;
 extern u8 DCFU02_send_flag;
 extern u8 LYTHR30EN_send_flag;
 
-extern u8 read_3phase_voltage[];	
-extern u8 read_DCFU02[];	
-extern u8 read_LYTHR30EN[];
+//extern u8 read_3phase_voltage[];	
+//extern u8 read_DCFU02[];	
+//extern u8 read_LYTHR30EN[];
+extern u8 ask_BIBD180[];
+extern u8 send_addr1_ON_BIBD180[];
+//extern u8 send_addr2_ON_BIBD180[];
+//extern u8 send_addr3_ON_BIBD180[];
+extern u8 send_addr1_OFF_BIBD180[];
+//extern u8 send_addr2_OFF_BIBD180[];
+//extern u8 send_addr3_OFF_BIBD180[];
+
+
 // 定义帧结构体
 typedef struct {
     u8 SOI;        // 起始位标志（START OF INFORMATION）
